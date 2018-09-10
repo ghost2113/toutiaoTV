@@ -1,0 +1,116 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"><title>基础收益</title><link rel="stylesheet" href="./css/reset.css"><link rel="stylesheet" href="./css/common.css"><link rel="stylesheet" href="./css/mfDiscEarn.css"></head><body><div class="actiBg"><img src="./img/jcsyBg.png" alt=""></div><div class="img1" style="width:100%;height:.9rem"><img src="./img/jcsyTxt.png"></div><section id="main" style="opacity:0"><ul class="rules"><li>新增徒弟：</li><li>朋友通过你分享的链接下载头条TV并登陆</li><li>有效徒弟：</li><li>新增徒弟阅读获得50金币，成为你的有效徒弟</li><li>奖励发放：</li><li>新增徒弟阅读获得50金币时，师傅即可获得<span class="rew">1000金币</span>,之后徒弟任意一天阅读获得50金币，师傅即可再次获得当天奖励。首次收徒还能获得额外2元红包奖励</li></ul><ul class="reward"><li><span>天数</span><span>奖励</span></li></ul></section><div class="discBtn" onclick="disciple()"><img src="./img/jcsyBtn.png" alt="error"></div></body><script src="./js/rem.js"></script><script src="./js/loading.js"></script><script src="./js/zepto.js"></script><script src="js/fastclick.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script><script>var urlOnline = "https://zhishun520.com/zaotoutiao-api-home-1.0.0/";
+			var urlTest = "http://47.104.250.210:8083/zaotoutiao-api-home-1.0.0/";
+			var ajaxUrl = urlOnline;
+			//获取Url地址中userId参数
+			function getUrlParams(name) { 
+			    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+			    var r = window.location.search.substr(1).match(reg);  
+			    if (r != null) return unescape(r[2]); 
+			    return null; 
+			};		
+			/**
+			 * 去收徒
+			 */
+			function disciple(){ 
+		       var u = navigator.userAgent;
+		       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		       if(isAndroid){
+		          /*  alert('是否是Android：'+isAndroid);*/
+		           window.jsi.disciple("ok");
+		       }else if(isiOS){
+		           /* alert('是否是iOS：'+isiOS);*/
+		           window.webkit.messageHandlers.disciple.postMessage("ok");
+		       }	       	   
+			}	
+			/**
+			 * 收徒奖励
+			 */
+			axios({	
+			  url: '/apprentice/award/user',
+			  method: 'get', // 默认是 get
+			  baseURL: ajaxUrl,	
+			})
+			.then(function(res){
+				var $html = '';
+				var str = '';
+				$.each(res.data.data,function(index,item){
+					if(index==0){
+						str = `${item.gold==0?item.money+'元':item.gold+'金币'}`;
+					}
+					if(!(item.gold==0&&item.money==0)){
+						$html +=
+						`
+						<li><span>第${numType(index+1)}天</span><span class="gold">${item.gold==0?item.money+'元':item.gold+'金币'}</span></li>
+						`;
+					}					
+				});
+				$('.reward').append($html);				
+				$('.rew').html(str);		
+			})
+			.catch(function(error){
+				console.log(error);
+			});
+			function numType(Num) {
+		    for (i = Num.length - 1; i >= 0; i--) {
+		        Num = Num.replace(",", "")//替换Num中的“,”
+		        Num = Num.replace(" ", "")//替换Num中的空格
+		    }    
+		    if (isNaN(Num)) { //验证输入的字符是否为数字
+		        //alert("请检查小写金额是否正确");
+		        return;
+		    }
+		    //字符处理完毕后开始转换，采用前后两部分分别转换
+		    part = String(Num).split(".");
+		    newchar = "";
+		    //小数点前进行转化
+		    for (i = part[0].length - 1; i >= 0; i--) {
+		        if (part[0].length > 10) {
+		            //alert("位数过大，无法计算");
+		            return "";
+		        }//若数量超过拾亿单位，提示
+		        tmpnewchar = ""
+		        perchar = part[0].charAt(i);
+		        switch (perchar) {
+		            case "0":  tmpnewchar = "零" + tmpnewchar;break;
+		            case "1": tmpnewchar = "一" + tmpnewchar; break;
+		            case "2": tmpnewchar = "二" + tmpnewchar; break;
+		            case "3": tmpnewchar = "三" + tmpnewchar; break;
+		            case "4": tmpnewchar = "四" + tmpnewchar; break;
+		            case "5": tmpnewchar = "五" + tmpnewchar; break;
+		            case "6": tmpnewchar = "六" + tmpnewchar; break;
+		            case "7": tmpnewchar = "七" + tmpnewchar; break;
+		            case "8": tmpnewchar = "八" + tmpnewchar; break;
+		            case "9": tmpnewchar = "九" + tmpnewchar; break;
+		        }
+		        switch (part[0].length - i - 1) {
+		            case 0: tmpnewchar = tmpnewchar; break;
+		            case 1: if (perchar != 0) tmpnewchar = tmpnewchar + "十"; break;
+		            case 2: if (perchar != 0) tmpnewchar = tmpnewchar + "百"; break;
+		            case 3: if (perchar != 0) tmpnewchar = tmpnewchar + "千"; break;
+		            case 4: tmpnewchar = tmpnewchar + "万"; break;
+		            case 5: if (perchar != 0) tmpnewchar = tmpnewchar + "十"; break;
+		            case 6: if (perchar != 0) tmpnewchar = tmpnewchar + "百"; break;
+		            case 7: if (perchar != 0) tmpnewchar = tmpnewchar + "千"; break;
+		            case 8: tmpnewchar = tmpnewchar + "亿"; break;
+		            case 9: tmpnewchar = tmpnewchar + "十"; break;
+		        }
+		        newchar = tmpnewchar + newchar;
+		    }   
+		    //替换所有无用汉字，直到没有此类无用的数字为止
+		    while (newchar.search("零零") != -1 || newchar.search("零亿") != -1 || newchar.search("亿万") != -1 || newchar.search("零万") != -1) {
+		        newchar = newchar.replace("零亿", "亿");
+		        newchar = newchar.replace("亿万", "亿");
+		        newchar = newchar.replace("零万", "万");
+		        newchar = newchar.replace("零零", "零");      
+		    }
+		    //替换以“一十”开头的，为“十”
+		    if (newchar.indexOf("一十") == 0) {
+		        newchar = newchar.substr(1);
+		    }
+		    //替换以“零”结尾的，为“”
+		    if (newchar.lastIndexOf("零") == newchar.length - 1) {
+		        newchar = newchar.substr(0, newchar.length - 1);
+		    }
+		    return newchar;
+		}</script></html>

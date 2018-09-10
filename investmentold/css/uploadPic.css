@@ -1,0 +1,37 @@
+@charset "UTF-8";
+.borderB1 { border-bottom: 1px solid #f7f7fa; }
+
+.borderB3 { border-bottom: 5px solid #f7f7fa; }
+
+.red { color: #f64040 !important; }
+
+a, button, input, textarea { -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+
+input[type=button], input[type=submit], input[type=file], button { cursor: pointer; -webkit-appearance: none; }
+
+html, body { background: #f7f7fa; }
+
+#main { border-top: 1px solid #edeef0; }
+#main .picNum { display: flex; display: -webkit-flex; flex-direction: row; justify-content: space-between; align-items: center; height: 0.4rem; padding: 0 0.1rem; background: white; border-top: 6px solid #f7f7fa; font-size: 0.13rem; color: #979899; }
+#main .picNum span:nth-child(2) { color: #1a1a1a; }
+#main #formData { display: flex; display: -webkit-flex; flex-direction: row; justify-content: space-between; align-items: center; flex-wrap: wrap; padding-top: 0.15rem; background: #f7f7fa; }
+#main #formData .imgFile { width: 1.1rem; height: 1.8rem; margin-bottom: 0.1rem; background: white url(../img/headPath.jpg) no-repeat center center; background-size: 2em 2em; }
+#main #formData .imgFile input { display: block; width: 100%; height: 100%; opacity: 0; }
+#main .inMon { width: 100%; display: flex; display: -webkit-flex; flex-direction: row; justify-content: flex-start; align-items: center; padding-left: 0.15rem; height: 0.4rem; background: white; font-size: 14px; /* 使用webkit内核的浏览器 */ /* Firefox版本4-18 */ /* Firefox版本19+ */ }
+#main .inMon .itemName { display: block; width: 0.7rem; text-align: justify; text-align-last: justify; }
+#main .inMon span { padding: 0 0.5em; }
+#main .inMon input { flex: 1; height: 100%; border: none; }
+#main .inMon .inputM::-webkit-input-placeholder { color: #d6d6d6; }
+#main .inMon .inputM:-moz-placeholder { color: #d6d6d6; }
+#main .inMon .inputM::-moz-placeholder { color: #d6d6d6; }
+#main .inMon .inputM:-ms-input-placeholder { color: #d6d6d6; }
+#main .tip { padding: 0.15rem 0.16rem; font-size: 0.12rem; color: #f64040; }
+#main .submit { width: 100%; height: 0.45rem; padding: 0 0.15rem; box-sizing: border-box; -webkit-box-sizing: border-box; }
+#main .submit #submit { display: block; width: 100%; height: 100%; background: #f64040; border-radius: 0.05rem; border: 0; font-size: 17px; color: white; }
+
+#mask { position: fixed; left: 0; top: 0; width: 100%; height: 100%; display: flex; display: -webkit-flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(0, 0, 0, 0.3); }
+#mask .maskwrap { width: 2rem; padding: 0.2rem 0.2rem 0.2rem; background: white; border-radius: 0.1rem; box-sizing: border-box; display: flex; display: -webkit-flex; flex-direction: column; justify-content: center; align-items: center; }
+#mask .maskwrap p { text-align: center; }
+#mask .maskwrap .btn { margin-top: 0.2rem; outline: none; padding: 0.05rem 0.1rem; background: #f64040; border-radius: 0.05rem; color: white; border: 0; }
+
+/*# sourceMappingURL=uploadPic.css.map */

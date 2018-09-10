@@ -1,0 +1,202 @@
+@charset "utf-8";
+// 默认将输出webkit前缀，moz前缀和标准
+@mixin prefixer($property, $value, $prefixes: webkit moz o ms) {
+  #{$property}: $value;
+
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}:#{$value};
+    }
+    @else if $prefix == moz {
+      -moz-#{$property}:#{$value};
+    }
+    @else if $prefix == o {
+      -o-#{$property}:#{$value};
+    }
+    @else if $prefix == ms {
+      -ms-#{$property}:#{$value};
+    }
+  }
+}
+//flex布局
+@mixin flex($direction,$justify:center,$alignItems:center){
+    display:flex;
+    display:-webkit-flex;
+    flex-direction:$direction;
+    justify-content: $justify;
+    align-items: $alignItems;
+}
+//字体样式
+@mixin font($size:14px,$weight:500,$family:"微软雅黑",$height:1.4,$color:#000){
+    font-size:$size;
+    font-weight:$weight;
+    font-family:$family;
+    line-height:$height;
+    color:$color;
+}
+//多行文本溢出
+@mixin overflow($num:1){
+   display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $num;
+    overflow: hidden; 
+}
+//元素水平居中
+@mixin centerRow{
+    margin:0 auto;
+}
+@mixin img100{
+    display:block;
+    width: 100%;
+    height:100%;
+}
+//主题黄色
+$fontColor:#ff6260;
+//头部  原生跳转H5页面只需嵌入 用不到头部
+//#header .title{
+//  flex:1;
+//  font-size:0.16rem;
+//  line-height:0.44rem;
+//  text-align:center;
+//}
+//#header a{
+//  border:0;
+//}
+html,body{
+    display:block;
+    posision:relative;
+    left:0;
+    top:0;
+    overflow:auto;
+}
+
+#main{        
+    box-sizing: border-box; 
+    padding-bottom:0.44rem;
+    .p1{
+        @include font(18px,600,null,1.4,#000);
+        text-align: center;
+    }
+    .p2{
+        @include font(13px,500,null,1.4,#000);
+        text-align: center;
+    }  
+    .rank{
+        @include flex(row,space-around,center);        
+        padding:0.4rem 0.05rem 0.25rem;
+        background:#ff6260;
+        li{
+            width:33.33%;
+          @include flex(column,center,center);
+          .headPath{
+              z-index:10000;
+              position:relative;
+              width:0.6rem;
+              height:0.6rem;                           
+              @include flex(column,center,center);
+              border-radius:100px;
+              background:#e1e1e1;
+              img{
+                z-index:10000;
+                display:block;
+                width:0.55rem; 
+                height:0.55rem;
+                border-radius:100px;
+              }
+              .rankItem{
+                  z-index:1;
+                  position:absolute;
+                  left:0;
+                  right:0;
+                  top:-0.2rem;
+                  margin:0 auto;
+                  width:0.27rem;
+                  height:0.24rem;
+                  background:url(../img/rankSecond.png) no-repeat center center;
+                  background-size:100% auto;
+              }
+          }
+          .pickName{
+              @include font(0.14rem,500,null,null,#fff);      
+              margin-top:0.12rem; 
+              text-align: center; 
+              @include overflow(1);      
+          }
+          .discNum{
+              @include font(0.12rem,500,null,null,rgba(255,255,255,0.7));                
+          }
+          .reward
+          {
+              @include font(0.14rem,500,null,null,#fff);              
+          }
+        }
+       
+        li:nth-child(2){
+            .headPath{
+              width:0.7rem;
+              height:0.7rem;              
+              background:#f9d63c;
+//            transform: translateY(-0.2rem);
+	           margin-top:-0.1rem;
+              img{
+                width:0.65rem; 
+                height:0.65rem;
+              }
+            .rankItem{ 
+                background:url(../img/rankFirst.png) no-repeat center center;
+                background-size:100% auto;
+            }
+        } 
+        } 
+        li:nth-child(3) .headPath{
+              width:0.6rem;
+              height:0.6rem;              
+              background:#d1a36f;
+              img{
+                width:0.55rem; 
+                height:0.55rem;
+              }
+              .rankItem{ 
+                background:url(../img/rankThird.png) no-repeat center center;
+                background-size:100% auto;
+            }
+        } 
+    }
+    .rankRules{
+        padding:0.1rem 0.15rem 0.1rem;
+        background:#fafafa;
+        .p1{
+            @include font(0.14rem,500,null,null,black);  
+            text-align:left;
+            margin-bottom:0.05rem;
+        }
+        .p2{
+            @include font(0.12rem,500,null,null,#8f8f8f);
+            text-align:left;  
+        }
+    }
+    .rank2{
+        li{
+            height:0.5rem;
+           @include flex(row,space-between,center); 
+           padding:0 0.15rem;
+           border-bottom:1px solid #f8f8f8;
+           .l{
+               @include flex(row,flex-start,center); 
+               @include font(0.16rem,600,"黑体",null,#333);
+               .pickName{
+                   font-weight:500;
+               }
+               img{
+                   display:block;
+                   width:0.35rem;
+                   height:0.35rem;
+                   margin:0 0.1rem 0 0.22rem;
+                   border-radius:100px;
+               }
+            }
+           .r{@include font(0.16rem,500,"黑体",null,#e73d3d);}
+        }
+    }
+    
+}

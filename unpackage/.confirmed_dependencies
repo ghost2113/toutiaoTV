@@ -1,0 +1,18 @@
+{
+  "mfSign.html": {
+    "href": "mfSign.html",
+    "resources": [
+      "css/reset.css",
+      "css/common.css",
+      "css/mfSign.css",
+      "js/rem.js",
+      "js/jquery-3.3.1.min.js",
+      "js/zepto.js",
+      "js/fastclick.js",
+      "js/nfSign.js",
+      "json/date.json"
+    ],
+    "refer": [],
+    "priority": 0
+  }
+}

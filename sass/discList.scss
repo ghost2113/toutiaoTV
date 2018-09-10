@@ -1,0 +1,303 @@
+@charset "utf-8";
+// 默认将输出webkit前缀，moz前缀和标准
+@mixin prefixerKey($property, $value, $prefixes: webkit moz o ms) {
+  #{$property}: $value;
+
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}:#{$value};
+    }
+    @else if $prefix == moz {
+      -moz-#{$property}:#{$value};
+    }
+    @else if $prefix == o {
+      -o-#{$property}:#{$value};
+    }
+    @else if $prefix == ms {
+      -ms-#{$property}:#{$value};
+    }
+  }
+}
+@mixin prefixerValue($property, $value, $prefixes: webkit moz o ms) {
+  #{$property}: $value;
+
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      #{$property}:-webkit-#{$value};
+    }
+    @else if $prefix == moz {
+      #{$property}:-moz-#{$value};
+    }
+    @else if $prefix == o {
+      #{$property}:-o-#{$value};
+    }
+    @else if $prefix == ms {
+      #{$property}:-ms-#{$value};
+    }
+  }
+}
+//flex布局
+@mixin flex($direction,$justify:center,$alignItems:center){
+    display:flex;
+    display:-webkit-flex;
+    flex-direction:$direction;
+    justify-content: $justify;
+    align-items: $alignItems;
+}
+//元素水平居中
+@mixin centerRow{
+    margin:0 auto;
+}
+@mixin img100{
+    display:block;
+    width: 100%;
+    height:100%;
+}
+//主题黄色
+$fontColor:#f8e5a1;
+//头部  原生跳转H5页面只需嵌入 用不到头部
+//#header .title{
+//  flex:1;
+//  font-size:0.16rem;
+//  line-height:0.44rem;
+//  text-align:center;
+//}
+//#header a{
+//  border:0;
+//}
+html,body{
+    posision:relative;
+    left:0;
+    top:0;
+}
+#main{  
+    height:100%;
+    @include flex(column,flex-start,flex-start);
+    .banner{
+        position:relative;
+        left:0;
+        top:0;
+        width:100%;
+        height:1.5rem;
+        padding-top: 0.4rem;
+        background:url(../img/disListBg.png) no-repeat center center;
+        background-size:100% auto;
+        img{
+            display:block;
+            width:2.945rem;
+            margin:0 auto;
+        } 
+        .rules{
+            display:block;
+            position:absolute;
+            right:0;
+            top:0.2rem;
+            width:0.7rem; 
+            height:0.23rem;
+            font-size:0.12rem;
+            line-height:0.23rem;
+            text-align:center; 
+            color:#f55058; 
+            border:1px solid #fcd0d1;
+            border-top-left-radius:0.1rem;
+            border-bottom-left-radius:0.1rem;
+            background:#fff;
+            box-sizing:border-box; 
+             -webkit-tap-highlight-color:transparent;//方法一  
+        }
+        .getDisc{
+            display:block;
+            width:1.38rem;
+            height:0.41rem;
+            margin:0 auto;
+            background:url(../img/disGetMoney.png) no-repeat center center;
+            background-size:100% auto;
+            button{
+                width:100%;
+                height:100%;
+                font-size:0.16rem;
+                line-height:0.2rem;
+                text-align:center; 
+                font-family:"微软雅黑";
+                color:#fe4704;
+                font-weight:bold;
+                background:none;  
+                border:none;       
+            }     
+        }
+    }
+    .discTab{
+            display:flex;
+            display:-webkit-flex;
+            flex-direction:row;
+            width:100%;
+            height:0.4rem;
+            font-size:0.13rem;
+            padding:0 0.15rem;
+            border-bottom:1px solid #f2f2f2;
+            box-sizing:border-box;
+            color:#999999;
+            li{
+                position:relative;
+                left:0;
+                top:0;
+                display:flex;
+                display:-webkit-flex;
+                flex:1;
+                align-items:center;
+                justify-content: center;
+                font-size:0.13rem;
+                 -webkit-tap-highlight-color:transparent;//方法一
+                span{
+                    position:absolute;
+                    left:0;
+                    bottom:0;
+                    right:0;
+                    margin:0 auto;
+                    display:block;
+                    width:0.2rem;
+                    height:0.02rem;
+                    border-radius:0.01rem;
+                    background:#e73d3d;
+                }
+            }
+            .active{
+                color:#1a1a1a;
+            }
+        }
+    .discCon{
+        flex:1;
+        width:100%;      
+        overflow:auto; 
+        .discList{
+            width:100%; 
+            /**
+             * 默认图片
+             */
+            .noDisc{
+                display:block;
+                margin:0 auto;
+                padding-top:50px;
+                width:0.96rem;
+                height:1.19rem;
+            }
+            li{
+                display:flex;
+                display:-webkit-flex;
+                flex-direction:row;
+                align-items:center;
+                justify-content: center;
+                padding:0 0.15rem;
+                height:0.5rem;
+                width:100%; 
+                border-bottom:1px solid #f2f2f2;
+                box-sizing:border-box;
+                font-size:0.13rem;
+                color:#1a1a1a;
+                div{
+                    flex:1;
+                    display:flex;
+                    display:-webkit-flex;
+                    flex-direction:row;
+                    align-items:center;
+                }
+                div:nth-child(1){
+                    justify-content: flex-start;
+                    .userPhoto{
+                        display:flex;
+                        display:-webkit-flex;
+                        flex-direction: row;
+                        align-items: center;
+                        width:0.35rem;
+                        height:0.35rem;
+                        border-radius:1000px;
+                        overflow:hidden;
+                        img{
+                            display:block;
+                            width:100%;
+                        }
+                    }
+                    .userInfo{
+                        @include flex(column,center,flex-start);
+                        height:100%;
+                        .userName{
+                            font-size:0.13rem;
+                            padding:0 0.05rem 0.05rem;
+                        }
+                        .creatTime{
+                            font-size:0.12rem;
+                            padding:0 0.05rem;
+                            color:#999999;
+                        }
+                    }
+                   
+                }
+                div:nth-child(2){ justify-content: flex-end;}
+                .redFont{color:#f65656;}
+                //我的徒弟选择项卡样式
+                .myDisc{color:#999999;}  
+                 //有效徒弟选择项卡样式
+                .availDisc{width:0.4rem;height:0.2rem;border:none;}             
+                 //唤醒徒弟选择项卡样式
+                .wakeDisc button{width:0.5rem;height:0.23rem;border:none;background:#f65656;color:#fff;border-radius:100px;}                        
+            }
+        }
+    }    
+}
+//活动规则弹出层
+.mask{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    padding-top:0.6rem;
+    .discRules{
+        display:flex;
+        flex-direction:column;
+        width:3.15rem;
+        border-radius:0.1rem;
+        margin:0 auto;
+        overflow:hidden;
+        .discRulesTit{
+            height:0.45rem;
+            font-size:0.14rem;
+            font-family:"微软雅黑";
+            font-weight:bold;
+            text-align:center;
+            line-height:0.45rem;
+            padding-left:0.45rem;
+            color:#fff;
+            background:-webkit-linear-gradient(left,#f44c53,#f86771);
+            background:-o-linear-gradient(right,#f44c53,#f86771);
+            background:-ms-linear-gradient(right,#f44c53,#f86771);        
+            background:--linear-gradient(right,#f44c53,#f86771);
+            span{
+                display:block;
+                float:right;
+                width:0.45rem;
+                height:0.45rem;
+                background:url(../img/close.png) no-repeat center center;
+                background-size:0.12rem 0.12rem;
+                 -webkit-tap-highlight-color:transparent;//方法一
+            }
+        }
+        .discRulesCont{
+            flex:1;
+            padding:0.15rem 0.15rem;
+            font-size:0.14rem;
+            line-height:0.21rem;
+            background:white;
+            p{
+                font-size:0.14rem;
+                line-height:0.21rem;
+                margin-bottom:0.13rem;
+            }
+            .redFont{
+                color:#f44d54;
+            }
+        }
+    }
+}
+

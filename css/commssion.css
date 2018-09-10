@@ -1,0 +1,10 @@
+html, body { posision: relative; left: 0; top: 0; background: #ff6119; box-sizing: border-box; overflow: auto; }
+
+#main { display: flex; display: -webkit-flex; flex-direction: column; justify-content: space-between; align-items: center; display: flex !important; display: -webkit-flex !important; width: 100%; }
+#main .t { width: 100%; }
+#main .t .img { display: block; display: flex; display: -webkit-flex; flex-direction: row; justify-content: center; align-items: center; }
+#main .t .img img { display: block; width: 3.35rem; }
+#main .t .img:nth-child(1) img { width: 2.35rem; }
+#main .imgBtn { z-index: 9999; width: 100%; display: block; width: 3.34rem; height: 1rem; background: url(../img/yjtcBtn.png) no-repeat center center; background-size: 100% auto; }
+
+/*# sourceMappingURL=commssion.css.map */

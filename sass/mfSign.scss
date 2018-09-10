@@ -1,0 +1,173 @@
+@charset "utf-8";
+// 默认将输出webkit前缀，moz前缀和标准
+@mixin prefixerKey($property, $value, $prefixes: webkit moz o ms) {
+  #{$property}: $value;
+
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}:#{$value};
+    }
+    @else if $prefix == moz {
+      -moz-#{$property}:#{$value};
+    }
+    @else if $prefix == o {
+      -o-#{$property}:#{$value};
+    }
+    @else if $prefix == ms {
+      -ms-#{$property}:#{$value};
+    }
+  }
+}
+@mixin prefixerValue($property, $value, $prefixes: webkit moz o ms) {
+  #{$property}: $value;
+
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      #{$property}:-webkit-#{$value};
+    }
+    @else if $prefix == moz {
+      #{$property}:-moz-#{$value};
+    }
+    @else if $prefix == o {
+      #{$property}:-o-#{$value};
+    }
+    @else if $prefix == ms {
+      #{$property}:-ms-#{$value};
+    }
+  }
+}
+//元素水平居中
+@mixin centerRow{
+    margin:0 auto;
+}
+@mixin img100{
+    display:block;
+    width: 100%;
+    height:100%;
+}
+//主题黄色
+$fontColor:#f8e5a1;
+body{
+    font-size:14px;
+    background:white;
+}
+/*日历签到*/
+#main{
+    overflow:auto;
+    padding-bottom:0.2rem;
+}
+#main .banner{
+    height:1.7rem;
+    background:url(../img/nfSignBg.png) no-repeat center center;
+    background-size:100% auto;
+}
+//签到日历框
+#main .calendarBox{
+    margin:-0.35rem auto 0;
+    width:3.35rem;
+    overflow: hidden;
+    box-shadow: 3px 3px 3px 0 rgba(0,0,0,0.1);
+    box-shadow: 0 0 5px 2px rgba(0,0,0,0.1);
+}
+//签到头部星期
+#main .calendarBox .qiandaoDay{
+    display:flex;
+    display:-webkit-flex;
+    flex-direction:row;
+    -webkit-flex-direction: row;
+    overflow: hidden;
+    box-sizing: content-box;
+    clear:both;
+}
+#main .calendarBox .qiandaoDay span{
+    display: block;
+    flex:1;
+    width:14.286%;
+    height:0.35rem;
+    text-align: center;
+    line-height:0.4rem;
+    background:white;
+    box-sizing: border-box;
+}
+//签到网格日历
+#js-qiandao-list{
+    display:flex;
+    display:-webkit-flex;
+    flex-direction:row;
+    -webkit-flex-direction: row;
+    flex-wrap:wrap;
+     -webkit-tap-highlight-color:transparent;//方法一
+}
+#js-qiandao-list li{
+    position:relative;
+    width:14.286%;
+    height:0.6rem;
+    text-align: center;
+    line-height:0.6rem;
+    list-style: none;
+    border-right:1px solid #f5f5f5;
+    border-top:1px solid #f5f5f5;
+    box-sizing: border-box;
+     -webkit-tap-highlight-color:transparent;//方法一
+}
+#js-qiandao-list li:nth-child(7n+7){
+    border-right:none;
+}
+#js-qiandao-list li.qiandaoActive{
+    background:url(../img/qiandaoActive.png) no-repeat center center;
+    background-size:0.14rem auto;
+    color:transparent !important;
+}
+#js-qiandao-list li.qiandaoActive0{
+    background:url(../img/100G.png) no-repeat center center;
+    background-size:72% auto;
+    color:transparent !important;
+}
+#js-qiandao-list li.qiandaoActive1{
+    @extend .qiandaoActive0;
+    background-image:url(../img/120G.png);
+}
+#js-qiandao-list li.qiandaoActive2{
+    @extend .qiandaoActive0;
+    background-image:url(../img/160G.png);
+}
+#js-qiandao-list li.qiandaoActive3{
+    @extend .qiandaoActive0;
+    background-image:url(../img/redPackets.png);
+}
+.qiandaoBox{
+    width:1.8rem;
+    height:0.38rem;
+    margin:0.20rem auto 0;
+    #qiandaoBtn{
+        width:100%;
+        height:100%;
+        border:none;
+        border-radius:2rem;
+        background:#f84e50;
+        box-shadow:0 2px 5px #f84e50;
+        color:white;
+        line-height:0.38rem;
+    }
+    .btnActived{
+        background:#a8a8a8 !important;
+        box-shadow:none !important;
+    }
+}
+
+.signRules{
+    width:3.35rem;
+    margin:0 auto;
+    h4{
+        font-size:0.14rem;
+        line-height:0.2rem; 
+        margin-top:0.1rem;
+    }
+    p{
+       color:#a3a3a3;
+       font-size:0.13rem;
+       line-height:0.18rem; 
+    }
+}
+
+

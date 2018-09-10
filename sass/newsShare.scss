@@ -1,0 +1,179 @@
+@charset "utf-8";
+// 默认将输出webkit前缀，moz前缀和标准
+@mixin prefixerKey($property, $value, $prefixes: webkit moz o ms) {
+  #{$property}: $value;
+
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}:#{$value};
+    }
+    @else if $prefix == moz {
+      -moz-#{$property}:#{$value};
+    }
+    @else if $prefix == o {
+      -o-#{$property}:#{$value};
+    }
+    @else if $prefix == ms {
+      -ms-#{$property}:#{$value};
+    }
+  }
+}
+@mixin prefixerValue($property, $value, $prefixes: webkit moz o ms) {
+  #{$property}: $value;
+
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      #{$property}:-webkit-#{$value};
+    }
+    @else if $prefix == moz {
+      #{$property}:-moz-#{$value};
+    }
+    @else if $prefix == o {
+      #{$property}:-o-#{$value};
+    }
+    @else if $prefix == ms {
+      #{$property}:-ms-#{$value};
+    }
+  }
+}
+//flex布局
+@mixin flex($direction,$justify:center,$alignItems:center){
+    display:flex;
+    display:-webkit-flex;
+    flex-direction:$direction;
+    justify-content: $justify;
+    align-items: $alignItems;
+}
+//多行文本溢出
+@mixin overflow($num:1){
+   display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $num;
+    overflow: hidden; 
+}
+
+//字体样式
+@mixin font($size:14px,$weight:500,$family:"微软雅黑",$height:1.4,$color:#000){
+    font-size:$size;
+    font-weight:$weight;
+    font-family:$family;
+    line-height:$height;
+    color:$color;
+}
+//元素水平居中
+@mixin centerRow{
+    margin:0 auto;
+}
+@mixin img100{
+    display:block;
+    width: 100%;
+    height:100%;
+}
+//主题黄色
+$fontColor:#f8e5a1;
+html,body{
+    margin:0;
+    padding:0;
+    position:relative;
+    font-size:14px;
+    overflow: scroll;
+}
+#iframepage{z-index:-1000;}
+#main{
+    padding:15px 15px 1rem;
+    box-sizing:border-box;
+  .title{
+     @include flex(row,flex-start,center); 
+     height:0.39rem;
+     @include font(16px,null,null,null,null);
+     border-bottom:1px solid #f2f3f5;
+     span{
+         display:block;
+         width:3px;
+         height:0.14rem;
+         background:#e73d3d;
+         margin-right:5px;
+     }
+  }
+  .items{
+      @include flex(row,space-between);
+      padding:0.12rem 0;
+      box-sizing:border-box;
+      border-bottom:1px solid #f2f3f5;
+      .leftCon{
+          height:0.73rem;
+          @include flex(column,space-between,flex-start);
+          padding-right:0.12rem;
+          p{
+               @include font(16px,null,null,0.24rem,null);
+               @include overflow(2);
+          }
+          .itemsInfor{
+               @include font(12px,null,null,0.2rem,#b3b3b3);
+               span{
+                   float:left;
+                   margin-right:10px;
+               }
+               span:nth-child(1){
+                   display:inline-block;
+                   width: 60px;
+                    @include overflow(1);
+               }
+               span:nth-child(3){
+                   margin:0;
+               }
+          }
+      }
+      .rightImg{
+          @include flex(column);
+          img{
+              display:block;
+              width:1.14rem;
+              height:0.73rem;
+          }
+      }
+  }
+}
+//视频信息
+.videoCon{
+    padding:10px 15px 0;
+    box-sizing:border-box;
+    .videoName{
+        @include font(24px,null,null,32px,null);
+        @include overflow(2);
+    }
+    .videoInfo{
+        @include font(12px,"黑体",null,22px,#999);
+        @include flex(row,flex-start);
+        span:nth-child(1){
+            margin-right:10px;
+//          width: 60px;
+//          @include overflow(1);
+        }
+    }
+}
+.shareLink{
+    z-index:1000;
+    @include flex(row,space-around);
+    position:fixed;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:0.6rem;
+    font-size:0.18rem;
+    background:rgba(255,255,255,1);
+    border-top:1px solid #e5e5e5;
+    box-sizing:border-box;
+    .icon{
+        @include flex(row,space-around);
+        span:nth-child(1){
+            display:block;
+            width:0.4rem;
+            height:0.4rem;
+            background:url(../img/newsShareIcon.png) no-repeat center center;
+            background-size:100% auto;
+        }
+        span:nth-child(2){text-indent:0.12rem;}
+    }
+    a{display:block;width:0.75rem;height:0.3rem;text-align:center;line-height:0.3rem;color:white;background:#e73d3d;border-radius:100px;}
+}

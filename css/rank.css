@@ -1,0 +1,30 @@
+@charset "UTF-8";
+html, body { display: block; posision: relative; left: 0; top: 0; overflow: auto; }
+
+#main { box-sizing: border-box; padding-bottom: 0.44rem; }
+#main .p1 { font-size: 18px; font-weight: 600; line-height: 1.4; color: #000; text-align: center; }
+#main .p2 { font-size: 13px; font-weight: 500; line-height: 1.4; color: #000; text-align: center; }
+#main .rank { display: flex; display: -webkit-flex; flex-direction: row; justify-content: space-around; align-items: center; padding: 0.4rem 0.05rem 0.25rem; background: #ff6260; }
+#main .rank li { width: 33.33%; display: flex; display: -webkit-flex; flex-direction: column; justify-content: center; align-items: center; }
+#main .rank li .headPath { z-index: 10000; position: relative; width: 0.6rem; height: 0.6rem; display: flex; display: -webkit-flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 100px; background: #e1e1e1; }
+#main .rank li .headPath img { z-index: 10000; display: block; width: 0.55rem; height: 0.55rem; border-radius: 100px; }
+#main .rank li .headPath .rankItem { z-index: 1; position: absolute; left: 0; right: 0; top: -0.2rem; margin: 0 auto; width: 0.27rem; height: 0.24rem; background: url(../img/rankSecond.png) no-repeat center center; background-size: 100% auto; }
+#main .rank li .pickName { font-size: 0.14rem; font-weight: 500; color: #fff; margin-top: 0.12rem; text-align: center; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; }
+#main .rank li .discNum { font-size: 0.12rem; font-weight: 500; color: rgba(255, 255, 255, 0.7); }
+#main .rank li .reward { font-size: 0.14rem; font-weight: 500; color: #fff; }
+#main .rank li:nth-child(2) .headPath { width: 0.7rem; height: 0.7rem; background: #f9d63c; margin-top: -0.1rem; }
+#main .rank li:nth-child(2) .headPath img { width: 0.65rem; height: 0.65rem; }
+#main .rank li:nth-child(2) .headPath .rankItem { background: url(../img/rankFirst.png) no-repeat center center; background-size: 100% auto; }
+#main .rank li:nth-child(3) .headPath { width: 0.6rem; height: 0.6rem; background: #d1a36f; }
+#main .rank li:nth-child(3) .headPath img { width: 0.55rem; height: 0.55rem; }
+#main .rank li:nth-child(3) .headPath .rankItem { background: url(../img/rankThird.png) no-repeat center center; background-size: 100% auto; }
+#main .rankRules { padding: 0.1rem 0.15rem 0.1rem; background: #fafafa; }
+#main .rankRules .p1 { font-size: 0.14rem; font-weight: 500; color: black; text-align: left; margin-bottom: 0.05rem; }
+#main .rankRules .p2 { font-size: 0.12rem; font-weight: 500; color: #8f8f8f; text-align: left; }
+#main .rank2 li { height: 0.5rem; display: flex; display: -webkit-flex; flex-direction: row; justify-content: space-between; align-items: center; padding: 0 0.15rem; border-bottom: 1px solid #f8f8f8; }
+#main .rank2 li .l { display: flex; display: -webkit-flex; flex-direction: row; justify-content: flex-start; align-items: center; font-size: 0.16rem; font-weight: 600; font-family: "黑体"; color: #333; }
+#main .rank2 li .l .pickName { font-weight: 500; }
+#main .rank2 li .l img { display: block; width: 0.35rem; height: 0.35rem; margin: 0 0.1rem 0 0.22rem; border-radius: 100px; }
+#main .rank2 li .r { font-size: 0.16rem; font-weight: 500; font-family: "黑体"; color: #e73d3d; }
+
+/*# sourceMappingURL=rank.css.map */

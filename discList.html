@@ -1,0 +1,212 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"><title>徒弟列表</title><link rel="stylesheet" href="./css/reset.css"><link rel="stylesheet" href="./css/common.css"><link rel="stylesheet" href="./static/drop/dropload.css"><link rel="stylesheet" href="./css/discList.css"></head><body><section id="main"><div class="banner"><img src="./img/disListText1.png" alt=""><div class="getDisc"><button onclick="disciple()">收徒赚大钱</button></div><span class="rules">基础收益</span></div><ul class="discTab"><li class="item active">未激活徒弟</li><li class="item">有效徒弟</li><li class="item">唤醒徒弟</li></ul><div class="discCon"><div class="discList" id="discList"><div class="box"></div></div></div></section><div class="mask" style="display:none"><div class="discRules"><div class="discRulesTit">活动规则 <span class="close"></span></div><div class="discRulesCont"><p>每收一位有效徒弟奖励一次性奖励<span class="redFont">3000金币</span> 每当徒弟阅读新闻获得<span class="redFont">10金币</span>，师傅将会获得双倍奖励</p><p><strong>新增徒弟：</strong>朋友通过你分享的链接下载头条TV并登陆</p><p><strong>有效徒弟：</strong>徒弟进贡<span class="redFont">100金币</span>时，成为你的有效徒弟</p><ul><h4 class="redFont">段位规则</h4><li><span>青铜：</span><span class="redFont">0-2</span>位有效徒弟</li><li><span>白银：</span><span class="redFont">3</span>位有效徒弟</li><li><span>黄金：</span><span class="redFont">10</span>位有效徒弟</li><li><span>白金：</span><span class="redFont">66</span>位有效徒弟</li><li><span>钻石：</span><span class="redFont">200</span>位有效徒弟</li><li><span>大师：</span><span class="redFont">400</span>位有效徒弟</li><li><span>王者：</span><span class="redFont">1000</span>位有效徒弟</li></ul></div></div></div><script src="./js/rem.js"></script><script src="./js/loading.js"></script><script src="./js/zepto.js"></script><script src="js/fastclick.js"></script><script src="static/drop/dropload.min.js"></script><script>//			$(function(){
+//				FastClick();
+//			})
+			//获取Url地址中userId参数
+			function getUrlParams(name) { 
+			    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+			    var r = window.location.search.substr(1).match(reg);  
+			    if (r != null) return unescape(r[2]); 
+			    return null; 
+			};
+			/**
+			 * 变量
+			 */
+			var active = getUrlParams("active");
+			var userID = getUrlParams("userId");//用户userId
+			var itemIndex = 0;
+			if(userID=="779"){
+				userID = 1521;
+			}
+		    // tab
+		    $(".item").on('click',function(){
+		    	$(".box").html('');
+		    	$(".discCon").css("background-image","none");
+		        var $this = $(this);
+		        itemIndex = $this.index();
+		        $this.addClass('active').siblings().removeClass('active');
+		        //$(".border").eq(itemIndex).show().siblings().hide();
+		        $('.box').eq(itemIndex).show().siblings('.box').hide();		        
+		        // 如果选中菜单一
+		        if(itemIndex == '0'){
+					lists("my");
+		        }else if(itemIndex == '1'){
+					lists("effective");
+		        }else if(itemIndex == '2'){
+					lists("avaken");
+		        }
+		    });
+		    
+		    function lists(type){
+		    	$(".noDisc").remove();
+		    	$(".dropload-down").remove();		    	
+				// 页数
+			    var page = 0;	
+			    // dropload
+			    $('.discCon').dropload({
+			        scrollArea : $(".discCon"),
+			        loadDownFn : function(me){
+			            page++;
+			            // 拼接HTML
+			            var result = '';
+			            if(itemIndex==0){
+			            	 $.ajax({
+				                type: 'GET',
+				                url: ajaxUrl+"/apprentice/list?userId="+userID+"&type="+type+"&pageNo="+page+"&pageSize=10",
+				                dataType: 'json',
+				                success: function(res){				                	
+				                    var arrLen = res.data.length;
+				                    var data = res.data;
+				                    if(arrLen > 0){
+				                        for(var i=0; i<arrLen; i++){
+				                            result +=   '<li>'
+															+'<div>'
+																+'<span class="userPhoto"><img src=\"'+data[i].headPath+'\" alt="" /></span><span class="userName">'+(data[i].nickName?data[i].nickName:"昵称")+'</span>'
+															+'</div>'
+															+'<div class="myDisc">'
+																+'尚未成为有效徒弟'
+															+'</div>'
+														+'</li>';
+				                        }
+				                    // 如果没有数据
+				                    }else{
+				                    	if(page==1){
+				                    		$(".discList").append(`<img class="noDisc" src="./img/noDisc.png" alt="">`);
+				                    	}
+				                        // 锁定
+				                        me.lock();
+				                        // 无数据
+				                        me.noData();
+				                    }
+				                    // 为了测试，延迟1秒加载
+			                        // 插入数据到页面，放到最后面
+			                        $('.box').append(result);
+			                        $(".dropload-down").remove();
+			                        // 每次数据插入，必须重置
+			                        me.resetload();
+				                },
+				                error: function(xhr, type){
+				                    alert('Ajax error!');
+				                    // 即使加载出错，也得重置
+				                    me.resetload();
+				                }
+				            });
+			            }else if(itemIndex==1){
+			            	 $.ajax({
+				                type: 'GET',
+				                url: ajaxUrl+"/apprentice/list?userId="+userID+"&type="+type+"&pageNo="+page+"&pageSize=10",
+				                dataType: 'json',
+				                success: function(res){				                	
+				                    var arrLen = res.data.length;
+				                    var data = res.data;
+				                    				                    console.log(page)
+			                    	if(page==1){
+			                    		console.log(1111111111);
+			                    		$(".discCon").css("background-image","./dist/img/noDisc.png");
+			                    	}
+				                    if(arrLen > 0){
+				                        for(var i=0; i<arrLen; i++){
+				                            result +=   '<li>'
+										+'<div class="availDisc">'
+											+'<span class="userPhoto"><img src=\"'+data[i].headPath+'\" alt="" /></span><div class="userInfo"><span class="userName">'+(data[i].nickName?data[i].nickName:"昵称")+'</span><span class="creatTime">'+(typeof data[i].apprenticeDate == 'string'?data[i].apprenticeDate.substr(5,5):'5分钟前')+'收徒</span></div>'
+										+'</div>'
+										+'<div>'
+											+'累计进贡<span class="redFont">'+item.sumGold+'</span>'
+										+'</div>'
+									+'</li>';
+				                        }
+				                    // 如果没有数据
+				                    }else{
+				                    	if(page==1){
+				                    		$(".discList").append(`<img class="noDisc" src="./img/noDisc.png" alt="">`);
+				                    	}
+				                        // 锁定
+				                        me.lock();
+				                        // 无数据
+				                        me.noData();
+				                    }
+				                    // 为了测试，延迟1秒加载
+			                        // 插入数据到页面，放到最后面
+			                        $('.box').append(result);
+			                         $(".dropload-down").remove();
+			                        // 每次数据插入，必须重置
+			                        me.resetload();
+				                },
+				                error: function(xhr, type){
+				                    alert('Ajax error!');
+				                    // 即使加载出错，也得重置
+				                    me.resetload();
+				                }
+				            });
+			            }else if(itemIndex==2){
+			            	 $.ajax({
+				                type: 'GET',
+				                url: ajaxUrl+"/apprentice/list?userId="+userID+"&type="+type+"&pageNo="+page+"&pageSize=10",
+				                dataType: 'json',
+				                success: function(res){				                	
+				                    var arrLen = res.data.length;
+				                    var data = res.data;
+				                    if(arrLen > 0){
+				                        for(var i=0; i<arrLen; i++){
+				                            result +=   '<li>'
+															+'<div>'
+																+'<span class="userPhoto"><img src=\"'+data[i].headPath+'\" alt="" /></span><span class="userName">'+(data[i].nickName?data[i].nickName:"昵称")+'</span>'
+															+'</div>'
+															+'<div class="wakeDisc">'
+																+'<button onclick="wake()">唤醒</button>'
+															+'</div>'
+														+'</li>';
+				                        }
+				                    // 如果没有数据
+				                    }else{
+				                    	if(page==1){
+				                    		$(".discList").append(`<img class="noDisc" src="./img/noDisc.png" alt="">`);
+				                    	}
+				                        // 锁定
+				                        me.lock();
+				                        // 无数据
+				                        me.noData();
+				                    }
+			                        // 插入数据到页面，放到最后面
+			                        $('.box').append(result);
+			                        $(".dropload-down").remove();
+			                        // 每次数据插入，必须重置
+			                        me.resetload();
+				                },
+				                error: function(xhr, type){
+				                    alert('Ajax error!');
+				                    // 即使加载出错，也得重置
+				                    me.resetload();
+				                }
+				            });
+			            }
+			           
+			        }			       
+			    });
+		    }
+		    $(".item").eq(0).trigger("click");
+			//唤醒徒弟
+			function wake(){    
+		       var u = navigator.userAgent;
+		       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		       if(isAndroid){
+		           /* alert('是否是Android：'+isAndroid);*/
+		           window.jsi.wake("ok")
+		       }else if(isiOS){
+		            /*alert('是否是iOS：'+isiOS);*/
+		           window.webkit.messageHandlers.wake.postMessage("ok");
+		       }
+			}
+			//收徒赚大钱
+			function disciple(){    
+		       var u = navigator.userAgent;
+		       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		       if(isAndroid){
+		            /*alert('是否是Android：'+isAndroid);*/
+		           window.jsi.disciple("ok")
+		       }else if(isiOS){
+		           /* alert('是否是iOS：'+isiOS);*/
+		           window.webkit.messageHandlers.disciple.postMessage("ok");
+		       }		       	  
+			}</script></body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>截图示例</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../static/css/swiper-4.2.6.min.css" />
+    <style>
+    	html,body{
+    		height:100%;
+    		background:#f7f7fa;
+   			display: flex; display: -webkit-flex; flex-direction: row; justify-content: center;align-items: center;
+    	}
+    	#main{
+    		position:relative;
+    		/*padding:0.15rem 0.35rem;  */ 		   		
+    	}
+    	#main .swiper-container{width:2.6rem;height:4.3rem;}
+    	#main .swiper-container .swiper-wrapper .swiper-slide img{
+			display:block;
+			width:2.6rem;
+			height:4.3rem;
+			margin:0 auto;
+		}
+		.swiper-pagination{
+			position:absolute;
+			left:0;
+			right:0;
+			bottom:-0.5rem;
+			margin:0 auto;
+		}
+		.swiper-pagination-bullet{
+			margin:0 5px;
+		}
+		.swiper-pagination-bullet-active{
+			background:#fc5151;
+		}
+    </style>
+</head>
+<body>
+	<section id="main" style="opacity:0;filter:alpha(opacity=0);">
+		<div class="swiper-container">
+		    <div class="swiper-wrapper">
+		    	<div class="swiper-slide"><div style="width:2.6rem;height:3rem;margin:0 auto;text-align:center;line-height:3rem;">无示例图片</div></div>
+		    </div>
+		</div>
+		<div class="swiper-pagination" style="display:none;"></div>
+	</section>
+</body>
+	<script type="text/javascript" src="../js/zepto.js"></script>
+	<script type="text/javascript" src="../js/rem.js"></script>
+	<script type="text/javascript" src="../js/loading.js"></script>
+	<script type="text/javascript" src="../js/fastclick.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript" src="../static/js/swiper-4.2.6.min.js"></script>
+	<script>
+	/**
+	 * 初始化swiper
+	 */	
+	var mySwiper = new Swiper ('.swiper-container', {
+	    direction: 'horizontal',
+	    observer: true,//修改swiper自己或子元素时，自动初始化swiper
+		observeParents: true,//修改swiper的父元素时，自动初始化swiper
+	   /* loop: true,	  */  
+	    // 如果需要分页器
+	    pagination: {
+	      el: '.swiper-pagination',
+	    }
+	})   
+	/**
+	 * 接口地址
+	 */
+	var urlOnline = "https://zhishun520.com/zaotoutiao-api-home-1.0.0";
+	var urlTest = "http://47.104.250.210:8084/zaotoutiao-api-home-1.0.0";
+	var ajaxUrl = urlOnline;		     
+	//获取Url地址中userId参数
+		function getUrlParams(name) { 
+		    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+		    var r = window.location.search.substr(1).match(reg);  
+		    if (r != null) return unescape(r[2]); 
+		    return null; 
+		};
+		var userID = getUrlParams("userId");
+		var id = getUrlParams("id");
+		/**
+		 * 任务接口
+		 */
+		axios({	
+			  url: '/investment/info/by/id',
+			  method: 'post', // 默认是 get
+			  baseURL: ajaxUrl,	
+			  params:{
+			  	id:id
+			  }
+			})
+			.then(function(res){
+				var data = res.data.data;
+				console.log(data.examplesUrl);
+				var examplesUrl = data.examplesUrl;//截图示例		
+				var _html = "";
+				if(examplesUrl==null){
+					console.log("ok");					
+				}else{
+					examplesUrl.split(",").forEach(function(item,index){
+						_html+=`<div class="swiper-slide"><img src=${item} alt="" /></div>`;						
+					});	
+					$(".swiper-wrapper").html("");
+					$(".swiper-wrapper").append(_html);
+					$(".swiper-pagination").show();						
+				};					
+			})									
+			.catch(function(error) {
+				console.log(error);								
+			});
+	</script>
+</html>

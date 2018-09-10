@@ -1,0 +1,384 @@
+body,
+html {
+	height: 100%;
+}
+
+*,
+a:active {
+	outline: 0;
+}
+
+dd,
+dl,
+li,
+ol,
+td,
+th,
+ul {
+	padding: 0;
+}
+
+.placeholder,
+button,
+html,
+input,
+textarea {
+	font-family: "Helvetica Neue", Helvetica, Hiragino Sans GB, "Microsoft Yahei", STHeiTi, Arial, sans-serif;
+}
+
+.float,
+body,
+input {
+	width: 100%;
+}
+
+.float,
+blockquote,
+body,
+dd,
+dl,
+figure,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+ol,
+p,
+ul {
+	margin: 0;
+}
+
+.btn,
+.float,
+body {
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+.btn,
+.float,
+.light,
+body {
+	background-repeat: no-repeat;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-font-smoothing: antialiased;
+}
+
+body {
+	font-size: 12px;
+	line-height: 1;
+	overflow-x: hidden;
+	max-width: 640px;
+	color: #333;
+	-webkit-overflow-scrolling: touch;
+	-webkit-touch-callout: none;
+	background-image: url(../img/qbg.jpg);
+	background-color: #cd0102;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+	display: block;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+b,
+strong {
+	font-weight: 700;
+}
+
+dfn {
+	font-style: normal;
+}
+
+img {
+	max-width: 100%;
+	vertical-align: middle;
+	border: 0;
+}
+
+button,
+input,
+textarea {
+	font-size: .1024rem;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+textarea {
+	resize: none;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+li,
+ol,
+ul {
+	list-style: none;
+}
+
+input {
+	height: .29013333rem;
+	padding: 0 .08533333rem;
+	text-align: left;
+	border: 1px solid #ddd;
+	border-radius: 0.03413333rem;
+}
+
+.placeholder {
+	text-align: left;
+	color: #999;
+}
+
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+	font-family: 'Helvetica Neue', Helvetica, Hiragino Sans GB, 'Microsoft Yahei', STHeiTi, Arial, sans-serif;
+	text-align: left;
+	color: #999;
+}
+
+input:-moz-placeholder :-moz-placeholder,
+textarea:-moz-placeholder :-moz-placeholder {
+	color: #ddd;
+}
+
+input:-moz-placeholder ::-webkit-input-placeholder,
+textarea:-moz-placeholder ::-webkit-input-placeholder {
+	color: #ddd;
+}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+	opacity: 1;
+	font-family: 'Helvetica Neue', Helvetica, Hiragino Sans GB, 'Microsoft Yahei', STHeiTi, Arial, sans-serif;
+	text-align: left;
+	color: #999;
+}
+
+input::-moz-placeholder :-moz-placeholder,
+textarea::-moz-placeholder :-moz-placeholder {
+	color: #ddd;
+}
+
+input::-moz-placeholder ::-webkit-input-placeholder,
+textarea::-moz-placeholder ::-webkit-input-placeholder {
+	color: #ddd;
+}
+
+input:-ms-input-placeholder,
+textarea::-ms-input-placeholder {
+	font-family: 'Helvetica Neue', Helvetica, Hiragino Sans GB, 'Microsoft Yahei', STHeiTi, Arial, sans-serif;
+	text-align: left;
+	color: #999;
+}
+
+input:-ms-input-placeholder :-moz-placeholder,
+textarea::-ms-input-placeholder :-moz-placeholder {
+	color: #ddd;
+}
+
+input:-ms-input-placeholder ::-webkit-input-placeholder,
+textarea::-ms-input-placeholder ::-webkit-input-placeholder {
+	color: #ddd;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+	font-family: 'Helvetica Neue', Helvetica, Hiragino Sans GB, 'Microsoft Yahei', STHeiTi, Arial, sans-serif;
+	text-align: left;
+	color: #999;
+}
+
+input::-webkit-input-placeholder :-moz-placeholder,
+textarea::-webkit-input-placeholder :-moz-placeholder {
+	color: #ddd;
+}
+
+input::-webkit-input-placeholder ::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder ::-webkit-input-placeholder {
+	color: #ddd;
+}
+
+.hidden {
+	display: none !important;
+	visibility: hidden !important;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+.float {
+	height: .47rem;
+	position: fixed;
+	background-image: url(../img/bot.png);
+	bottom: 0;
+}
+
+.btn {
+	position: absolute;
+	top: 3.2rem;
+	left: .26rem;
+	height: .49493333rem;
+	width: 2.65386667rem;
+	background-image: url(//yun.tuisnake.com/h5-mami/landpage/download/qutoutiao/btn.png);
+}
+
+.btn2,
+.btn3 {
+	position: absolute;
+	height: 0.45rem;
+}
+
+.btn2 {
+	top: 2.25rem;
+	left: 1.65rem;
+	width: 1.4rem;
+}
+
+.btn3 {
+	display: block;
+	right: .05rem;
+	width: 1.2rem;
+}
+
+.light,
+.packContainer {
+	width: 100%;
+	position: absolute;
+}
+
+.packContainer {
+	top: 1.15rem;
+	background-image: url(//yun.tuisnake.com/h5-mami/landpage/download/qutoutiao/pack0.png);
+	height: 1.97973333rem;
+	background-size: cover;
+	background-position: 0 0;
+	-webkit-animation: turnAround 2s steps(7) infinite;
+	animation: turnAround 2s steps(7) infinite;
+}
+
+.light {
+	top: 1.4rem;
+	background-image: url(//yun.tuisnake.com/h5-mami/landpage/download/qutoutiao/light.png);
+	height: 1.27rem;
+	background-size: 100%;
+}
+
+@-webkit-keyframes turnAround {
+	0% {
+		background-position: 0 0;
+	}
+	100%,
+	87.5% {
+		background-position: 0 100%;
+	}
+}
+
+@keyframes turnAround {
+	0% {
+		background-position: 0 0;
+	}
+	100%,
+	87.5% {
+		background-position: 0 100%;
+	}
+}
+
+.lunbo {
+	width: 2.73066667rem;
+	height: .98133333rem;
+	position: absolute;
+	top: 3.95rem;
+	left: .32rem;
+	overflow: hidden;
+}
+
+.lunbo div {
+	width: 2.28693333rem;
+	height: .2432rem;
+	background-size: cover;
+	margin-bottom: .08rem;
+	margin-left: 0.1rem;
+}
+
+.lunbo .info1 {
+	background-image: url(../img/q1.png);
+}
+
+.lunbo .info2 {
+	background-image: url(../img/q2.png);
+}
+
+.lunbo .info3 {
+	background-image: url(//yun.tuisnake.com/h5-mami/landpage/download/qutoutiao/q3.png);
+}
+
+.lunbo .info4 {
+	background-image: url(../img/q4.png);
+}
+
+.moveUp1 {
+	-webkit-animation: moveUp1 1.5s linear forwards;
+	animation: moveUp1 1.5s linear forwards;
+}
+
+@-webkit-keyframes moveUp1 {
+	from {
+		-webkit-transform: translateY(0);
+		transform: translateY(0);
+	}
+	to {
+		-webkit-transform: translateY(-0.33066667rem);
+		transform: translateY(-0.33066667rem);
+	}
+}
+
+@keyframes moveUp1 {
+	from {
+		-webkit-transform: translateY(0);
+		transform: translateY(0);
+	}
+	to {
+		-webkit-transform: translateY(-0.33066667rem);
+		transform: translateY(-0.33066667rem);
+	}
+}
+
+
+/*# sourceMappingURL=copyHtml.css.map */

@@ -1,0 +1,241 @@
+@charset "utf-8";
+// 默认将输出webkit前缀，moz前缀和标准
+@mixin prefixer($property, $value, $prefixes: webkit moz o ms) {
+  #{$property}: $value;
+
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}:#{$value};
+    }
+    @else if $prefix == moz {
+      -moz-#{$property}:#{$value};
+    }
+    @else if $prefix == o {
+      -o-#{$property}:#{$value};
+    }
+    @else if $prefix == ms {
+      -ms-#{$property}:#{$value};
+    }
+  }
+}
+//元素水平居中
+@mixin centerRow{
+    margin:0 auto;
+}
+@mixin img100{
+    display:block;
+    width: 100%;
+    height:100%;
+}
+//主题黄色
+$fontColor:#f8e5a1;
+//头部  原生跳转H5页面只需嵌入 用不到头部
+//#header .title{
+//  flex:1;
+//  font-size:0.16rem;
+//  line-height:0.44rem;
+//  text-align:center;
+//}
+//#header a{
+//  border:0;
+//}
+html,body{
+    posision:relative;
+    left:0;
+    top:0;
+    background:#f55058;
+    overflow:hidden;
+}
+#main{
+    box-sizing: border-box; 
+    padding-top:0.32rem;  
+    padding-bottom:0.44rem;
+    .banner{
+        position:relative;
+        left:0;
+        top:0;
+        height:1.2rem;
+        img{
+            display:block;
+            width:2.04rem;
+            margin:0 auto;
+        } 
+        .rules{
+            display:block;
+            position:absolute;
+            right:0;
+            top:0.2rem;
+            width:0.7rem; 
+            height:0.23rem;
+            font-size:0.12rem;
+            line-height:0.23rem;
+            text-align:center; 
+            color:#f55058; 
+            border:1px solid #fcd0d1;
+            border-top-left-radius:0.1rem;
+            border-bottom-left-radius:0.1rem;
+            background:#fff;
+            box-sizing:border-box;
+            -webkit-tap-highlight-color:transparent;//方法一  
+        }
+        .list{
+            @extend .rules;
+            top:0.55rem;
+        }
+    }
+    .conBg{
+        display:block;
+        width:2.92rem;
+        margin:0 auto;
+    }
+    .textTime{
+        margin-bottom:0.1rem;
+        font-size:0.14rem;
+        line-height:0.35rem;
+        text-align:center;
+        color:#fff;
+    }
+    .discCon{
+        .discTab{
+            display:flex;
+            display:-webkit-flex;
+            flex-direction:row;
+            height:0.75rem;
+            padding:0 0.15rem;
+            background:url(../img/nfDisBg1.png) no-repeat center center;
+            background-size:100% auto;
+            background-origin:content-box;
+            li{
+                display:flex;
+                display:-webkit-flex;
+                flex:1;
+                flex-direction:column;
+                align-items:center;
+                justify-content: center;
+                span{
+                    display:block;
+                }
+            }
+            li span:nth-child(1){
+                color:#525252;
+            }
+            li span:nth-child(2){
+                margin-top:0.05rem;
+                color:#f44c53;
+            }
+            div{               
+                span{
+                    display:block;
+                    width:1px;
+                    height:0.225rem;
+                    margin-top:0.26rem;
+                    background:#e0e0e0;
+                }
+            }
+        }
+        .disRank{
+            height:1.25rem;
+            padding:0 0.15rem;
+            margin-top:0.1rem;
+            background:url(../img/nfDisBg2.png) no-repeat center center;
+            background-size:100% auto;
+            background-origin:content-box;
+            li{
+                text-align:center;
+                margin:0 auto;
+            }
+            li:nth-child(1){
+                padding-top:0.19rem;
+               img{
+                   width:1.03rem;
+               }
+            }
+            li:nth-child(2){
+                margin-top:0.16rem;
+                font-size:0.13rem;
+                color:#525252;
+               span{
+                   color:#f44c53;
+                   font-size:0.13rem;
+               }
+            }
+            li:nth-child(3){
+                margin-top:0.16rem;
+                color:#a8a8a8;
+                font-size:0.13rem;
+            }
+        }
+    }    
+}
+#footer{
+    position:fixed;
+    left:0;
+    bottom:0.1rem;
+    height:auto !important;
+    min-height:0.44rem;
+    .discBtn{
+        width:2.82rem;
+        height:0.74rem;
+        margin:0 auto;
+        img{
+            @include img100;
+        }   
+    }
+}
+//活动规则弹出层
+.mask{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    padding-top:0.6rem;
+    .discRules{
+        display:flex;
+        flex-direction:column;
+        width:3.15rem;
+        border-radius:0.1rem;
+        margin:0 auto;
+        overflow:hidden;
+        .discRulesTit{
+            height:0.45rem;
+            font-size:0.14rem;
+            font-family:"微软雅黑";
+            font-weight:bold;
+            text-align:center;
+            line-height:0.45rem;
+            padding-left:0.45rem;
+            color:#fff;
+            background:-webkit-linear-gradient(left,#f44c53,#f86771);
+            background:-o-linear-gradient(right,#f44c53,#f86771);
+            background:-ms-linear-gradient(right,#f44c53,#f86771);        
+            background:--linear-gradient(right,#f44c53,#f86771);
+            span{
+                display:block;
+                float:right;
+                width:0.45rem;
+                height:0.45rem;
+                background:url(../img/close.png) no-repeat center center;
+                background-size:0.12rem 0.12rem;
+                -webkit-tap-highlight-color:transparent;//方法一
+            }
+        }
+        .discRulesCont{
+            flex:1;
+            padding:0.15rem 0.15rem;
+            font-size:0.14rem;
+            line-height:0.21rem;
+            background:white;
+            p{
+                font-size:0.14rem;
+                line-height:0.21rem;
+                margin-bottom:0.13rem;
+            }
+            .redFont{
+                color:#f44d54;
+            }
+        }
+    }
+}
+

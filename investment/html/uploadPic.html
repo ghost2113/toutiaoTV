@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>投资信息</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="./css/uploadPic.css"/>
+</head>
+
+<body>
+	<section id="main" style="opacity:0;filter:alpha(opacity=0);">	
+	<!--<div class="picNum">
+		<a href="#">你需要上传张截图</a>
+		<a href="#" onclick="goPicEg();">截图示例></a>
+	</div>-->
+	<form id="formData" action="https://zhishun520.com/zaotoutiao-api-home-1.0.0/investment/info/commit" method="post" enctype="multipart/form-data" target="rfFrame">
+    	<!--<div class="inMon">
+			<span class="itemName">手机号</span>：<input name="uploadTel" class="telephone" type="text" placeholder="请输入您的投资手机号" value=""/>
+		</div>
+    	<div class="inMon">
+			<span  class="itemName">投资金额</span>：<input name="investment" class="investment" type="text" placeholder="请输入您的投资金额" value=""/>
+		</div>-->
+		<div class="inMon2 ">
+			<textarea class="inputM" name="content" rows="" cols="" placeholder="请按下方规则填写"></textarea>
+		</div>
+		<p class="tip markedWords"></p>
+		<input class="userId" name="userId" type="hidden" value="" />
+		<input class="id" name="id" type="hidden" value="" />
+		<div class="submit">
+			<input id="submit"  type="submit" value="上传投资信息" />
+		</div>		
+    	<!--<div id="submit">上传截图</div>-->
+	</form>
+	<iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;">
+	</iframe>
+	<!--弹出层-->
+	<div id="mask" style="display:none;">
+		<div class="maskwrap">
+			<p class="msg">提交成功</p>
+			<button class="btn btn-info" id="close">确认</button>
+		</div>
+	</div>
+	</section>	
+	
+	
+</body>
+	<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.form.js"></script>
+	<script type="text/javascript" src="./js/rem.js"></script>
+	<script type="text/javascript" src="../js/loading.js"></script>
+	<script type="text/javascript" src="../js/fastclick.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+	var userID = getUrlParams("userId"),//用户userID
+	    id = getUrlParams("id"),//任务id
+	    markedWords = getUrlParams("markedWords");
+	//console.log({"userID":userID,"id":id});
+	$(".userId").val(userID);
+	$(".id").val(id);
+	axios({	
+	  url: '/investment/info/by/id',
+	  method: 'post', // 默认是 get
+	  baseURL: ajaxUrl,	
+	  params:{
+	  	id:id
+	  }
+	})
+	.then(function(res){
+		//console.log(res)
+		$(".markedWords").html(res.data.data.markedWords);
+	})
+	.catch(function(error){
+		console.log(error)
+	})
+	
+	function showImg(self){
+		var imgUrl = URL.createObjectURL(self.files[0]);
+		var id = self.getAttribute("class");
+		console.log(id);
+		$("#"+id).css( {"background":"white url("+imgUrl+") no-repeat center center",
+            "background-size": "100% 100%"});
+	}
+	$("#submit").click(function(){
+		var content = $('textarea.inputM').val();
+		if(content.length < 1){
+			TJY.msg("上传信息不能为空！");
+		}
+		else{				
+			var opt = {
+			    type:'post',            
+			    datatype:'json',
+			    url:ajaxUrl+'/investment/info/commit',            
+			    success: function(data) {
+			    	/*console.log(data);*/
+			    	if(data.result.success=="true"){
+			    		TJY.msg("提交成功");
+			    	}else{
+			    		TJY.msg("提交失败");
+			    	}
+			    },
+			    error:function(){
+			    	var msg = setTimeout(function(){
+						TJY.msg("提交失败");
+					},1000);
+			    }
+			};
+			$("#formData").ajaxSubmit(opt);//相当于from.submit()
+		}
+		return false;	  	
+});
+	//获取Url地址中userId参数
+	function getUrlParams(name) { 
+	    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+	    var r = window.location.search.substr(1).match(reg);  
+	    if (r != null) return unescape(r[2]); 
+	    return null; 
+	};
+	//关闭弹出框
+	$("#close").on("click",function(){
+		$("#mask").hide();
+	});
+	//弹出框
+	var TJY = TJY || {};
+	TJY.msg = function(msg){
+		$("#mask").show();
+		$(".msg").html(msg);
+	}
+	TJY.isPhone = function(v){
+	 var tel = new RegExp("^[1][0-9]{10}$");
+	 return(tel.test(v));
+	}
+	
+	TJY.isNumber = function(v){
+	 var num = new RegExp("^\D$");
+	 return(num.test(v));
+	}
+	</script>
+</html>

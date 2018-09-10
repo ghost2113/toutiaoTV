@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>高额返利说明</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="./css/instrRebate.css"/>
+</head>
+<body>
+	<section id="main" style="opacity:0;filter:alpha(opacity=0);">	
+		<img class="instrRebateTit" src="./img/instrRebateTit.png" alt="" />
+		<img style="margin-bottom:0.15rem;" src="./img/instrRebate1.png" alt="" />
+		<img  src="./img/instrRebate2.png" alt="" />
+	</section>
+	<footer id="footer">
+		<img class="goRebate" src="./img/instrRebateBtn.jpg" onclick="goRebate();">
+	</footer>
+</body>
+	<script type="text/javascript" src="../js/zepto.js"></script>
+	<script type="text/javascript" src="./js/rem.js"></script>
+	<script type="text/javascript" src="../js/loading.js"></script>
+	<script type="text/javascript" src="../js/fastclick.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+		//获取Url地址中userId参数
+		function getUrlParams(name) { 
+		    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+		    var r = window.location.search.substr(1).match(reg);  
+		    if (r != null) return unescape(r[2]); 
+		    return null; 
+		};
+		var userID = getUrlParams("userId");
+		/**
+		 * 立即赚返利
+		* */
+		function goRebate(){
+			window.location.href = "./highRebate.html?userID="+userID;
+		}
+	</script>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"><title>新闻详情页</title><style>@charset "UTF-8";*{margin:0;padding:0;outline:0}body,html{width:100%;font-family:Hiragino Sans GB,Arial,Helvetica,"黑体",sans-serif;-webkit-touch-callout:inherit;-webkit-user-select:auto;background-color:#fff;font-size:14px;position:relative;width:100%;font-size:14px;overflow:auto;-webkit-overflow-scrolling:touch}#main{padding:.1rem .15rem .2rem;box-sizing:border-box;overflow:hidden;-webkit-overflow-scrolling:touch}#main .title{font-size:22px;color:#000;line-height:1.4;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;text-align:justify;margin-bottom:10px;box-sizing:content-box-box;-webkit-box-sizing:content-box-box}#main .newsInfo{border-top:1px solid #e7e7eb;font-size:14px;line-height:38px;color:#999}#main .newsInfo span:nth-child(2){padding-left:10px}#main .newsCon section{display:block;width:auto!important;max-width:100%!important}#main .newsCon p{display:block;width:auto!important;max-width:100%!important}#main .newsCon img{display:block;width:auto!important;max-width:100%!important;margin:10px auto}</style></head><body><section id="main"><article><h2 class="title">新闻标题</h2><div class="newsInfo"><span class="source">头条TV</span> <span class="time">十二小时前</span></div><section class="newsCon" id="article"></section></article></section></body><script src="./js/rem.js"></script><script src="./js/loading.js"></script><script src="./js/zepto.js"></script><script src="js/fastclick.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script><script>!function(n,e){var t=n.documentElement,i="orientationchange"in window?"orientationchange":"resize",d=function(){var n=t.clientWidth;n&&(t.style.fontSize=n/375*100+"px")};n.addEventListener&&(e.addEventListener(i,d,!1),n.addEventListener("DOMContentLoaded",d,!1))}(document,window)</script><script>var infoId = getUrlParams("infoId");
+		var urlOnline = "https://zhishun520.com/zaotoutiao-api-home-1.0.0/";
+		var urlTest = "http://47.104.250.210:8083/zaotoutiao-api-home-1.0.0/";
+		var timeArray = ["一小时前","两小时前","三小时前","四小时前","五小时前","六小时前","七小时前","八小时前","九小时前","十个小时前","十个小时前","十一个小时前","十二个小时前","十三个小时前","十四个小时前","十五个小时前","十六个小时前","十七个小时前","十八个小时前","十九个小时前","二十个小时前","二十一个小时前",
+			"一天前","两天前","三天前","四天前","五天前","六天前","七天前","八天前","九天前","十天前","十一天前","十二天前","十三天前"];
+		var index =parseInt(Math.random()*33+1);
+		$(".time").html(`${timeArray[index]}`);
+		axios({
+		  url: 'getHotInfos',
+		  method: 'get', // 默认是 get
+		  baseURL: urlOnline,
+		  params:{
+		  	infoId:infoId
+		  }
+		})
+		.then(function(res){
+/*			console.log(res.data.data);*/
+			var _html = res.data.data.contents,
+				source = res.data.data.source,
+				title = res.data.data.title;
+			$("#article").html(`${_html}`);
+			$(".source").html(`${source}`);	
+			$(".title").html(`${title}`);
+			document.title = title;
+			$("#activity-name").remove();
+			/*console.log($("#main").height());*/
+		})
+		.catch(function(error){
+			console.log(error);
+		});
+		function getUrlParams(name) { 
+		    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+		    var r = window.location.search.substr(1).match(reg);  
+		    if (r != null) return unescape(r[2]); 
+		    return null; 
+		};</script></html>

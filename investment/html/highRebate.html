@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>高额返利</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../static/drop/dropload.css"/> 
+    <link rel="stylesheet" href="./css/highRebate.css"/>
+    <style>
+    	.dropload-down{
+    		background:rgb(247, 247, 250);
+    	}
+    </style>
+</head>
+<body>
+	<section id="main" style="opacity:0;filter:alpha(opacity=0);">	
+		<div class="rebate_tab">
+			<span class="rebate_tab_active">返利列表</span>
+			<span>返利记录</span>
+		</div>
+		<div class="content">
+			<div class="list tabItem">
+				<div  class="banner">
+					<img src="./img/banner.jpg" alt="" />
+				</div>	
+				<div class="taskList">
+					<div class="taskItem">
+						<!--<div class="taskInfo">
+							<div class="l">
+								<span><img src="./images/taskIcon.png" alt="" /></span>
+								P2P金融理财2000起投
+							</div>
+							<div class="r">
+								<span><img src="./img/investLink.png" alt="" /></span>
+								银行存管
+							</div>
+						</div>
+						<div class="taskCon">
+							<div class="taskWrap">
+								<div class="l">
+									<span>15<span style="font-size:0.16rem;">%</span></span>
+									<span>预计年化</span>
+								</div>
+								<div class="r">
+									<span >500<span style="font-size:0.16rem;">元</span></span>
+									<span>首次投资返利</span>
+								</div>
+							</div>
+							<button class="btn" onclick="getRebate()">投资拿返利</button>
+						</div>-->
+					</div>
+				</div>		
+			</div>
+			<ul class="instruc tabItem">				
+			</ul>
+		</div>
+		<div class="noDataTip" style="display:none;">
+			无返利记录
+		</div>
+	</section>
+
+</body>
+	
+	<script>
+		//获取Url地址中userId参数
+/*		function getUrlParams(name) { 
+		    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+		    var r = window.location.search.substr(1).match(reg);  
+		    if (r != null) return unescape(r[2]); 
+		    return null; 
+		};	*/
+		/**
+		 * @param   userId 用户Id
+		 */
+		/*var userID = getUrlParams("userId");
+		window.location.href = "../timeTask.html?userId="+userID;*/
+	</script>
+	<script type="text/javascript" src="../js/zepto.js"></script>
+	<script type="text/javascript" src="./js/rem.js"></script>
+	<script type="text/javascript" src="../js/loading.js"></script>
+	<script type="text/javascript" src="../js/fastclick.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript" src="../static/drop/dropload.js"></script>	
+	<script type="text/javascript" src="./js/highRebate.js"></script>	
+</html>

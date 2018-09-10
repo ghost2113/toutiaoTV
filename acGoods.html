@@ -1,0 +1,75 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"><title>0元好礼</title><link rel="stylesheet" href="./css/reset.css"><link rel="stylesheet" href="./css/common.css"><link rel="stylesheet" href="./css/ac.css"></head><body><section id="main" style="opacity:0"><div style="height:1.3rem"></div><ul class="container"></ul></section><footer id="footer">每个账号仅限领取一次 该活动最终解释权归头条TV所有</footer><script src="./js/rem.js"></script><script src="./js/zepto.js"></script><script src="./js/loading.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script><script>//获取Url地址中userId参数
+			function getUrlParams(name) { 
+			    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+			    var r = window.location.search.substr(1).match(reg);  
+			    if (r != null) return unescape(r[2]); 
+			    return null; 
+			};
+			/**
+			 * 活动
+			 */
+			axios({	
+			  url: '/list/hsProduct',
+			  method: 'get', // 默认是 get
+			  baseURL:ajaxUrl,	
+			})
+			.then(function(res){
+				const data = res.data.data;
+				console.log(data);
+				let html = '';
+				data.map(function(item,index){
+					html+=`
+						<li class="item" data-id="${item.id}">
+							<dl style="background-image:url(${item.imgUrl})"></dl>
+							<dt>${item.productName}</dt>
+						</li>
+					`;
+				});
+				$(".container").html(html);		
+				$(".item").on("click",function(){
+					goods($(this).attr("data-id"));
+				});
+			})
+			.catch(function(error){
+				console.log(error);
+			});
+   			/**
+			 * 完美解决safari、微信浏览器下拉回弹效果和上拉空白的bug
+			 * @param {Object} el 滑动元素
+			 */
+			var overscroll = function(el) {
+				el.addEventListener('touchstart', function() {
+					var top = el.scrollTop
+					,totalScroll = el.scrollHeight
+					,currentScroll = top + el.offsetHeight;
+					if(top === 0) {
+						el.scrollTop = 1;
+					}else if(currentScroll === totalScroll) {
+						el.scrollTop = top - 1;
+					}
+				});
+
+				el.addEventListener('touchmove', function(evt) {
+				if(el.offsetHeight < el.scrollHeight)
+					evt._isScroller = true;
+				});
+			}
+			overscroll(document.querySelector('#main'));
+			document.body.addEventListener('touchmove', function(evt) {
+				if(!evt._isScroller) {
+					evt.preventDefault();
+				}
+			});
+			/**
+			 * 商品详情页
+			 */
+			function goods(id){ 
+		       var u = navigator.userAgent;
+		       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		       if(isAndroid){
+		           window.jsi.goods(id)
+		       }else if(isiOS){
+		           window.webkit.messageHandlers.goods.postMessage(id);
+		       }	       	   
+			}</script></body></html>

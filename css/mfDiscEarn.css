@@ -1,0 +1,22 @@
+@charset "UTF-8";
+html, body { display: block; posision: relative; left: 0; top: 0; background: #ff6318; box-sizing: border-box; overflow: auto; padding: 0 0.15rem; }
+
+.img1 { display: flex; display: -webkit-flex; flex-direction: row; justify-content: center; align-items: center; }
+.img1 img { display: block; width: 1.65rem; }
+
+#main { box-sizing: border-box; padding: 0.2rem 0 0.3rem; background: white; border-radius: 15px; margin-bottom: 0.75rem; }
+#main .p1 { font-size: 18px; font-weight: 600; line-height: 1.4; color: #000; text-align: center; }
+#main .p2 { font-size: 13px; font-weight: 500; line-height: 1.4; color: #000; text-align: center; }
+#main .rules { padding: 15px; }
+#main .rules li:nth-child(2n+1) { font-size: 15px; font-weight: 500; font-family: "微软雅黑"; line-height: 20px; color: #000; background: url(../img/dot.png) no-repeat left center; background-size: 5px 5px; text-indent: 1em; }
+#main .rules li:nth-child(2n) { font-size: 13px; font-weight: 500; font-family: "微软雅黑"; line-height: 20px; color: #757575; margin-left: 1em; margin-bottom: 5px; }
+#main .rules li:last-child { margin-bottom: 0; }
+#main .reward { width: 90%; margin: 0 auto; border: 1px solid #ecebf0; }
+#main .reward li { height: 34px; }
+#main .reward li span { display: block; float: left; width: 50%; height: 34px; text-align: center; line-height: 34px; }
+#main .reward li:nth-child(2n) { background: #f8f7fc; }
+
+.discBtn { z-index: 9999; position: fixed; left: 0; right: 0; bottom: 0.2rem; margin: 0 auto; padding: 0 0.15rem; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+.discBtn img { display: block; width: 100%; margin: 0.1rem auto 0; pointer-events: none; }
+
+/*# sourceMappingURL=mfDiscEarn.css.map */

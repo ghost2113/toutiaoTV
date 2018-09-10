@@ -1,0 +1,128 @@
+@charset "utf-8";
+// 默认将输出webkit前缀，moz前缀和标准
+@mixin prefixer($property, $value, $prefixes: webkit moz o ms) {
+  #{$property}: $value;
+
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}:#{$value};
+    }
+    @else if $prefix == moz {
+      -moz-#{$property}:#{$value};
+    }
+    @else if $prefix == o {
+      -o-#{$property}:#{$value};
+    }
+    @else if $prefix == ms {
+      -ms-#{$property}:#{$value};
+    }
+  }
+}
+//元素水平居中
+@mixin centerRow{
+    margin:0 auto;
+}
+@mixin img100{
+    display:block;
+    width: 100%;
+    height:100%;
+}
+//主题黄色
+$fontColor:#f8e5a1;
+//头部  原生跳转H5页面只需嵌入 用不到头部
+//#header .title{
+//  flex:1;
+//  font-size:0.16rem;
+//  line-height:0.44rem;
+//  text-align:center;
+//}
+//#header a{
+//  border:0;
+//}
+html,body{
+    background:#3eaaef;
+    -webkit-overflow-scrolling:touch;
+}
+#main{
+    padding-top:0.3rem;
+    box-sizing: border-box; 
+    overflow: auto;   
+    -webkit-overflow-scrolling:touch;
+    .nfNewsText1{
+        width:84%;        
+        @include centerRow;
+        img{
+            display:block;
+            width:100%;
+        }
+    }
+    .nfNewsText2{
+        @include centerRow;
+        width:53%;
+        margin-top:6.7%;
+        img{
+            display:block;
+            width:100%;
+        }  
+        margin-bottom:0.26rem;
+    }
+    .nfNewsCon{
+        position:relative;
+        left:0;
+        top:0;
+        @include centerRow;
+        width:3.45rem;
+        height:1.6rem;
+//      background:url(../img/nfNewsConBg.png) no-repeat center center;
+//      background-size:contain;    
+        background:white;
+        border-radius:0.05rem;
+        padding-top:0.4rem;    
+        box-shadow: 0px 0px 10px rgba(166,216,248,1) inset,0px 0px 5px rgba(166,216,248,1);    
+        img{
+            display:block;
+            width:1.3rem;
+            height:0.32rem;
+            position:absolute;
+            left:0;
+            right:0;
+            top:0;
+            margin:-0.12rem auto 0;
+        }
+        .border{
+            width:90%;
+            height:1px;
+            background:url(../img/nfNewsConBorder.png);
+            margin:0 auto; 
+        }
+        p{
+            width:90%;           
+            @include centerRow;
+            font-size:0.14rem;
+            font-family: "微软雅黑";
+            letter-spacing:-1px;
+            line-height:0.2rem;
+            padding:0.05rem 0;
+            span{
+                color:#f73845;
+            }
+        }
+        p:last-child{
+            border:none;
+        }
+    }
+}
+#footer{
+    position:fixed;
+    left:0;
+    bottom:0;
+    height:0.64rem;
+    background:#3eaaef;
+    img{
+        display:block;
+        width:2.7rem;
+        margin:0 auto;
+    }    
+}
+
+

@@ -1,0 +1,99 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"><title>活动中间页</title><link rel="stylesheet" href="./css/reset.css"><link rel="stylesheet" href="./css/common.css"><link rel="stylesheet" href="./css/activity2.css"></head><body><section id="main" style="opacity:0"><div class="actiText1"><img src="./img/acTxt.png" alt=""></div><p class="acTime">活动时间：6月1日-6月30日</p><div class="timeTask"><a class="actiItem" href=""><img src="./img/acDisc.png" alt="error"></a></div><div class="actiList"><a class="actiItem" href=""><img src="./img/acNews.png" alt="error"></a><p class="p"><span></span><span></span></p><a class="actiItem" href=""><img src="./img/acSign.png" alt="error"></a><p class="p"><span></span><span></span></p><a class="actiItem" href=""><img src="./img/acTreasure.png" alt="error"></a></div></section><footer id="footer"><div class="actiFoot actiFootL"></div><div class="actiFoot actiFootR" onclick="shareMore()"></div></footer><script src="./js/rem.js"></script><script src="./js/zepto.js"></script><script src="./js/loading.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script><script>//获取Url地址中userId参数
+			function getUrlParams(name) { 
+			    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+			    var r = window.location.search.substr(1).match(reg);  
+			    if (r != null) return unescape(r[2]); 
+			    return null; 
+			};
+			var userID = getUrlParams("userId");
+			/**
+			 * 新功能部分用户开放
+			 */
+/*			if(userID=="1968"||userID=="530"||userID=="929"||userID=="2209"){
+				console.log(userID);
+			}else{
+				$("body").html("功能暂未开放");
+				$("body").css({"display": "flex", "display": "-webkit-flex", "flex-direction": "column", "justify-content":"center", "align-items": "center"});
+				$(".rank").hide();
+			};*/
+/*			['./timeTask.html?userId=','./investment/highRebate.html?userId=','./mfNews.html?userId=','./mfSign.html?userId=','./mfTreasure.html?userId='].forEach(function(item,index){
+				$(".actiItem").eq(index).attr("href",item+userID);
+			});*/
+			['./timeTask.html?userId=','./mfNews.html?userId=','./mfSign.html?userId=','./mfTreasure.html?userId='].forEach(function(item,index){
+				$(".actiItem").eq(index).attr("href",item+userID);
+			});
+			$(".actiFootL").on("click",function(){
+				window.location.href = "strategy.html?userId="+userID;
+			})
+			/**
+			 * 活动日期
+			 */
+			axios({	
+			  url: '/get/activityTime',
+			  method: 'get', // 默认是 get
+			  baseURL:ajaxUrl,	
+			})
+			.then(function(res){
+				//console.log(res);
+				const result = res.data.data;
+				const startDateMonth = result.startDate.substr(5,2)
+				const startDateDay = result.startDate.substr(8,2)
+				const endDateMonth = result.endDate.substr(5,2)
+				const endDateDay = result.endDate.substr(8,2)
+				$('.acTime').html(`活动时间：${~~startDateMonth}月${~~startDateDay}日—${~~endDateMonth}月${~~endDateDay}日`);
+			})
+			.catch(function(error){
+				console.log(error);
+			});
+			 function strategy(){      			 	
+		       var u = navigator.userAgent;
+		       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		       if(isAndroid){
+		           /* alert('是否是Android：'+isAndroid);*/
+		           window.jsi.strategy("strategy")
+		       }else if(isiOS){
+		            /*alert('是否是iOS：'+isiOS);*/
+		           window.webkit.messageHandlers.strategy.postMessage("strategy");
+		       }
+   			}	
+   			function shareMore(){    
+		       var u = navigator.userAgent;
+		       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		       if(isAndroid){
+		            /*alert('是否是Android：'+isAndroid);*/
+		           /*window.android.shareMore(title,desc,urls,img,goodsPrice);*/
+		           window.jsi.shareMore("ok");
+		       }else if(isiOS){
+		            /*alert('是否是iOS：'+isiOS);*/
+		           window.webkit.messageHandlers.shareMore.postMessage("shareMore");
+		       }
+   			}	
+   			/**
+			 * 完美解决safari、微信浏览器下拉回弹效果和上拉空白的bug
+			 * @param {Object} el 滑动元素
+			 */
+			var overscroll = function(el) {
+				el.addEventListener('touchstart', function() {
+					var top = el.scrollTop
+					,totalScroll = el.scrollHeight
+					,currentScroll = top + el.offsetHeight;
+					if(top === 0) {
+						el.scrollTop = 1;
+					}else if(currentScroll === totalScroll) {
+						el.scrollTop = top - 1;
+					}
+				});
+
+				el.addEventListener('touchmove', function(evt) {
+				if(el.offsetHeight < el.scrollHeight)
+					evt._isScroller = true;
+				});
+			}
+			overscroll(document.querySelector('#main'));
+			document.body.addEventListener('touchmove', function(evt) {
+				if(!evt._isScroller) {
+					evt.preventDefault();
+				}
+			});</script></body></html>

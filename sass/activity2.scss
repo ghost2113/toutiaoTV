@@ -1,0 +1,147 @@
+@charset "utf-8";
+// 默认将输出webkit前缀，moz前缀和标准
+@mixin prefixer($property, $value, $prefixes: webkit moz o ms) {
+  #{$property}: $value;
+
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}:#{$value};
+    }
+    @else if $prefix == moz {
+      -moz-#{$property}:#{$value};
+    }
+    @else if $prefix == o {
+      -o-#{$property}:#{$value};
+    }
+    @else if $prefix == ms {
+      -ms-#{$property}:#{$value};
+    }
+  }
+}
+//flex布局
+@mixin flex($direction,$justify:center,$alignItems:center){
+    display:flex;
+    display:-webkit-flex;
+    flex-direction:$direction;
+    justify-content: $justify;
+    align-items: $alignItems;
+}
+//元素水平居中
+@mixin centerRow{
+    margin:0 auto;
+}
+@mixin img100{
+    display:block;
+    width: 100%;
+    height:100%;
+}
+//主题黄色
+$fontColor:#f8e5a1;
+//头部  原生跳转H5页面只需嵌入 用不到头部
+//#header .title{
+//  flex:1;
+//  font-size:0.16rem;
+//  line-height:0.44rem;
+//  text-align:center;
+//}
+//#header a{
+//  border:0;
+//}
+#main{
+    background:url(../img/acBg.jpg) no-repeat center center;
+    background-size:cover;
+    padding:0.12rem 0.15rem 0.62rem;
+    box-sizing: border-box;    
+    overflow: auto;
+    .actiText1{
+        width: 80%;        
+        @include centerRow;
+        img{
+            display:block;
+            width:100%;
+        }
+    }
+    .acTime{
+        width:100%;
+        height:0.4rem;
+        width:2.5rem;
+        margin:0 auto;
+        margin-top:0.1rem;
+        font-size:0.14rem;
+        color:white;
+        text-align:center;
+        line-height:0.4rem;
+        background:url(../img/acBtn.png) no-repeat center center;
+        background-size:100% auto;
+    }
+    .timeTask{
+        width:100%;
+        //height:0.8rem;
+        margin:0.15rem 0 0.1rem;
+        a{
+            display:block;
+            width:100%;
+            height:100%;
+            img{
+                display:block;
+                width:100%;
+//              height:100%;
+            }
+        }
+    }
+    .actiList{
+        display:flex;
+        display:-webkit-flex;
+        flex-direction: column;
+        justify-content:space-around;
+        flex-wrap:wrap;
+        margin-top:0.1rem;
+        .actiItem{
+            width:100%;
+            height:0.8rem;
+            img{
+                @include img100;
+            }           
+        }
+        .p{
+            @include flex(row,space-between,center);
+            width:100%;
+            height:0.1rem;
+            margin-top:0;
+            padding:0 15%;
+            box-sizing:border-box;
+            span{
+                z-index:9999;
+                display:block;
+                width:0.06rem;
+                height:0.2rem;
+                background:url(../img/acImg.png) no-repeat center center;
+                background-size:100% 100%;
+            }
+        }
+    }
+}
+#footer{
+    position:fixed;
+    left:0;
+    bottom:0;
+    height:0.5rem;
+    display:block;
+    display:-webkit-flex;
+    flex-direction: row;
+    justify-content:space-between;
+    background:url(../img/acFooter.png) no-repeat center center;
+    background-size:100% 100%; 
+    .actiFootL{
+        width:50%;    
+        color:#fc2e2c; 
+        font-size:0.16rem;
+        text-align:center;  
+        line-height:0.5rem;
+    }
+    .actiFootR{
+        @extend .actiFootL;
+    }
+}
+
+

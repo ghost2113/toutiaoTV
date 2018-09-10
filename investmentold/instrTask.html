@@ -1,0 +1,87 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"><title>高额返利</title><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="./css/instrTask.css"></head><body><section id="main" style="opacity:0"><div class="taskInfo borderB1"><p class="p1"><span class="taskName">金融理财1000起投</span> <span class="taskStatus red">+<span class="additionalRebates">20</span></span></p></div><div class="platformInstr borderB3 platformPresent">面向理财用户，用智能科技的方式帮忙投资人分散风险， 倡导“投资让生活更美好”的财富管理模式， 为用户提供开放式财富管理、样化金融配置、单一产品到综合化</div><ul class="investInfo"><li><span>投资期限</span> <span class="investhorizon investDuration">≥10</span></li><div class="border"><span></span><span></span></div><li><span>投资金额</span> <span class="investAmount investMoney">≥10000元</span></li><div class="border"><span></span><span></span></div><li><span>年化收益</span> <span class="annualEarnings annualizedReturn">25%</span></li><div class="border"><span></span><span></span></div><li><span>额外返利</span> <span class="additionalRebate additionalRebates">5800000元</span></li></ul><ul class="rulesRebate borderB3"><li class="borderB1">返利规则</li><li><div>剩余名额: <span class="remnantNum">5</span></div><div>审核周期<span>72</span>小时</div></li></ul><ul class="steps"><li class="borderB1">操作步骤</li><div class="stepsInfo"><p class="p1 taskPresentTit">任务介绍:</p><p class="p2 taskPresent">点击投资按钮，购买理财产品后， 为用户提供开放式财富管理、多样化金融配置、单一产品到综合化的资产配置方案的服务。</p><p class="p1" style="display:none">需要上传截图:</p><p class="p2 screenshotPresent" style="display:none"></p><p class="p1 red noticeTit">特别注意:</p><p class="p2 red notice">点击投资按钮，请注意按照步骤截图，为用户提供理财管理。</p><p class="p1 remindersTit">温馨提示:</p><p class="p2 reminders">点击投资按钮，购买理财产品后， 为用户提供开放式财富管理</p></div></ul><ul class="screenshots" style="display:none"><li class="borderB1">截图示例</li><div class="stepsInfo examplesUrl"></div></ul><div class="tip">理财有风险 投资需谨慎</div></section><footer id="footer"><div><a class="investUrl" href="javascript:void(0);">投资拿返利</a></div><div><a id="goUploadPic" href="javascript:void(0);">上传投资信息</a></div></footer></body><script src="../js/zepto.js"></script><script src="../js/rem.js"></script><script src="../js/loading.js"></script><script src="../js/fastclick.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script><script>//获取Url地址中userId参数
+		function getUrlParams(name) { 
+		    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+		    var r = window.location.search.substr(1).match(reg);  
+		    if (r != null) return unescape(r[2]); 
+		    return null; 
+		};
+		var userID = getUrlParams("userId");
+		var id = getUrlParams("id");
+		var imgNum;//任务截图示例数量
+		/**
+		 * 跳装上传截图界面
+		 */
+		$("#goUploadPic").attr("href","./uploadPic.html?userId="+userID+"&id="+id);
+		/**
+		 * 任务接口
+		 */
+		axios({	
+			  url: '/investment/info/by/id',
+			  method: 'post', // 默认是 get
+			  baseURL: ajaxUrl,	
+			  params:{
+			  	id:id
+			  }
+			})
+			.then(function(res){
+				console.log(res);
+				var data = res.data.data,
+					taskName = data.taskName,//任务名称
+					investUrl = data.investUrl,//投资链接
+					
+					investDuration = data.investDuration,//投资期限					
+					investMoney = data.investMoney,//投资金额
+					annualizedReturn = data.annualizedReturn,//年化收益
+					additionalRebates = data.additionalRebates,//额外返利
+					
+					platformPresent = data.platformPresent,//平台介绍
+					remnantNum = data.remnantNum,//剩余名额
+					taskPresent = data.taskPresent,//任务介绍					
+					screenshotPresent = data.screenshotPresent,//截图说明
+					notice = data.notice,//特别注意
+					reminders = data.reminders,//温馨提示
+					examplesUrl = data.examplesUrl,//截图示例
+					taskState = data.taskState//任务状态 1 未上架 2 已上架	
+					document.title = taskName;
+				$(".taskInfo").css({"background":"url("+data.logoUrl+") no-repeat 0.15rem center","background-size":"0.45rem 0.45rem"});
+				$(".taskName").html(taskName);
+				$(".investUrl").attr("href",investUrl);				
+				$(".investDuration").html("≥"+investDuration);
+				$(".investMoney").html("≥"+investMoney+"元");
+				$(".annualizedReturn").html(annualizedReturn+"%");
+				$(".additionalRebates").html(additionalRebates+"元");				
+				$(".platformPresent").html(platformPresent);
+				$(".remnantNum").html(remnantNum);
+				$(".taskPresent").html(taskPresent);
+				$(".screenshotPresent").html(screenshotPresent);
+				$(".notice").html(notice);
+				$(".reminders").html(reminders);
+				$(".taskState").html(taskState);
+				if(reminders==""||reminders=="<p>无</p>"){
+					$(".remindersTit").hide();
+					$(".reminders").hide();
+				};
+				if(notice==""||notice=="<p>无</p>"){
+					$(".noticeTit").hide();
+					$(".notice").hide();
+				};
+				if(taskPresentTit==""||taskPresentTit=="<p>无</p>"){
+					$(".taskPresentTit").hide();
+					$(".taskPresent").hide();
+				};
+				if(examplesUrl==null){
+					console.log("截图示例为空");
+					imgNum = 0;
+				}else{
+					var imgList = examplesUrl.split(",");
+					imgNum = imgList.length
+					imgList.forEach(function(item,index){
+					$(".examplesUrl").append(
+						`<img src=${item} alt="error" />` 
+					);
+				});	
+				}
+			})
+			.catch(function(error) {
+				console.log(error);
+			});</script></html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"><title>新手任务</title><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="./css/newTask.css"></head><body><section id="main" style="opacity:0"><div id="content"><p class="height15"></p><p class="taskDaysWarp">第<span class="days"></span>天&nbsp;<span style="color:#fb2e3c;font-size:.14rem;font-weight:400">(&nbsp;完成任务即可立提现金红包&nbsp;)</span></p><p class="taskTimeWrap">活动时间:<span class="taskTime"></span></p><div class="taskCon"><ul class="taskList"><li class="taskItem"><div class="icon"><img src="./img/news.png" alt=""></div><div class="item"><p class="p1">阅读20篇新闻&nbsp;<span class="gold">+600</span></p><p class="p2">完成<span class="newsNum num"></span>/20</p></div><div class="btn newsState"><button class="taskState taskState1">未完成</button> <button class="taskState taskState2" onclick='getReward(1,"newsState")'>领取奖励</button> <button class="taskState taskState3">已完成</button></div></li><div class="border1"></div><li class="taskItem"><div class="icon"><img src="./img/sign.png" alt=""></div><div class="item"><p class="p1">完成签到一次&nbsp;<span class="gold">+100</span></p><p class="p2">完成<span class="signNum num"></span>/1</p></div><div class="btn signState"><button class="taskState taskState1">未完成</button> <button class="taskState taskState2" onclick='getReward(3,"signState")'>领取奖励</button> <button class="taskState taskState3">已完成</button></div></li><div class="border1"></div><li class="taskItem"><div class="icon"><img src="./img/treasure.png" alt=""></div><div class="item"><p class="p1">开宝箱一次&nbsp;<span class="gold">+100</span></p><p class="p2">完成<span class="treasureNum num"></span>/1</p></div><div class="btn treasureState"><button class="taskState taskState1">未完成</button> <button class="taskState taskState2" onclick='getReward(4,"treasureState")'>领取奖励</button> <button class="taskState taskState3">已完成</button></div></li><div class="border1"></div><li class="taskItem"><div class="icon"><img src="./img/share.png" alt=""></div><div class="item"><p class="p1">分享收徒一次&nbsp;<span class="gold">+100</span></p><p class="p2">完成<span class="shareNum num"></span>/1</p></div><div class="btn shareState"><button class="taskState taskState1">未完成</button> <button class="taskState taskState2" onclick='getReward(10,"shareState")'>领取奖励</button> <button class="taskState taskState3">已完成</button></div></li><div class="border1"></div><li class="taskItem"><div class="icon"><img src="./img/gold.png" alt=""></div><div class="item"><p class="p1">抽奖一次&nbsp;<span class="gold">+100</span></p><p class="p2">完成<span class="goldNum num"></span>/1</p></div><div class="btn goldState"><button class="taskState taskState1">未完成</button> <button class="taskState taskState2" onclick='getReward(20,"goldState")'>领取奖励</button> <button class="taskState taskState3">已完成</button></div></li></ul></div><div class="taskCon" style="background:#f5f5f5"><ul class="pocket"><li class="pocketItem pocketItemL"><p class="p1">已连续<span class="completeDays"></span>天</p><span class="tip">连续完成四天任务 即可领取1元红包</span></li><li class="pocketItem pocketItemLactive" onclick='withdrawal("23")'><p class="p2">1.00</p><span class="tip">恭喜你获得1元红包</span></li><div></div><li class="pocketItem pocketItemR"><p class="p1">已连续<span class="completeDays"></span>天</p><span class="tip">连续完成7天任务 即可领取2元红包</span></li><li class="pocketItem pocketItemRactive" onclick='withdrawal("23")'><p class="p2">2.00</p><span class="tip">恭喜你获得两元红包</span></li></ul></div><div class="taskCon"><div class="taskRules"><div class="ruleTitle"><img src="../newTask/img/rules.png" alt="error"></div><div class="ruleCon"><p>1、新手任务活动将从您的注册日起持续7日，完成任务即可领取相应的奖励。新手任务每天23.59分刷新，奖励请在发放当日领取，如有漏领情况，平台不补发奖励。</p><p>2、连续完成四天、七天新手任务即可分别获得1元红包、2元红包，红包可立即在当前页面无门槛提现。活动期间中断完成新手任务，将重新开始计算。</p><p>3、新手活动结束后将会关闭此页面，请及时领取您的奖励。</p><p>4、此活动最终解释权归头条TV所有</p></div></div></div></div><div id="mask" style="display:none"><div class="maskCon"><div class="maskwrap"><p class="msg"></p><div class="btn btn-info close" id="close">确认</div></div></div></div></section></body><script src="../js/zepto.js"></script><script src="../js/rem.js"></script><script src="../js/loading.js"></script><script src="../js/fastclick.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script><script>$(function() {  			
+		    FastClick.attach(document.body);		   
+		});  
+		var userID = getUrlParams("userId");
+		/**
+		 * 新功能部分用户开放
+		 */
+//		if(userID=="7"){
+//			console.log(userID);
+//		}else{
+//			$("body").html("功能暂未开放");
+//			$("body").css({"display": "flex", "display": "-webkit-flex", "flex-direction": "column", "justify-content":"center", "align-items": "center"});
+//			$(".rank").hide();
+//		};
+		/**
+		 * 新手任务状态
+		 */
+		/**
+		 * 初始化  新手任务状态
+		 */	
+		taskState();						
+		function taskState(){
+			axios({
+			  //url:'../json/newTask.json',
+			  url: '/get/newsTask/today',
+			  method: 'get', // 默认是 get9			  
+			  baseURL:ajaxUrl,
+			  params: {
+			  	userId:userID
+			  }
+			})
+			.then(function(res){
+				var data = res.data;
+				console.log("新手任务",res.data);
+				var isShareApprenticeNumber,
+					isBoxNumber,
+				    isReadNumber,
+				    days,
+				    isTurnTableGoldToday,
+				    state,
+				    readNumber,
+				    isSignNumber,
+				    oneRedEnvelopeReceive,
+				    twoRedEnvelopeReceive,
+				    completeDays;
+				isShareApprenticeNumber = data.isShareApprenticeNumber;
+			    isBoxNumber = data.isBoxNumber;//宝箱
+			    isReadNumber = data.isReadNumber;//阅读
+			    days = data.days;//第几天
+			    isTurnTableGoldToday = data.isTurnTableGoldToday;//抽奖
+			    state = data.state;
+			    readNumber = data.readNumber;//阅读数量
+			    isSignNumber = data.isSignNumber;//签到
+			    completeDays = data.completeDays;//完成天数
+			    oneRedEnvelopeReceive  = data.oneRedEnvelopeReceive;//1元红包领取状态
+			    twoRedEnvelopeReceive  = data.twoRedEnvelopeReceive;//2元红包领取状态
+			    //活动日期
+			    $(".taskTime").html(`${data.startDate.substr(0,10)}至${data.endDate.substr(0,10)}`);
+			    $(".completeDays").html(completeDays);
+			    $(".days").html(days);
+			    //"UNCLAIMED" 表示未领取  "CANRECEIVE" 可领取 "ALREADYRECEIVED" 已领取
+			    //一元红包
+			    if(oneRedEnvelopeReceive=="ALREADYRECEIVED"){
+		    		$(".pocketItemLactive>.tip").html("你已领取1元红包");
+			    	$(".pocketItemLactive").css("background-image","url(./img/pocketAced.png)");
+			    	$(".pocketItemLactive").removeAttr("onclick")
+			    	
+			    }
+			    //一元红包
+			    if(twoRedEnvelopeReceive=="ALREADYRECEIVED"){
+			    	$(".pocketItemRactive>.tip").html("你已领取2元红包");
+			    	$(".pocketItemRactive").css("background-image","url(./img/pocketAced.png)");
+			    }			    
+			    //2元红包
+			    //阅读新闻
+			    console.log(readNumber);
+			    $(".newsNum").html(`${isReadNumber=="CANRECEIVE"?20:readNumber}`);
+			    if(isReadNumber=="UNCLAIMED"){
+			    	$('.newsState>.taskState1').show();
+			    	$('.newsState>.taskState2').hide();
+			    	$('.newsState>.taskState3').hide();
+			    }else if(isReadNumber=="CANRECEIVE"){
+			    	$('.newsState>.taskState1').hide();
+			    	$('.newsState>.taskState2').show();
+			    	$('.newsState>.taskState3').hide();
+			    }else if(isReadNumber=="ALREADYRECEIVED"){
+			    	$('.newsState>.taskState1').hide();
+			    	$('.newsState>.taskState2').hide();
+			    	$('.newsState>.taskState3').show();
+			    }
+			    //签到
+			    $(".signNum").html(`${isSignNumber=="UNCLAIMED"?0:1}`);
+			    if(isSignNumber=="UNCLAIMED"){
+			    	$('.signState>.taskState1').show();
+			    	$('.signState>.taskState2').hide();
+			    	$('.signState>.taskState3').hide();
+			    }else if(isSignNumber=="CANRECEIVE"){
+			    	$('.signState>.taskState1').hide();
+			    	$('.signState>.taskState2').show();
+			    	$('.signState>.taskState3').hide();
+			    }else if(isSignNumber=="ALREADYRECEIVED"){
+			    	$('.signState>.taskState1').hide();
+			    	$('.signState>.taskState2').hide();
+			    	$('.signState>.taskState3').show();
+			    }
+			    //宝箱
+			    $(".treasureNum").html(`${isBoxNumber=="UNCLAIMED"?0:1}`);
+			    if(isBoxNumber=="UNCLAIMED"){
+			    	$('.treasureState>.taskState1').show();
+			    	$('.treasureState>.taskState2').hide();
+			    	$('.treasureState>.taskState3').hide();
+			    }else if(isBoxNumber=="CANRECEIVE"){
+			    	$('.treasureState>.taskState1').hide();
+			    	$('.treasureState>.taskState2').show();
+			    	$('.treasureState>.taskState3').hide();
+			    }else if(isBoxNumber=="ALREADYRECEIVED"){
+			    	$('.treasureState>.taskState1').hide();
+			    	$('.treasureState>.taskState2').hide();
+			    	$('.treasureState>.taskState3').show();
+			    }
+			    //徒弟分享
+			    $(".shareNum").html(`${isShareApprenticeNumber=="UNCLAIMED"?0:1}`);
+			    if(isShareApprenticeNumber=="UNCLAIMED"){
+			    	$('.shareState>.taskState1').show();
+			    	$('.shareState>.taskState2').hide();
+			    	$('.shareState>.taskState3').hide();
+			    }else if(isShareApprenticeNumber=="CANRECEIVE"){
+			    	$('.shareState>.taskState1').hide();
+			    	$('.shareState>.taskState2').show();
+			    	$('.shareState>.taskState3').hide();
+			    }else if(isShareApprenticeNumber=="ALREADYRECEIVED"){
+			    	$('.shareState>.taskState1').hide();
+			    	$('.shareState>.taskState2').hide();
+			    	$('.shareState>.taskState3').show();
+			    }
+			    //抽奖
+			    $(".goldNum").html(`${isTurnTableGoldToday=="UNCLAIMED"?0:1}`);
+			    if(isTurnTableGoldToday=="UNCLAIMED"){
+			    	$('.goldState>.taskState1').show();
+			    	$('.goldState>.taskState2').hide();
+			    	$('.goldState>.taskState3').hide();
+			    }else if(isTurnTableGoldToday=="CANRECEIVE"){
+			    	$('.goldState>.taskState1').hide();
+			    	$('.goldState>.taskState2').show();
+			    	$('.goldState>.taskState3').hide();
+			    }else if(isTurnTableGoldToday=="ALREADYRECEIVED"){
+			    	$('.goldState>.taskState1').hide();
+			    	$('.goldState>.taskState2').hide();
+			    	$('.goldState>.taskState3').show();
+			    }
+			    //完成天数
+			    if(completeDays==4||completeDays>4){
+			    	console.log(completeDays);
+			    	$(".pocketItemL").hide();
+			    	$(".pocketItemLactive").show();
+			    	$(".pocketItemL").on("click",function(){
+			    		$(".pocketItemL").hide();
+			    		
+			    		$(".pocketItemLactive").show();
+			    	})			
+			    }
+			    if(completeDays==7){
+			    	$(".pocketItemR").hide();
+			    	$(".pocketItemRactive").show();
+			    	$(".pocketItemR").on("click",function(){
+			    		$(".pocketItemR").hide();
+			    		$(".pocketItemRactive").show();
+			    	});
+			    }
+			})
+			.catch(function(error){
+				console.log(error)
+			})
+		}		
+	    //领取奖励
+	    function getReward(type,dom){
+//	    	type   签到：3; 新闻阅读：1；开宝箱：4；分享收徒：10；转盘奖励：20
+			axios({
+			  url: '/gold/coins',
+			  method: 'get', // 默认是 get			  
+			  baseURL:ajaxUrl,
+			  params: {
+			  	userId:userID,
+			  	sonSource:type
+			  }
+			})
+			.then(function(res){
+				var msg = res.data.msg,
+					gold = res.data.gold
+					TJY.msg("恭喜你获得"+gold+"币","确认");
+					$(`.${dom}>.taskState1`).hide();
+			    	$(`.${dom}>.taskState2`).hide();
+			    	$(`.${dom}>.taskState3`).show();
+			})
+			.catch(function(error){
+				console.log(error)
+			})
+	    }
+	    //提现
+	    function withdrawal(type){
+	       var u = navigator.userAgent;
+	       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+	       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+	       if(isAndroid){
+	       		console.log(type);
+	           window.jsi.withdrawal(type);
+	       }else if(isiOS){
+	       	console.log(type);
+	           window.webkit.messageHandlers.withdrawal.postMessage(type);
+	       }
+	    }
+	    //获取Url地址中userId参数
+		function getUrlParams(name) {
+		    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+		    var r = window.location.search.substr(1).match(reg);  
+		    if (r != null) return unescape(r[2]); 
+		    return null; 
+		};		
+		//关闭弹出框
+		$("#close").on("click",function(){							
+			$("#mask").hide();							
+		});
+		//弹出框
+		var TJY = TJY || {};
+		TJY.msg = function(msg,btn){
+			$("#mask").show();
+			$(".msg").html(msg);
+			$(".close").html(btn);
+		}</script></html>

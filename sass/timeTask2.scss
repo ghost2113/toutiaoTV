@@ -1,0 +1,379 @@
+@charset "utf-8";
+// 默认将输出webkit前缀，moz前缀和标准
+@mixin prefixer($property, $value, $prefixes: webkit moz o ms) {
+  #{$property}: $value;
+
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}:#{$value};
+    }
+    @else if $prefix == moz {
+      -moz-#{$property}:#{$value};
+    }
+    @else if $prefix == o {
+      -o-#{$property}:#{$value};
+    }
+    @else if $prefix == ms {
+      -ms-#{$property}:#{$value};
+    }
+  }
+}
+//flex布局
+@mixin flex($direction,$justify:center,$alignItems:center){
+    display:flex;
+    display:-webkit-flex;
+    flex-direction:$direction;
+    justify-content: $justify;
+    align-items: $alignItems;
+}
+//字体样式
+@mixin font($size:14px,$weight:500,$family:"微软雅黑",$height:1.4,$color:#000){
+    font-size:$size;
+    font-weight:$weight;
+    font-family:$family;
+    line-height:$height;
+    color:$color;
+}
+//多行文本溢出
+@mixin overflow($num:1){
+   display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $num;
+    overflow: hidden; 
+}
+//元素水平居中
+@mixin centerRow{
+    margin:0 auto;
+}
+@mixin img100{
+    display:block;
+    width: 100%;
+    height:100%;
+}
+//主题黄色
+$themeColor:#e73d3d;
+//头部  原生跳转H5页面只需嵌入 用不到头部
+//#header .title{
+//  flex:1;
+//  font-size:0.16rem;
+//  line-height:0.44rem;
+//  text-align:center;
+//}
+//#header a{
+//  border:0;
+//}
+html,body{
+    display:block;
+    posision:relative;
+    left:0;
+    top:0;
+    overflow:auto;
+}
+.rank{
+    display:block;
+    position:fixed;
+    right:0rem;
+    bottom:0.8rem;
+    width:1rem;
+    height:1rem;
+    padding-top:0.27rem;
+    background:url(../img/xsrw_rank.png) no-repeat center center;
+    background-size:100% auto;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color: transparent;
+    p{
+        margin:0;
+        @include font(0.21rem,600,null,1,#fff);
+        text-align:center;
+    }
+};
+#main{
+    box-sizing: border-box; 
+    padding-top:0.32rem;  
+    .p1{
+        @include font(0.18rem,600,null,1.4,#000);
+        text-align: center;       
+    }
+    .p2{
+        @include font(0.13rem,500,null,1.4,#000);
+        text-align: center;
+    }
+    .banner{
+        position:relative;
+        left:0;
+        top:0;
+        padding:0.22rem 0 0;
+//      margin-bottom:0.1rem;
+        background:white;
+        .p1 span{
+            color:$themeColor;
+        }
+        .img{
+            display:block;
+            position:relative;
+            @include flex(row,center,center);            
+            margin-bottom:0.3rem;
+            img{
+                display:block;
+                width:1.88rem;
+            }
+            .sideLink{
+                width:0.7rem;
+                 @include flex(column,center,center);
+                position:absolute;
+                top:0rem;
+                right:0;
+                text-align:center;
+                .link{
+                    width:100%;
+                    padding:0.05rem 0;
+                    @include font(0.12rem,null,null,null,white);
+                    border-radius:0.16rem 0 0 0.16rem;
+                    background:#ffd84c;
+                }
+                .link:nth-of-type(1){margin-bottom:0.08rem;}
+            }
+        }
+        .discBtn{
+            display:block;
+            width:2.77rem;
+            height:0.44rem;
+            margin:0.24rem auto;
+            @include font(0.17rem,600,null,0.44rem,white);
+            background:$themeColor;
+            text-align:center;
+            border-radius:4px;            
+        }
+        .p2{
+            @include flex(row,center,center);
+            margin:0.15rem 0;
+            color:#a6a6a6;
+            span{
+                display:block;
+                width:1.1rem;
+                height:0.05rem;
+                background:url(../img/xsrwL.png) no-repeat right center;
+                background-size:100% auto;
+            }
+            span:nth-child(2){
+                background:url(../img/xsrwR.png) no-repeat right center;
+                background-size:100% auto;
+            }
+        } 
+        .earningsInfo{
+            @include flex(row,space-between,center);
+            padding:0 0.15rem;
+            li{
+                width:1.7rem;
+                height:0.82rem;
+                background:white;
+                box-shadow: 0 0 10px 0px rgba(0,0,0,0.1);
+                a{                         
+                    display:block;
+                    width:100%;
+                    height:100%;
+                    background:url(../img/xhrw200.png) no-repeat 0.15rem center;
+                    background-size:0.265rem 0.24rem;
+                    padding-left:0.45rem;
+                    box-sizing:border-box;
+                    @include flex(column,center,flex-start
+                    
+                    
+                    
+                    );
+                    p{
+                        float:left;
+                        @include font(0.16rem,600,null,null,black);
+                        white-space: nowrap;                        
+                        .earning{
+                           color:$themeColor;   
+                        }
+                        text-align:left;
+                    }
+                    p:nth-child(2){
+                        @include font(0.13rem,500,null,null,#a6a6a6);
+                    }
+                }
+            }
+            li:nth-child(1) a{
+                background:url(../img/xsrw_jcsy.png) no-repeat 0.15rem center;
+                background-size:0.29rem 0.29rem;
+            }
+        }
+        .tixian{
+           
+            .border1{
+                width:100%;
+                border-bottom:1px solid #f5f5f7;
+            }
+            .item{
+                padding:0 0.15rem;
+                box-sizing:border-box;
+                height:0.45rem;
+                @include flex(row,space-between,center);
+                .l{                   
+                    font-size:0.14rem;
+                    color:#1a1a1a;
+                    @include flex(row,flex-start,center);
+                    .text{
+                        display:block;
+                        width:0.95rem;
+                        padding:0 0.1rem 0 0;
+                        white-space: nowrap;
+                    }
+                    .gold,.goldRecord{
+                        color:#e73d3d; 
+                        padding:0 0.05rem;
+                    }
+                    img{
+                        display:block;
+                        width:0.15rem;
+                    }
+
+                }
+                .btn{
+                    width:0.8rem;
+                    height:0.3rem;
+                    @include flex(row,center,center);
+                    background:#f0f0f0;
+                    color:#b2b2b2;
+                    border-radius:0.1rem;
+                    border:none;
+                    font-size:0.13rem;
+                }
+                .btnActive{
+                    width:0.8rem;
+                    height:0.3rem;
+                    @include flex(row,center,center);
+                    border-radius:0.1rem;
+                    border:none;
+                    font-size:0.13rem;
+                    background:#e73d3d;
+                    color:white;
+                }
+                .withdrawalRecord{
+                   font-size:0.13rem;
+                   color:#b2b2b2; 
+                   -webkit-tap-highlight-color:transparent;
+                }
+            }
+        }
+    }   
+    .discCon{
+        border-top:5px solid #f2f2f2;
+        .tabTit{
+            height:0.4rem;
+            padding:0 0.15rem;
+            @include flex(row,flex-start,center);
+            @include font(0.13rem,500,null,null,black);
+            border-bottom:1px solid #f2f2f2;
+            span{
+                display:block;
+                width:3px;
+                height:0.13rem;
+                margin-right:3px;
+                background:$themeColor;
+            }
+        }
+        .discTab{
+            display:flex;
+            display:-webkit-flex;
+            flex-direction:row;
+            height:0.75rem;
+            padding:0 0.15rem;
+            border-bottom:5px solid #f2f2f2;
+            background:white;
+            li{
+                display:flex;
+                display:-webkit-flex;
+                flex:1;
+                flex-direction:column;
+                align-items:center;
+                justify-content: center;
+                span{
+                    display:block;
+                }
+            }
+            li a{
+                display:flex;
+                display:-webkit-flex;
+                flex:1;
+                flex-direction:column;
+                align-items:center;
+                justify-content: center;
+            }
+            li span:nth-child(1){
+                color:#808080;
+            }
+            li span:nth-child(2){
+                margin-top:0.05rem;
+                color:$themeColor;
+                font-size:21px;
+            }
+            div{               
+                span{
+                    display:block;
+                    width:1px;
+                    height:0.225rem;
+                    margin-top:0.26rem;
+                    background:#e0e0e0;
+                }
+            }
+        }
+         .textTime{
+        @include flex(row,flex-start,center);
+        padding:0.24rem 0.15rem;
+        margin-top:5px;
+        background:white;
+        border-bottom:1px solid #f2f2f2;
+        span{
+            display:block;
+            @include font(0.13rem,500,null,null,#b2b2b2);
+        }
+        img{
+            display:block;
+            width:0.72rem;
+        }
+    }
+        .reward{
+            background:#fff;    
+            padding:0 0.15rem 0.15rem;        
+            li{
+                width:100%;
+                height:0.45rem;
+                background:white;
+                @include flex(row,space-between,center);
+                @include font(0.14rem,600,"黑体",null,#333);
+                text-indent:0.3rem;
+                box-sizing:border-box;
+                background:url(../img/xsrw1.png) no-repeat left center;
+                background-size:0.28rem 0.28rem;
+                span{
+                    white-space: nowrap;
+                }
+                span:nth-child(2){
+                    color:$themeColor;
+                    font-weight:500;
+                }
+                span.active{
+                    color:rgb(178, 178, 178);
+                    font-weight:500;
+                }
+            }
+        }
+    }   
+    .cheating{
+        padding:0.15rem 0.15rem 0.44rem;
+        background:rgb(242, 242, 242);
+        .p1{
+            width:100%;
+            @include font(0.14rem,500,"黑体",0.21rem,#000);
+            text-align:left;
+        } 
+        .p2{
+            width:100%;
+             @include font(0.14rem,500,"黑体",0.2rem,#8F8F8F);
+             text-align:left;
+        }
+    } 
+}

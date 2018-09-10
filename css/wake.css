@@ -1,0 +1,10 @@
+html, body { position: relative; font-size: 14px; }
+
+#main { z-index: -2; position: relative; padding-top: 0.25rem; background: #ff6024; overflow: auto; }
+#main .bg { z-index: -1; display: block; position: absolute; left: 0; top: 0; width: 100%; }
+#main .wakeText { z-index: 1; display: block; width: 2.52rem; height: 0.9rem; margin: 0 auto; }
+#main .wakeBtn { z-index: 1; display: block; width: 1.77rem; height: 0.38rem; margin: 0 auto; margin-top: 1.4rem; margin-bottom: 0.15rem; border: none; outline: none; color: white; background: url(../img/wakeBtn.png) no-repeat center center; background-size: 100% auto; }
+#main .wakeCon { display: block; width: 3.27rem; height: 4.09rem; margin: 0 auto; }
+#main .wakeBtn2 { z-index: 1; display: block; width: 3.15rem; height: 0.47rem; margin: 0 auto; margin-top: 0.25rem; margin-bottom: 0.15rem; border: none; outline: none; color: white; background: url(../img/wakeBtn2.png) no-repeat center center; background-size: 100% auto; }
+
+/*# sourceMappingURL=wake.css.map */

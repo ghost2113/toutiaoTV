@@ -1,0 +1,219 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"><title>限时任务</title><link rel="stylesheet" href="./css/reset.css"><link rel="stylesheet" href="./css/common.css"><link rel="stylesheet" href="./css/timeTask2.css"></head><body><section id="main" style="opacity:0"><div class="banner"><div class="img"><img src="./img/xhrw_reward.png"><div class="sideLink"><a class="link" href="">规则说明</a> <a class="link" href="">200%奖励</a></div></div><p class="p1">收有效徒弟1名赚<span><em class="earnings">1</em>元红包+3000金币</span></p><div class="discBtn" onclick="disciple()">点击收徒</div><ul class="tixian"><li class="item goldNumber"><div class="l"><span class="text">当前可提现红包</span><span class="gold"></span><img src="./img/iconPocket.png" alt=""></div><button class="btn" style="display:none">立即提现</button> <button class="btnActive" onclick="withdrawal()" style="display:none">立即提现</button></li><div class="border1"></div><li class="item goldRecord"><div class="l"><span class="text">累计获得红包</span><span class="goldRecord goldRecordTotal"></span><img src="./img/iconPocket.png" alt=""></div><div class="withdrawalRecord" onclick="withdrawalRecord()">提现记录></div></li></ul></div><div class="discCon"><div class="tabTit"><span></span>活动期间收徒</div><ul class="discTab"><li class="newDisc discList"><a href=""><span>新增徒弟</span> <span class="newNum"></span></a></li><div><span></span></div><li class="effDisc discList"><a href=""><span>有效徒弟</span> <span class="effectiveNum"></span></a></li><div><span></span></div><li class="rewardDisc" onclick="myIncome()"><span>累计收益</span> <span class="goldNum"></span></li></ul><div class="textTime"><img src="./img/xhrw_jtreward.png" alt=""> <span class="taskTime"></span></div><ul class="reward"></ul></div><div class="cheating" style="background:#fff;color:rgba(128,128,128,1)"><p><span style="font-family:黑体,SimHei;font-size:14px">作弊说明:</span></p><p><span style="font-family:黑体,SimHei;font-size:12px">1.凡是存在作弊行为的用户，头条TV有权扣除作弊金额。</span></p><p><span style="font-family:黑体,SimHei;font-size:12px">2.邀请的新徒弟若存在作弊行为，该徒弟产生的奖励头条TV有权冻结。</span></p><p><span style="font-family:黑体,SimHei;font-size:12px">3.作弊行为包含一个手机注册登录多个账号，虚拟号注册登录，扰乱系统，实施网络攻击等行为。</span></p><p><br></p></div></section><div class="rank" onclick="sideRank(this)" data-sidestatus="true" style="opacity:0"><p class="rankNum">无</p></div></body><script src="./js/rem.js"></script><script src="./js/zepto.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script><script src="js/fastclick.js"></script><script>var _PageHeight=document.documentElement.clientHeight,_PageWidth=document.documentElement.clientWidth,_LoadingTop=61<_PageHeight?(_PageHeight-61)/2:0,_LoadingLeft=215<_PageWidth?(_PageWidth-215)/2:0,_LoadingHtml='<div id="loadingDiv" style="position:absolute;left:0;width:100%;height:'+_PageHeight+'px;top:0;background:url(./img/details_loading.png) no-repeat center center;background-size:100% 100%;opacity:100;filter:alpha(opacity=100);z-index:10000;"></div>';function completeLoading(){if("complete"==document.readyState){var e=document.getElementById("loadingDiv");e.parentNode.removeChild(e),$("#loadingDiv").remove(),$("#main").css({opacity:100,filter:"alpha(opacity=100)"}),$(".rank").css({opacity:100,filter:"alpha(opacity=100)"})}}document.write(_LoadingHtml),document.onreadystatechange=completeLoading</script><script>//获取Url地址中userId参数
+			function getUrlParams(name) { 
+			    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+			    var r = window.location.search.substr(1).match(reg);  
+			    if (r != null) return unescape(r[2]); 
+			    return null; 
+			};			
+			/**
+			 * @param   userId 用户Id
+			 */
+			var userID = getUrlParams("userId");
+
+			var index;
+			['./mfDiscEarn.html?userId=','./commssion.html?userId='].forEach(function(item,index){
+				$(".link").eq(index).attr("href",item+userID);
+			});
+			['./discList.html?userId=','./discList.html?active=1&userId='].forEach(function(item,index){
+				$(".discList").eq(index).find("a").attr("href",item+userID);
+			});
+			/**
+			 * 查询可提现金额
+			 */
+			  axios({
+			  //url:'json/redpacket.json',
+			  url: '/user/red/packet',
+			  method: 'get', // 默认是 get9			  
+			  baseURL:ajaxUrl,
+			  params: {
+			  	userId:userID
+			  }
+			})
+			.then(function(res){
+				console.log("可提现红包",res);
+				var redPacket = res.data.data;
+				$(".gold").html(`${redPacket}元`);
+				if(redPacket==0){
+					$(".btn").show();
+					$(".btnActive").hide();
+				}else{
+					$(".btn").hide();
+					$(".btnActive").show();
+				}
+			})
+			.catch(function(error){
+				console.log(error);
+			});	
+			//用户累计获得红包金额(收徒奖励红包)
+			axios({
+			  //url:'json/recordpacket.json',
+			  url: '/user/record/packet',
+			  method: 'get', // 默认是 get9			  
+			  baseURL:ajaxUrl,
+			  params: {
+			  	userId:userID
+			  }
+			})
+			.then(function(res){
+				console.log("累计红包",res);
+				var goldRecordTotal = res.data.data;
+				$(".goldRecordTotal").html(`${goldRecordTotal}元`);
+			})
+			.catch(function(error){
+				console.log(error);
+			});	
+			/**
+		    * 用户徒弟信息
+		    */
+		   axios({
+			  url: '/deseno/activity/reward',
+			  method: 'get', // 默认是 get		  
+			  baseURL:ajaxUrl,
+			  params: {
+			  	userId:userID
+			  }
+			})
+			.then(function(res){
+				console.log(res);
+				//徒弟数量
+				$(".newNum").html(res.data.newNum);
+				$(".effectiveNum").html(res.data.effectiveNum);
+				$(".goldNum").html(res.data.goldNum);	
+				//阶梯活动时间
+				const activity = res.data.activity;
+				const taskTime = `第 ${activity.activityName} 期 活动时间：${activity.startDate.replace("-","月")}日-${activity.endDate.replace("-","月")}日`
+				$(".taskTime").text(taskTime);
+				//阶梯奖励
+				let _html = "";
+				var str = "";
+				res.data.data.forEach(function(item,index){
+					console.log(item.isGrant);					
+					if(item.isGrant == "false"){
+						str = 
+							`<li><span>活动期间收徒${item.apprenticeNum.replace(",","-")}名</span><span>奖励${item.gold==0?'':item.gold+'金币'}${(item.gold!==0&&item.money==0)||(item.gold==0&&item.money!==0)?'':'+'}${item.money==0?'':item.money+'元'}</span></li>`;
+					}else{
+						str = 
+							`<li><span>活动期间收徒${item.apprenticeNum.replace(",","-")}名</span><span class="active">已发放${item.gold==0?'':item.gold+'金币'}${(item.gold!==0&&item.money==0)||(item.gold==0&&item.money!==0)?'':'+'}${item.money==0?'':item.money+'元'}</span></li>`;						
+					};
+					_html += str;
+				});
+				$(".reward").html(_html);
+				//我的排名			
+				$(".rankNum").text(`${res.data.myRank==0?'无':numType(res.data.myRank)}`);
+				/**
+				 * 侧边小球滚动隐藏
+				 */
+				var status = $(".rank").attr("data-sideStatus");
+				var sideDom = document.getElementsByClassName("rank");
+				$("body").scroll(function(){
+					$(".rank").animate({"right":"-0.8rem"},500);
+					$(".rank").attr("data-sideStatus","false");
+				});				
+			})
+			.catch(function(error){
+				console.log(error);
+			});	
+			/**
+			 * 跳转提现记录
+			 */
+			//提现
+		    function withdrawalRecord(){
+		       var u = navigator.userAgent;
+		       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		       if(isAndroid){
+		           window.jsi.withdrawalRecord("ok");
+		       }else if(isiOS){
+		           window.webkit.messageHandlers.withdrawalRecord.postMessage("ok");
+		       }
+		    }
+			/**
+			 * 提现
+			 */
+		    function withdrawal(){
+		       var u = navigator.userAgent;
+		       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		       if(isAndroid){
+		           window.jsi.withdrawal("24");
+		       }else if(isiOS){
+		           window.webkit.messageHandlers.withdrawal.postMessage("24");
+		           
+		       }
+		    }
+			/**
+			 * 去收徒
+			 */
+			function myIncome(){    
+		       var u = navigator.userAgent;
+		       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		       if(isAndroid){
+		          /*  alert('是否是Android：'+isAndroid);*/
+		           window.jsi.myIncome("ok")
+		       }else if(isiOS){
+		           /* alert('是否是iOS：'+isiOS);*/
+		           window.webkit.messageHandlers.myIncome.postMessage("ok");
+		       }	       	   
+			}	
+			/**
+			 * 跳装金币页
+			 */
+			function disciple(){    
+		       var u = navigator.userAgent;
+		       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		       if(isAndroid){
+		          /*  alert('是否是Android：'+isAndroid);*/
+		           window.jsi.disciple("ok")
+		       }else if(isiOS){
+		           /* alert('是否是iOS：'+isiOS);*/
+		           window.webkit.messageHandlers.disciple.postMessage("ok");
+		       }	       	   
+			}	
+			/**
+			 * 数字显示格式化
+			 * @param {Object} n
+			 */
+			function numType(n){
+				return n<1000?n:Math.floor(n/1000)+'k';
+			}
+			//侧边小球
+			function sideRank(_this){	
+				var status = $(".rank").attr("data-sideStatus");
+				console.log(status);
+				if(status=="true"){
+					console.log("跳转");
+					window.location.href="./rank.html";						
+				}else{
+					console.log("设置为true");
+					$(".rank").animate({"right":"0rem"},500);
+					$(".rank").attr("data-sideStatus","true");
+				}				
+			};	
+			/**
+			 * 完美解决safari、微信浏览器下拉回弹效果和上拉空白的bug
+			 * @param {Object} el 滑动元素
+			 */
+			/*var overscroll = function(el) {  
+			    el.addEventListener('touchstart', function() {  
+			        var top = el.scrollTop  
+			        ,totalScroll = el.scrollHeight  
+			        ,currentScroll = top + el.offsetHeight;  
+			        if(top === 0) {  
+			            el.scrollTop = 1;  
+			        }else if(currentScroll === totalScroll) {  
+			            el.scrollTop = top - 1;  
+			        }  
+			    });  			  
+			    el.addEventListener('touchmove', function(evt) {  
+			    if(el.offsetHeight < el.scrollHeight)  
+			        evt._isScroller = true;  
+			    });  
+			};  			          
+			overscroll(document.querySelector('#main'));  
+			document.body.addEventListener('touchmove', function(evt) {  
+			    if(!evt._isScroller) {  
+			        evt.preventDefault();  
+			    }  
+			});  */</script></html>

@@ -1,0 +1,37 @@
+/*
+Error: Invalid CSS after "c@charset "utf-8"": expected "{", was ";"
+        on line 1 of nfNews.scss
+
+1: c@charset "utf-8";
+2: *{margin:0;padding:0}
+3: li{list-style:none}
+4: img{vertical-align:top}
+5: /* 以上可合并 *\/
+6: .clear{clear:both}
+
+Backtrace:
+nfNews.scss:1
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/scss/parser.rb:1278:in `expected'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/scss/parser.rb:1208:in `expected'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/scss/parser.rb:1203:in `tok!'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/scss/parser.rb:677:in `block'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/scss/parser.rb:670:in `ruleset'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/scss/parser.rb:696:in `block_child'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/scss/parser.rb:686:in `block_contents'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/scss/parser.rb:137:in `stylesheet'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/scss/parser.rb:41:in `parse'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/engine.rb:414:in `_to_tree'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/engine.rb:389:in `_render_with_sourcemap'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/engine.rb:307:in `render_with_sourcemap'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/exec/sass_scss.rb:391:in `run'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/exec/sass_scss.rb:63:in `process_result'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/exec/base.rb:52:in `parse'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/lib/sass/exec/base.rb:19:in `parse!'
+D:/Ruby25-x64/lib/ruby/gems/2.5.0/gems/sass-3.5.5/bin/sass:13:in `<top (required)>'
+d:/Ruby25-x64/bin/sass:23:in `load'
+d:/Ruby25-x64/bin/sass:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Invalid CSS after \"c@charset \"utf-8\"\": expected \"{\", was \";\"\A         on line 1 of nfNews.scss\A \A 1: c@charset \"utf-8\";\A 2: *{margin:0;padding:0}\A 3: li{list-style:none}\A 4: img{vertical-align:top}\A 5: /* 以上可合并 */\A 6: .clear{clear:both}"; }

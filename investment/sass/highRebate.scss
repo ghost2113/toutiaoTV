@@ -1,0 +1,191 @@
+@charset "utf-8";
+//flex布局
+@mixin flex($direction,$justify:center,$alignItems:center){
+    display:flex;
+    display:-webkit-flex;
+    flex-direction:$direction;
+    justify-content: $justify;
+    align-items: $alignItems;
+}
+//字体样式
+@mixin font($size:14px,$weight:500,$family:"微软雅黑",$height:1.4,$color:#000){
+    font-size:$size;
+    font-weight:$weight;
+    font-family:$family;
+    line-height:$height;
+    color:$color;
+}
+//多行文本溢出
+@mixin overflow($num:1){
+   display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $num;
+    overflow: hidden; 
+}
+//元素水平居中
+@mixin centerRow{
+    margin:0 auto;
+}
+//主题红色
+$themeColor:#f64040;
+html,body{
+    background:#f7f7fa;
+}
+#main{
+    background:white;
+    .rebate_tab{
+        @include flex(row,space-between,center);
+        height:0.45rem;
+        border-top:1px solid #f7f7fa;
+        padding:0 25%;
+        box-sizing:border-box;
+        @include font(0.16rem,null,null,null,"#f7f7fa");
+        span{            
+            display:block;
+            height:100%;
+            line-height:0.45rem;
+            box-sizing:border-box;
+        }
+        .rebate_tab_active{
+            border-bottom:3px solid #f64040;
+        }
+    }
+    .noDataTip{
+        width:100%;
+        height:4rem;
+        background:#f7f7fa;
+        @include font(14px,null,null,4rem,null);
+        text-align:center;
+    }
+    .content{
+        border-top:3px solid #f7f7fa;
+        //返利列表
+        .list{
+            padding:0.1rem;
+            .banner{
+                border-radius:0.05rem;
+                overflow:hidden;
+                margin-bottom:0.1rem;
+                img{
+                    display:block;
+                    width:100%;
+                }
+            }
+            .taskList{
+                .taskItem{
+                    box-shadow:0 0 5px 0 rgba(0,0,0,0.1);
+                    -webkit-box-shadow:0 0 5px 0 rgba(0,0,0,0.1);
+                    margin-bottom:0.1rem;
+                    .taskInfo{
+                        padding:0.1rem;
+                        @include flex(row,space-between,center);
+                        @include font(0.14rem,null,null,null,#1a1a1a);
+                        border-bottom:1px solid #f7f7fa;
+                        .l{
+                            @include flex(row,flex-start,center);
+                            span{
+                               display:block;
+                               width:0.2rem; 
+                               margin-right:0.05rem;
+                               img{
+                                   display:block;
+                                   width:100%;
+                               }
+                            }
+                        }
+                        .r{
+                            @include flex(row,flex-start,center);
+                            span{
+                               display:block;
+                               width:0.15rem; 
+                               margin-right:0.05rem;
+                               img{
+                                   display:block;
+                                   width:100%;
+                               }
+                            } 
+                        }
+                    }
+                    .taskCon{
+                        padding:0 0.15rem 0.15rem;
+                        .taskWrap{
+                            @include flex(row,space-around,center);
+                            padding:0.2rem 0;
+                            .l,.r{
+                                 @include flex(column,center,center);                                
+                                 span:nth-child(1){
+                                    @include font(0.26rem,null,null,1.4,$themeColor);
+                                 }
+                                 span:nth-child(2){
+                                    @include font(0.12rem,null,null,1.4,#bbbcbd);
+                                 }
+                            }
+                        }
+                        .btn{
+                            width:100%;
+                            height:0.4rem;
+                            background:$themeColor;
+                            border-radius:100px;
+                            outline: none;
+                            border:0;
+                            @include font(0.14rem,null,null,0.4rem,white);
+                        }
+                    }
+                }
+            }
+        }
+        //返利记录
+        .instruc{
+            .instrucItem{
+                position: relative;
+               @include flex(column,space-between,center);
+               padding:0.14rem 0.1rem 0.14rem 0.55rem;
+               border-bottom:1px solid #f7f7fa;
+               box-sizing:border-box;
+               .logoUrl{
+                   position:absolute;
+                   left:0.1rem;
+                   top:0; 
+                   bottom:0;
+                   margin:auto;
+                   display:block;
+                   width:0.35rem;
+                   height:0.35rem;                 
+                   border-radius:1rem;
+                   overflow:hidden;
+                   img{
+                       display:block;
+                       width:100%;
+                       height:100%;
+                   }
+               }
+               p{
+                   width:100%;                   
+               }
+               .p1{
+                   @include flex(row,space-between,center);
+                   @include font(0.14rem,null,null,0.17rem,black);
+                   margin-bottom:0.02rem;
+                   span{
+                       @include font(0.12rem,null,null,1.4,black);
+                   }
+                   .task{
+                       font-size:0.14rem;
+                   }
+                   .red{
+                       color:$themeColor;
+                   }
+                   .green{
+                       color:#0eaf4e;
+                   }
+                   .gray{
+                       color:#bbbcbd;
+                   }
+               }
+               .p2{
+                    @include font(0.12rem,null,null,0.17rem,#bbbcbd);
+               }
+            }
+        }
+    }
+}

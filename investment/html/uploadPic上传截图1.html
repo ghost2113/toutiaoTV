@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>上传截图</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="./css/uploadPic.css"/>
+</head>
+
+<body>
+	<section id="main" style="opacity:0;filter:alpha(opacity=0);">	
+	<div class="picNum">
+		<a href="#">你需要上传<span class="imgNum">0</span>张截图</a>
+		<a href="#" onclick="goPicEg();">截图示例></a>
+	</div>
+	<form id="formData" action="https://zhishun520.com/zaotoutiao-api-home-1.0.0/investment/info/commit" method="post" enctype="multipart/form-data" target="rfFrame">
+		<!--<div id="img0"  class="imgFile">
+    		<input class="img0" type="file" name="pic" onchange="showImg(this);">			
+		</div>
+		<div id="img1" class="imgFile" >
+    		<input class="img1 " type="file" name="pic" onchange="showImg(this);" >			
+		</div>-->
+<!--		<div id="img2" class="imgFile" >
+    		<input class="img2" type="file" name="pic" onchange="showImg(this);">			
+		</div>
+		<div id="img3" class="imgFile" >
+    		<input class="img3" type="file" name="pic" onchange="showImg(this);">			
+		</div>-->
+    	<!--选择文件:<input type="file" name="pic">-->
+    	<div class="inMon">
+			<span>￥</span><input name="investment" class="investment" type="text" placeholder="请输入您的投资金额" value="0"/>
+		</div>
+		<p class="tip">此信息用于核实您的投资情况，请如实填写</p>
+		<input class="userId" name="userId" type="hidden" value="" />
+		<input class="id" name="id" type="hidden" value="" />
+		<div class="submit">
+			<input id="submit"  type="submit" value="上传截图" />
+		</div>		
+    	<!--<div id="submit">上传截图</div>-->
+	</form>
+	<iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;">
+	</iframe>
+	<!--弹出层-->
+	<div id="mask" style="display:none;">
+		<div class="maskwrap">
+			<p class="msg">上传成功</p>
+			<button class="btn btn-info" id="close">确认</button>
+		</div>
+	</div>
+	</section>	
+</body>
+	<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.form.js"></script>
+	<script type="text/javascript" src="../js/rem.js"></script>
+	<script type="text/javascript" src="../js/loading.js"></script>
+	<script type="text/javascript" src="../js/fastclick.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+	/**
+	 * 接口地址
+	 */
+	var urlOnline = "https://zhishun520.com/zaotoutiao-api-home-1.0.0";
+	var urlTest = "http://47.104.250.210:8084/zaotoutiao-api-home-1.0.0";
+	var ajaxUrl = urlOnline;
+	var userID = getUrlParams("userId");//用户userID
+	var id = getUrlParams("id");//任务id
+	var imgNum = getUrlParams("imgNum");
+	imgNum =1;
+	console.log({"userID":userID,"id":id});
+	$(".userId").val(userID);
+	$(".id").val(id);
+	$(".imgNum").html(imgNum);
+	for(var i=0; i<imgNum;i++){
+		$("#formData").prepend(`	
+		<div id="img${i}"  class="imgFile">
+    		<input class="img${i}" type="file" name="pic" onchange="showImg(this);">			
+		</div>`);
+	}
+	//获取截图个数
+	/**
+	 * 任务接口
+	 */
+/*	axios({	
+		  url: '/investment/info/by/id',
+		  method: 'post', // 默认是 get
+		  baseURL: ajaxUrl,	
+		  params:{
+		  	id:id
+		  }
+		})
+		.then(function(res){
+			console.log(res);
+			if(data.examplesUrl==null){
+				$(".imgNum").html("0")
+			}else{
+				var len = data.examplesUrl.split(",").length;
+				$(".imgNum").html(len);
+				for(var i=0; i<len;i++){
+					html+=`	
+					<div id="img${i}"  class="imgFile">
+			    		<input class="img${i}" type="file" name="pic" onchange="showImg(this);">			
+					</div>`;
+				}
+			}//截图示例
+		})
+		.catch(function(error) {
+			console.log(error);
+	});*/
+	function showImg(self){
+		var imgUrl = URL.createObjectURL(self.files[0]);
+		var id = self.getAttribute("class");
+		console.log(id);
+		$("#"+id).css( {"background":"white url("+imgUrl+") no-repeat center center",
+            "background-size": "100% 100%"});
+		}
+	$("#submit").click(function(){
+		var investment = $(".investment").val();
+		console.log(investment);
+		var msg = true;
+		$("input[type='file']").each(function(inde,item){
+			console.log(investment);
+			if(item.files[0]==undefined){
+				TJY.msg("请上传完整图片");
+				msg = false;
+				return false ;
+			}else if(investment==""||investment=="0"){
+				console.log("investment");
+				TJY.msg("请输入投资金额");
+				msg = false;
+				return false;
+			}else{
+				var opt = {
+				    type:'post',            
+				    datatype:'json',
+				    url:'https:zhishun520.com/zaotoutiao-api-home-1.0.0/investment/info/commit',            
+				    success: function(data) {
+				    	console.log(data);
+				    	if(data.result.success){
+				    		TJY.msg("上传成功");
+				    	}	  	   
+				    },
+				    error:function(){
+				    	var msg = setTimeout(function(){
+							TJY.msg("上传成功");
+						},1000);
+				    }
+				};
+				$("#formData").ajaxSubmit(opt);//相当于from.submit()
+				return false;
+
+			}
+		});
+	  	
+});
+	//获取Url地址中userId参数
+	function getUrlParams(name) { 
+	    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+	    var r = window.location.search.substr(1).match(reg);  
+	    if (r != null) return unescape(r[2]); 
+	    return null; 
+	};
+	/**
+	 * 跳转截图示例
+	* */
+	function goPicEg(){
+		window.location.href = "./picEg.html?id="+id+"&userId="+userID;
+	}
+	//关闭弹出框
+	$("#close").on("click",function(){
+		$("#mask").hide();
+	});
+	//弹出框
+	var TJY = TJY || {};
+	TJY.msg = function(msg){
+		$("#mask").show();
+		$(".msg").html(msg);
+	}
+	</script>
+</html>

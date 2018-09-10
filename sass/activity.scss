@@ -1,0 +1,114 @@
+@charset "utf-8";
+// 默认将输出webkit前缀，moz前缀和标准
+@mixin prefixer($property, $value, $prefixes: webkit moz o ms) {
+  #{$property}: $value;
+
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}:#{$value};
+    }
+    @else if $prefix == moz {
+      -moz-#{$property}:#{$value};
+    }
+    @else if $prefix == o {
+      -o-#{$property}:#{$value};
+    }
+    @else if $prefix == ms {
+      -ms-#{$property}:#{$value};
+    }
+  }
+}
+//元素水平居中
+@mixin centerRow{
+    margin:0 auto;
+}
+@mixin img100{
+    display:block;
+    width: 100%;
+    height:100%;
+}
+//主题黄色
+$fontColor:#f8e5a1;
+//头部  原生跳转H5页面只需嵌入 用不到头部
+//#header .title{
+//  flex:1;
+//  font-size:0.16rem;
+//  line-height:0.44rem;
+//  text-align:center;
+//}
+//#header a{
+//  border:0;
+//}
+#main{
+    background:url(../img/activityBg.jpg) no-repeat center center;
+    background-size:cover;
+    padding:0.12rem 0.075rem 0.62rem;
+    box-sizing: border-box;    
+    overflow: auto;
+    .actiText1{
+        width: 60%;        
+        @include centerRow;
+        img{
+            display:block;
+            width:100%;
+        }
+    }
+    .actiText2{
+        @include centerRow;
+        width:75%;
+        margin-top:0.08rem;
+        img{
+            display:block;
+            width:100%;
+        }  
+    }
+    p{
+        width:100%;
+        height:0.28rem;
+        margin-top:0.1rem;
+        font-size:0.14rem;
+        color:$fontColor;
+        text-align:center;
+        line-height:0.14rem;
+    }
+    .actiList{
+        display:flex;
+        display:-webkit-flex;
+        flex-direction: row;
+        justify-content:space-around;
+        flex-wrap:wrap;
+        .actiItem{
+            width:50%;
+            img{
+                @include img100;
+            }
+            margin-bottom:0.5%;
+        }
+    }
+}
+#footer{
+    position:fixed;
+    left:0;
+    bottom:0;
+    height:0.5rem;
+    display:block;
+    display:-webkit-flex;
+    flex-direction: row;
+    justify-content:space-between;
+    .actiFootL{
+        width:50%;  
+        background:url(../img/acti-footL.png) no-repeat center center;
+        background-size:100% 100%;   
+        color:#fc2e2c; 
+        font-size:0.16rem;
+        text-align:center;  
+        line-height:0.5rem;
+    }
+    .actiFootR{
+        @extend .actiFootL;
+        background:url(../img/acti-footR.png) no-repeat center center;
+        background-size:100% 100%
+    }
+}
+
+

@@ -1,0 +1,44 @@
+.borderB1 { border-bottom: 1px solid #f7f7fa; }
+
+.borderB3 { border-bottom: 5px solid #f7f7fa; }
+
+.red { color: #f64040 !important; }
+
+html, body { background: #f7f7fa; }
+
+#main { background: white; }
+#main img { display: block; max-width: 60%; margin: 0.1rem auto; }
+#main .taskInfo { display: flex; display: -webkit-flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 0.15rem 0.15rem 0.15rem 0.7rem; border-bottom: 1px solid #f7f7fa; background: url(../images/taskLogo.png) no-repeat 0.15rem center; background-size: 0.45rem 0.45rem; box-sizing: border-box; }
+#main .taskInfo p { width: 100%; }
+#main .taskInfo .p1 { font-size: 0.14rem; line-height: 0.2rem; color: black; display: flex; display: -webkit-flex; flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 0.05rem; }
+#main .taskInfo .p1 span { font-size: 0.15rem; line-height: 0.2rem; color: #f64040; }
+#main .taskInfo .p1 .red { font-size: 0.16rem; color: #f64040; }
+#main .taskInfo .p2 { font-size: 0.12rem; line-height: 0.2rem; color: #bbbcbd; text-indent: 0.2rem; background: url(../img/investLink.png) no-repeat 0.05rem center; background-size: 0.12rem 0.12rem; }
+#main .platformInstr { padding: 0.15rem; font-size: 0.14rem; line-height: 0.21rem; color: #1a1a1a; }
+#main .investInfo { display: flex; display: -webkit-flex; flex-direction: row; justify-content: center; align-items: center; padding: 0.1rem 0.15rem; }
+#main .investInfo li { flex: 1; border: 0.1rem 0.1rem 0 0 solid #f64040; display: flex; display: -webkit-flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; }
+#main .investInfo li span { display: flex; display: -webkit-flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; height: 0.4rem; font-size: 0.15rem; }
+#main .investInfo li span:nth-child(1) { background: #f64040; color: white; }
+#main .investInfo li span:nth-child(2) { background: #fff7f5; color: #f64040; }
+#main .investInfo li:nth-of-type(1) { border-radius: 0.1rem 0 0 0; overflow: hidden; }
+#main .investInfo li:nth-of-type(4) { border-radius: 0 0.1rem 0 0; overflow: hidden; }
+#main .investInfo .border { display: flex; display: -webkit-flex; flex-direction: column; justify-content: center; align-items: center; width: 1px; }
+#main .investInfo .border span:nth-child(1) { width: 100%; height: 0.4rem; background: white; }
+#main .investInfo .border span:nth-child(2) { width: 100%; height: 0.4rem; background: #f64040; }
+#main .rulesRebate, #main .steps, #main .screenshots { padding: 0 0.15rem; }
+#main .rulesRebate li, #main .steps li, #main .screenshots li { height: 0.35rem; font-size: 0.14rem; color: #1a1a1a; display: flex; display: -webkit-flex; flex-direction: row; justify-content: flex-left; align-items: center; }
+#main .rulesRebate li:nth-child(2), #main .steps li:nth-child(2), #main .screenshots li:nth-child(2) { font-size: 0.14rem; color: #6e6e6e; display: flex; display: -webkit-flex; flex-direction: row; justify-content: space-between; align-items: center; }
+#main .steps .stepsInfo { padding: 0.1rem 0; }
+#main .steps .stepsInfo .p1 { font-size: 0.14rem; line-height: 0.21rem; color: #1a1a1a; }
+#main .steps .stepsInfo .p2 { font-size: 0.14rem; line-height: 0.21rem; color: #6e6e6e; }
+#main .screenshots { overflow: hidden; }
+#main .screenshots .stepsInfo { display: flex; display: -webkit-flex; flex-direction: row; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: 0.1rem 0; }
+#main .screenshots .stepsInfo img { display: block; width: 1.1rem; height: 1.8rem; margin-bottom: 0.1rem; }
+#main .tip { height: 0.4rem; padding: 0 0.15rem 0.5rem; background: #f7f7fa; font-size: 0.13rem; line-height: 0.21rem; color: #c8c9cc; display: flex; display: -webkit-flex; flex-direction: row; justify-content: center; align-items: center; }
+
+#footer { position: fixed; bottom: 0; left: 0; height: 0.5rem; width: 100%; display: flex; display: -webkit-flex; flex-direction: row; justify-content: center; align-items: center; }
+#footer div { width: 50%; height: 100%; }
+#footer div a { display: block; width: 100%; height: 100%; display: flex; display: -webkit-flex; flex-direction: row; justify-content: center; align-items: center; font-size: 0.15rem; line-height: 0.21rem; color: #f64040; background: white; }
+#footer div:nth-child(2) a { background: #f64040; color: white; }
+
+/*# sourceMappingURL=instrTask.css.map */

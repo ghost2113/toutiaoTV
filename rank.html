@@ -1,0 +1,97 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"><title>排行榜</title><link rel="stylesheet" href="./css/reset.css"><link rel="stylesheet" href="./css/common.css"><link rel="stylesheet" href="./css/rank.css"></head><body><section id="main" style="opacity:0"><ul class="rank"><li><div class="headPath"><img class="headPath1" src="./img/headPath.jpg" alt=""> <span class="rankItem"></span></div><p class="pickName pickName1">无</p><p class="discNum"><span class="discNum1">—</span>徒弟</p><p class="reward">预期奖励<span class="rew1">15元</span></p></li><li><div class="headPath"><img class="headPath0" src="./img/headPath.jpg" alt=""> <span class="rankItem"></span></div><p class="pickName pickName0">无</p><p class="discNum"><span class="discNum0">—</span>徒弟</p><p class="reward">预期奖励<span class="rew0">20元</span></p></li><li><div class="headPath"><img class="headPath2" src="./img/headPath.jpg" alt=""> <span class="rankItem"></span></div><p class="pickName pickName2">无</p><p class="discNum"><span class="discNum2">—</span>徒弟</p><p class="reward">预期奖励<span class="rew2">10元</span></p></li></ul><div class="rankRules"><p class="p1">排行榜规则：</p><p class="p2">排行榜实时更新，每个月最后一天23.59分 结算排名，当月收徒数排名前三的用户分别发放<span class="rew0">10元</span>奖 励、<span class="rew1">15元</span>奖励、<span class="rew2">20元</span>奖励。并于次日0点重新 计算排行</p></div><ul class="rank2"></ul></section></body><script src="./js/rem.js"></script><script src="./js/loading.js"></script><script src="./js/zepto.js"></script><script src="js/fastclick.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script><script>//获取Url地址中userId参数
+			function getUrlParams(name) { 
+			    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+			    var r = window.location.search.substr(1).match(reg);  
+			    if (r != null) return unescape(r[2]); 
+			    return null; 
+			};	
+			axios({	
+			  url: '/month/ranking',
+			  method: 'get', // 默认是 get
+			  baseURL: ajaxUrl,	
+			})
+			.then(function(res){
+				var $htmlRank2 = "";
+				var arrRank = res.data.data;
+				$.each(arrRank,function(index,item){
+					console.log({"index":index,"item":item});
+					if(index<3){
+						$(".headPath"+index).attr("src",item.headpath);
+						$(".pickName"+index).html(item.nickName);
+						$(".discNum"+index).html(item.apprenticeNum);
+					}else{
+						$htmlRank2 += 
+							 `<li>
+								<div class="l">					
+									<span class="rankItem">${index+1}</span>
+									<img src="${item.headpath}" alt="" />
+									<span class="pickName">${item.nickName}</span>
+								</div>
+								<div class="r">
+									<span class="discNum">${item.apprenticeNum}</span>名徒弟
+								</div>
+							</li>`;
+					}
+					$(".rank2").html($htmlRank2);
+				});
+			})
+			.catch(function(error){
+				console.log(error);
+			});
+
+			axios({	
+			  url: '/ranking/awards/user',
+			  method: 'get', // 默认是 get
+			  baseURL: urlOnline,	
+			})
+			.then(function(res){
+				console.log(res);
+				$.each(res.data.data,function(index,item){
+					console.log({"index":index,"item":item});
+					$(".rew"+index).html(`${item.gold==0?item.money+'元':item.gold+'金币'}`);
+				});
+			})
+			.catch(function(error){
+				console.log(error);
+			});
+			/**
+			 * 去收徒
+			 */
+			function disciple(){    
+		       var u = navigator.userAgent;
+		       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		       var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		       if(isAndroid){
+		          /*  alert('是否是Android：'+isAndroid);*/
+		           window.jsi.disciple("ok");
+		       }else if(isiOS){
+		           /* alert('是否是iOS：'+isiOS);*/
+		           window.webkit.messageHandlers.disciple.postMessage("ok");
+		       }	       	   
+			};	
+			/**
+			 * 完美解决safari、微信浏览器下拉回弹效果和上拉空白的bug
+			 * @param {Object} el 滑动元素
+			 */
+//			var overscroll = function(el) {  
+//			    el.addEventListener('touchstart', function() {  
+//			        var top = el.scrollTop  
+//			        ,totalScroll = el.scrollHeight  
+//			        ,currentScroll = top + el.offsetHeight;  
+//			        if(top === 0) {  
+//			            el.scrollTop = 1;  
+//			        }else if(currentScroll === totalScroll) {  
+//			            el.scrollTop = top - 1;  
+//			        }  
+//			    });  			  
+//			    el.addEventListener('touchmove', function(evt) {  
+//			    if(el.offsetHeight < el.scrollHeight)  
+//			        evt._isScroller = true;  
+//			    });  
+//			};  			          
+//			overscroll(document.querySelector('#main'));  
+//			document.body.addEventListener('touchmove', function(evt) {  
+//			    if(!evt._isScroller) {  
+//			        evt.preventDefault();  
+//			    }  
+//			});</script></html>

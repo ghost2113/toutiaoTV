@@ -1,0 +1,9 @@
+@charset "UTF-8";
+#main { padding-top: 1.05rem; display: flex; display: -webkit-flex; flex-direction: column; justify-content: flex-start; align-items: center; box-sizing: border-box; }
+#main img { display: block; width: 0.9rem; }
+#main .p1 { font-size: 20px; font-weight: 600; font-family: "微软雅黑"; line-height: 22px; color: #000; margin-top: 0.2rem; }
+#main .p2 { margin-top: 0.3rem; font-size: 16px; font-weight: 500; font-family: "微软雅黑"; line-height: 22px; color: #8f8f8f; }
+#main .p3 { font-size: 16px; font-weight: 500; font-family: "微软雅黑"; line-height: 22px; color: #8f8f8f; }
+#main .p3 span { color: #f25959; }
+
+/*# sourceMappingURL=codeSuccess.css.map */

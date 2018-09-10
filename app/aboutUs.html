@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>关于我们</title>
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/aboutUs.css" />
+</head>
+<body>
+	<section id="main">	
+		<img class="logo" src="../img/about_us_logo.png" alt="" />
+		<p class="p1">头条TV</p>
+		<p class="p2">看新闻赚零花钱</p>
+		<p class="footer">Copyright © 2018 toutiaoTV.All Rights Reserved</p>
+	</section>
+	<script type="text/javascript" src="../js/rem.js"></script>
+	<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="../js/fastclick.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+	$(function(){
+		axios({	
+		  url: 'isFormal',
+		  method: 'get', // 默认是 get
+		  baseURL: "https://zhishun520.com/zaotoutiao-api-home-1.0.0",	
+		  params:{
+		  	"channelCode": "Appstore"
+		  }
+		})
+		.then(function(res){
+			var isShow = res.data.data;
+			if(isShow=="false"){
+				$(".logo").attr("src","../img/about_us_logo@2x.png");
+				$(".p2").html("");
+			}
+		})
+		.catch(function(error){
+			console.log(error);
+		});
+	})		
+	</script>
+</body>
+</html>

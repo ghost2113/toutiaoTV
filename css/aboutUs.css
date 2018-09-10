@@ -1,0 +1,8 @@
+@charset "UTF-8";
+#main { position: relative; padding-top: 0.5rem; display: flex; display: -webkit-flex; flex-direction: column; justify-content: flex-start; align-items: center; box-sizing: border-box; }
+#main img { display: block; width: 0.86rem; }
+#main .p1 { font-size: 17px; font-weight: 600; font-family: "微软雅黑"; line-height: 16px; color: #000; margin-top: 0.22rem; }
+#main .p2 { margin-top: 0.1rem; font-size: 14px; font-weight: 500; font-family: "微软雅黑"; line-height: 14px; color: #999999; }
+#main .footer { position: absolute; bottom: 15px; left: 0; width: 100%; text-align: center; color: #ADADAD; font-size: 12px; }
+
+/*# sourceMappingURL=aboutUs.css.map */
