@@ -9,7 +9,9 @@
 			 * @param   userId 用户Id
 			 */
 			var userID = getUrlParams("userId");
-
+			if(userID=="4081"){
+				window.location.href = 'https://zhishun520.com/test/timeTask.html?userId='+userID;
+			}
 			var index;
 			['./mfDiscEarn.html?userId=','./commssion.html?userId='].forEach(function(item,index){
 				$(".link").eq(index).attr("href",item+userID);

@@ -73,111 +73,29 @@ $fontColor:#f8e5a1;
 html,body{
     position:relative;
     font-size:14px;
-    background:url(../img/shareBg.png) no-repeat top center #1dc6ff;
+    background:url(../img/shareBg0929.jpg) no-repeat top center #ff6837;
     background-size:100% auto;
 }
 #main{
    padding:0.2rem 0;
-// @include flex(column,flex-start);
-   overflow: scroll;
-   .swiper-container{
-      width:2.8rem;
-      height:0.325rem;  
-      margin:0 auto;    
-      background:rgba(0,0,0,0.3);
-      border-radius:100px;
-      overflow:hidden;
-      .swiper-wrapper{    
-        .notice{         
-          @include flex(row,center);   
-          @include font(0.12rem,null,null,null,white);      
-          .userB{
-              @include flex(row,flex-start);  
-              .user{
-                  @include flex(row,null,null);
-                  width:0.225rem;
-                  height:0.225rem;
-                  border-radius:100px;
-                  overflow:hidden;
-                  img{
-                      display:block;
-                      width:100%;
-                  }
-              }
-              .userName{
-                  width:0.5rem;
-                  white-space:nowrap;
-                  @include overflow(1);
-              }
-          }               
-          .userName,.getMoney{
-              margin:0 0.05rem;
-              @include overflow(1);
-          }
-          .getMoney{
-              color:#fed234;
-              span{
-                  margin-left:0.1rem;
-              }
-          }
-        }
-      }
-   }
-  
-  .shareTit{
-      margin:0 auto; 
-      width:100%;
-//    margin-top:0.13rem;
-      padding-left:0.25rem;
-      @include font(0.13rem,null,null,0.3rem,white);
-      box-sizing:border-box;
-      img{
-          display:block;
-          width:1.68rem;
-          margin:0.15rem 0 0.15rem 0.025rem;
-      }
-      
-  }
-      .openPacket{
-          display:block;
-          position:relative;
-          margin:0.25rem auto 0; 
-          width:3.25rem;
-          height:4.15rem;
-          background:url(../img/shareRedPacket.png) repeat-y center center;
-          background-size:100% 100%;
-//        .prompt{
-//            position:relative;
-//            @include font(0.2rem,null,null,0.36rem,white);
-//            text-align:center;
-//            .text{
-//                position:absolute;
-//                left:0;
-//                right:0;
-//                bottom:0.5rem;
-//                margin:0 auto;
-//            }
-//        }
-          #dlApp{
-              position:absolute;
-              left:0;
-              right:0;
-              bottom:0.35rem;
-              display:block;
-              width:2rem;
-              height:0.48rem;
-              margin:0.25rem auto 0;
-              border:none;
-              outline-style: none;
-              background:url(../img/shareBtn.png) repeat-y center center;
-              background-size:100% auto;
-              animation:myPulse 2s infinite;
-                -moz-animation:myPulse 2s infinite; /* Firefox */
-                -webkit-animation:myPulse 2s infinite; /* Safari and Chrome */
-                -o-animation:myPulse 2s infinite; /* Opera */
-          }
-        }
-  
+  #dlApp{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0.35rem;
+      display:block;
+      width:3rem;
+      height:0.63rem;
+      margin:0.25rem auto 0;
+      border:none;
+      outline-style: none;
+      background:url(../img/shareBtn0929.png) no-repeat center center;
+      background-size:100% auto;
+      animation:myPulse 2s infinite;
+        -moz-animation:myPulse 2s infinite; /* Firefox */
+        -webkit-animation:myPulse 2s infinite; /* Safari and Chrome */
+        -o-animation:myPulse 2s infinite; /* Opera */
+  }  
 }
 @-webkit-keyframes myPulse {
     0% {

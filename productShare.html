@@ -13,7 +13,7 @@
 				var userID = getUrlParams("userId"),
 					itemId = getUrlParams("itemId"),
 					coupon = getUrlParams("coupon"),
-					commissionGold = getUrlParams("commissionGold"),
+					commission = getUrlParams("commission"),
 					itemUrl = getUrlParams("itemUrl"),
 					tmall = getUrlParams("tmall"),
 					nativeUrl = getUrlParams("nativeUrl"),
@@ -63,7 +63,7 @@
 							"itemId": itemId,
 							"coupon": parseFloat(coupon),
 							"itemPrice": itemPrice,
-							"commissionGold": commissionGold,
+							"commission": commission,
 							"tmall": tmall,
 							"nativeUrl": nativeUrl,
 							"itemUrl": itemUrl
@@ -88,7 +88,7 @@
 						//领券
 						$("#coupon").html("领" + coupon + "元券");
 						//佣金
-						$(".tip").html("购买后返" + commissionGold + "金币");
+						$(".tip").html("购买后返" + commission+ "元");
 						//价格
 						$(".price").html((itemPrice - coupon).toFixed(2));
 						if(tmall == 0) {
@@ -136,7 +136,7 @@
 						itemId: itemId,
 						userId: userID,
 						coupon: coupon,						
-						commissionGold: commissionGold,
+						commission: commission,
 						itemUrl: itemUrl,
 						nativeUrl: nativeUrl,
 						tmall: tmall

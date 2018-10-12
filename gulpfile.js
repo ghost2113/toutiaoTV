@@ -4,9 +4,8 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),               //js压缩
     //imagemin = require('gulp-imagemin'),            //图片的压缩
     //base64 = require('gulp-base64') ,               //- 把小图片转成base64字符串
-    htmlmin = require('gulp-htmlmin') ;  
+    htmlmin = require('gulp-htmlmin');
     //html的压缩
- 
 // 压缩 js 文件
 gulp.task('script', function() {
     // 1. 找到文件
@@ -106,12 +105,6 @@ gulp.task('newTaskHtml', function () {
         .pipe(htmlmin(options))
         .pipe(gulp.dest('./newTask/'));
 });
-//gulp.task('newTaskJs', function() {
-//  gulp.src(['dist/newTask/js/*.js'])
-//  	.pipe(babel({ presets:['env'] }))
-//      .pipe(uglify({ mangle: false }))
-//      .pipe(gulp.dest('./newTask/js/'));
-//});
 gulp.task('newTaskImg', function() {
     gulp.src(['dist/newTask/img/*.{png,gif,jpg}'])
         .pipe(gulp.dest('./newTask/img/'));
@@ -127,37 +120,4 @@ gulp.task('newTaskCss', function () {
     gulp.watch(['dist/newTask/css/*.css'], ['newTaskCss']); 
 });
 gulp.task('newTask',['newTaskHtml','newTaskImg','newTaskCss','watchNewTask']);
-//压缩  img文件
-// gulp.task('testImagemin', function () {
-//     gulp.src('img/*.{png,jpg,gif,ico}')
-//         .pipe(imagemin({
-//             optimizationLevel: 5, //类型：Number  默认：3  取值范围：0-7（优化等级）
-//             progressive: true, //类型：Boolean 默认：false 无损压缩jpg图片
-//             interlaced: true, //类型：Boolean 默认：false 隔行扫描gif进行渲染
-//             multipass: true //类型：Boolean 默认：false 多次优化svg直到完全优化
-//         }))
-//         .pipe(gulp.dest('./img/'));
-// });
-// gulp.task('turnplateJs', function() {
-//     gulp.src('turnplate/js2/*.js')
-//         .pipe(uglify({ mangle: false }))
-//         .pipe(gulp.dest('./turnplate/js/'))
-// })
- 
-//压缩  css文件   和base64 和文件名加md5后缀
-// gulp.task('testCssmin', function () {
-//     gulp.src('css2/*.css')   
-//     .pipe(base64())
-//         // .pipe(rev())               //文件名加md5后缀
-//         .pipe(cssmin())
-//         // .pipe(rev.manifest())　　　　　　　　 //rev-mainfest.json文件，里面是压缩文件的信息
-//         .pipe(gulp.dest('./css/'));
-// }); 
-// gulp.task('investmentCss', function () {
-//     gulp.src('investment/css2/*.css')   
-//     .pipe(base64())
-//         // .pipe(rev())               //文件名加md5后缀
-//         .pipe(cssmin())
-//         // .pipe(rev.manifest())　　　　　　　　 //rev-mainfest.json文件，里面是压缩文件的信息
-//         .pipe(gulp.dest('./investment/css/'));
-// });
+

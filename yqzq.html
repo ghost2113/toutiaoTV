@@ -1,0 +1,220 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"><title>邀请赚钱</title><link rel="stylesheet" href="./css/reset.css"><link rel="stylesheet" href="./css/common.css"><link rel="stylesheet" href="./css/yqzq.css"><script>var _PageHeight=document.documentElement.clientHeight,_PageWidth=document.documentElement.clientWidth,_LoadingTop=61<_PageHeight?(_PageHeight-61)/2:0,_LoadingLeft=215<_PageWidth?(_PageWidth-215)/2:0,_LoadingHtml='<div id="loadingDiv" style="position:absolute;left:0;width:100%;height:'+_PageHeight+'px;top:0;background:url(./img/details_loading.png) no-repeat center center;background-size:100% 100%;opacity:100;filter:alpha(opacity=100);z-index:10000;"></div>';function completeLoading(){if("complete"==document.readyState){var e=document.getElementById("loadingDiv");e.parentNode.removeChild(e),$("#loadingDiv").remove(),$("#main").css({opacity:100,filter:"alpha(opacity=100)"}),$(".rank").css({opacity:100,filter:"alpha(opacity=100)"})}}document.write(_LoadingHtml),document.onreadystatechange=completeLoading</script></head><body><section id="main" style="opacity:0"><div class="banner"><div class="discBtn" onclick="disciple()">点击收徒</div></div><div class="tabBar"><div class="tabBar-item tabBar-item-active">我的奖励</div><div class="tabBar-item">我的红包</div></div><div class="container"><div class="tab-box"><ul class="boxItem tixian"><li class="item goldNumber"><div class="l"><span class="text">当前可提现红包</span><span class="gold"></span><img src="./img/iconPocket.png" alt=""></div><button class="btn" style="display:none">立即提现</button> <button class="btnActive" onclick="withdrawal()" style="display:none">立即提现</button></li><div class="border1"></div><li class="item goldRecord"><div class="l"><span class="text">累计获得红包</span><span class="goldRecord goldRecordTotal"></span><img src="./img/iconPocket.png" alt=""></div><div class="withdrawalRecord" onclick="withdrawalRecord()">提现记录></div></li></ul><div class="tab-info"><h5 class="h5">活动规则</h5><p class="red">新增徒弟</p><p class="fontColor">朋友通过你分享的链接下载头条TV并登陆</p><p class="red">有效徒弟</p><p class="fontColor">新增徒弟阅读满20篇新闻或视频</p><p class="red">红包发放</p><p class="fontColor">每获得一个 有效徒弟立得1元红包</p><h5 class="h5">作弊说明</h5><p class="fontColor">1.凡是存在作弊行为的用户，头条TV有权扣除作弊金额。</p><p class="fontColor">2.邀请的新徒弟若存在作弊行为，该徒弟产生的奖励头条TV有权冻结。</p><p class="fontColor">3.作弊行为包含一个手机注册登录多个账号，虚拟号注册登录，扰乱系统，实施网络攻击等行为。</p></div></div><div class="tab-box discCon"><ul class="discList"></ul></div></div></section><div class="rank" onclick="sideRank(this)" data-sidestatus="t" rue style="opacity:0"></div></body><script src="./js/rem.js"></script><script src="./js/zepto.js"></script><script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script><script src="js/fastclick.js"></script><script src="static/drop/dropload.min.js"></script><script>if('addEventListener' in document) {
+			document.addEventListener('DOMContentLoaded', function() {
+				FastClick.attach(document.body);
+			}, false);
+		}
+		//获取Url地址中userId参数
+		function getUrlParams(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+			var r = window.location.search.substr(1).match(reg);
+			if(r != null) return unescape(r[2]);
+			return null;
+		};
+		/**
+		 * @param   userId 用户Id
+		 */
+		var userID = getUrlParams("userId");
+
+		/**
+		 * 查询可提现金额
+		 */
+		axios({
+				url: '/user/red/packet',
+				method: 'get', // 默认是 get9			  
+				baseURL: ajaxUrl,
+				params: {
+					userId: userID
+				}
+			})
+			.then(function(res) {
+				var redPacket = res.data.data;
+				$(".gold").html(redPacket + "元");
+				if(redPacket == 0) {
+					$(".btn").show();
+					$(".btnActive").hide();
+				} else {
+					$(".btn").hide();
+					$(".btnActive").show();
+				}
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+		//用户累计获得红包金额(收徒奖励红包)
+		axios({
+				url: '/user/record/packet',
+				method: 'get', // 默认是 get9			  
+				baseURL: ajaxUrl,
+				params: {
+					userId: userID
+				}
+			})
+			.then(function(res) {
+				var goldRecordTotal = res.data.data;
+				$(".goldRecordTotal").html(`${goldRecordTotal}元`);
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+		/**
+		 * 选项卡
+		 */
+		$('.tabBar-item').on('click', function() {
+			const index = $(this).index();
+			$(this).addClass("tabBar-item-active").siblings().removeClass('tabBar-item-active');
+			$('.tab-box').eq(index).show();
+			$('.tab-box').eq(index).siblings().hide();
+			if(index == 1) {
+				lists();
+			}
+		});
+		/**
+		 * 徒弟列表
+		 */
+		function lists() {
+			$(".noDisc").remove();
+			$(".dropload-down").remove();
+			// 页数
+			var page = 0;
+			// dropload
+			$('.discCon').dropload({
+				scrollArea: window,
+				loadDownFn: function(me) {
+					page++;
+					// 拼接HTML
+					var result = '';
+					$.ajax({
+						type: 'GET',
+						url: ajaxUrl + "/month/ranking?userId=" + userID + "&pageNo=" + page + "&pageSize=10",
+						dataType: 'json',
+						success: function(res) {
+							var arrLen = res.data.length;
+							var data = res.data;
+							arrLen = 20;
+							if(arrLen > 0) {
+								for(var i = 0; i < arrLen; i++) {
+									result += `<li>
+													<div>
+														<span class="userPhoto"><img src="./img/100G.png" alt="" /></span><span class="userName">昵称</span>
+													</div>
+													<div class="disc-status">
+														累计进贡<span class="red">0元</span>
+													</div>
+												</li>`;
+								}
+								// 如果没有数据
+							} else {
+								if(page == 1) {
+									$(".discList").append(`<img class="noDisc" src="./img/noDisc.png" alt="">`);
+								}
+								// 锁定
+								me.lock();
+								// 无数据
+								me.noData();
+							}
+							if(page == 3) {
+								// 锁定
+								me.lock();
+								// 无数据
+								me.noData();
+								$(".discList").append(`<img class="noDisc" src="./img/noDisc.png" alt="">`);
+							}
+
+							// 为了测试，延迟1秒加载
+							// 插入数据到页面，放到最后面
+							$('.discList').append(result);
+							$(".dropload-down").remove();
+							// 每次数据插入，必须重置
+							me.resetload();
+						},
+						error: function(xhr, type) {
+							alert('Ajax error!');
+							// 即使加载出错，也得重置
+							me.resetload();
+						}
+					});
+				}
+			});
+		}
+		/**
+		 * 侧边小球滚动隐藏
+		 */
+		//我的排名			
+		$("body").scroll(function() {
+			$(".rank").animate({
+				"right": "-0.3rem"
+			}, 500);
+			$(".rank").attr("data-sideStatus", "false");
+		});
+		/**
+		 * 跳转提现记录
+		 */
+		//提现
+		function withdrawalRecord() {
+			var u = navigator.userAgent;
+			var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+			var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+			if(isAndroid) {
+				window.jsi.withdrawalRecord("ok");
+			} else if(isiOS) {
+				window.webkit.messageHandlers.withdrawalRecord.postMessage("ok");
+			}
+		}
+		/**
+		 * 提现
+		 */
+		function withdrawal() {
+			var u = navigator.userAgent;
+			var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+			var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+			if(isAndroid) {
+				window.jsi.withdrawal("24");
+			} else if(isiOS) {
+				window.webkit.messageHandlers.withdrawal.postMessage("24");
+			}
+		}
+		/**
+		 * 去收徒
+		 */
+		function myIncome() {
+			var u = navigator.userAgent;
+			var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+			var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+			if(isAndroid) {
+				window.jsi.myIncome("ok")
+			} else if(isiOS) {
+				window.webkit.messageHandlers.myIncome.postMessage("ok");
+			}
+		}
+		/**
+		 * 跳装金币页
+		 */
+		function disciple() {
+			var u = navigator.userAgent;
+			var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+			var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+			if(isAndroid) {
+				window.jsi.disciple("ok")
+			} else if(isiOS) {
+				window.webkit.messageHandlers.disciple.postMessage("ok");
+			}
+		}
+		/**
+		 * 数字显示格式化
+		 * @param {Object} n
+		 */
+		function numType(n) {
+			return n < 1000 ? n : Math.floor(n / 1000) + 'k';
+		}
+		//侧边小球
+		function sideRank(_this) {
+			var status = $(".rank").attr("data-sideStatus");
+			if(status == "true") {
+				window.location.href = "./rank.html";
+			} else {
+				$(".rank").animate({
+					"right": "0.2rem"
+				}, 500);
+				$(".rank").attr("data-sideStatus", "true");
+			}
+		};</script></html>
