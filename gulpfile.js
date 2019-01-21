@@ -23,6 +23,7 @@ gulp.task('investmentJs', function() {
         .pipe(uglify({ mangle: false }))
         .pipe(gulp.dest('./investment/js/'));
 });
+
 gulp.task('investmentnewJs', function() {
     gulp.src(['dist/investmentnew/js/*.js'])
     	.pipe(babel({ presets:['env'] }))
@@ -84,8 +85,6 @@ gulp.task('investmentHtmlnew', function () {
     gulp.watch(['dist/investment/*.html'], ['investmentHtml']);
     gulp.watch(['dist/investmentnew/*.html'], ['investmentHtmlnew']);
 });
-/* 合并上述我的方法 监控并执行任务 */
-gulp.task('default',['script','html','investmentHtml','investmentJs','investmentHtmlnew','investmentnewJs','watch']);
 
 /**
  * 新手任务
@@ -120,4 +119,8 @@ gulp.task('newTaskCss', function () {
     gulp.watch(['dist/newTask/css/*.css'], ['newTaskCss']); 
 });
 gulp.task('newTask',['newTaskHtml','newTaskImg','newTaskCss','watchNewTask']);
+/* 合并上述我的方法 监控并执行任务 */
+gulp.task('default',['script','html','investmentHtml','investmentJs','investmentHtmlnew','investmentnewJs','watch']);
+
+
 

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<title>大转盘活动</title>
+
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <img src="images/1.png" id="1-img" style="display:none;" />
+    <img src="images/5.png" id="5-img" style="display:none;" />
+    <img src="images/gold.png" id="gold-img" style="display:none;" />
+	<div class="banner" style="opacity:0;filter:alpha(opacity=0);">
+		<div class="turnplate" style="background-image:url(images/turnplate-bg.png);background-size:100% 100%;">
+			<canvas class="item" id="wheelcanvas" width="422px" height="422px"></canvas>
+			<img class="pointer" src="images/turnplate-pointer.png"/>
+		</div>
+	</div>
+	<div class="reduce" style="opacity:0;filter:alpha(opacity=0);">每次抽奖消耗<span>30</span>金</div>
+	<img class="rulesTit" src="images/turnplateRules.png" style="opacity:0;filter:alpha(opacity=0);"></img>
+	<p class="p1" style="opacity:0;filter:alpha(opacity=0);">活动抽奖获得的金币将会直接发放,活动抽奖获得的金币和红包将会直接发放到个人中心</p>
+	<div id="maskBox" style="display:none;">
+		<div class="maskWarp">
+			<div id="mask"">
+				<div class="close closeMask" ></div>
+				<img class="img" src="./images/gold.png" alt="" />
+				<p class="txt">恭喜你抽中<span class="red"></span></p>
+				<button class="btn closeMask">确定</button>
+			</div>
+		</div>		
+	</div>
+<script type="text/javascript" src="../js/rem.js"></script>
+<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="js/awardRotate.js"></script>	
+<script type="text/javascript" src="../js/fastclick.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+	//获取浏览器页面可见高度和宽度  
+    var _PageHeight = document.documentElement.clientHeight,  
+        _PageWidth = document.documentElement.clientWidth;  
+    //计算loading框距离顶部和左部的距离（loading框的宽度为215px，高度为61px）  
+    var _LoadingTop = _PageHeight > 61 ? (_PageHeight - 61) / 2 : 0,  
+        _LoadingLeft = _PageWidth > 215 ? (_PageWidth - 215) / 2 : 0;  
+    //在页面未加载完毕之前显示的loading Html自定义内容  
+    var _LoadingHtml = 
+    '<div id="loadingDiv" style="position:absolute;left:0;width:100%;height:' + _PageHeight + 'px;top:0;background:url(../img/details_loading.png) no-repeat center center;background-size:100% 100%;opacity:100;filter:alpha(opacity=100);z-index:10000;"></div>';
+    //呈现loading效果  
+    document.write(_LoadingHtml);  
+    //监听加载状态改变  
+    document.onreadystatechange = completeLoading;     
+    //加载状态为complete时移除loading效果  
+    function completeLoading() {  
+        if (document.readyState == "complete") {  
+            var loadingMask = document.getElementById('loadingDiv');  
+            $("#loadingDiv").remove();
+            $(".banner").css({"opacity":100,"filter":"alpha(opacity=100)"});
+            $(".reduce").css({"opacity":100,"filter":"alpha(opacity=100)"});
+            $(".rulesTit").css({"opacity":100,"filter":"alpha(opacity=100)"});
+            $(".p1").css({"opacity":100,"filter":"alpha(opacity=100)"});
+        }  
+    }  
+</script>
+<script type="text/javascript">
+//获取Url地址中userId参数
+function getUrlParams(name) { 
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+    var r = window.location.search.substr(1).match(reg);  
+    if (r != null) return unescape(r[2]); 
+    return null; 
+};		
+/**
+ * @param   userId 用户Id
+ */
+var userID = getUrlParams("userId");
+var gold = new Number();
+var urlOnline = "https://zhishun520.com/zaotoutiao-api-home-1.0.0/";
+var urlTest = "http://47.104.250.210:8083/zaotoutiao-api-home-1.0.0/";
+var turnplate={
+		restaraunts:[],				//大转盘奖品名称
+		colors:[],					//大转盘奖品区块对应背景颜色
+		outsideRadius:192,			//大转盘外圆的半径
+		textRadius:155,				//大转盘奖品位置距离圆心的距离
+		insideRadius:68,			//大转盘内圆的半径
+		startAngle:0,				//开始角度
+		randomRate:[],              //控制获奖率，百分制(相加需等于100%)，对应restaraunts(顺序需要保持一致)，
+		bRotate:false				//false:停止;ture:旋转
+};
+$(document).ready(function(){
+	$.ajax({
+		url:ajaxUrl+"/user/get?userId="+userID,
+		type:"post",
+		async:false,
+		success:function(res){												
+			console.log("async",res);
+			gold = res.data.gold;
+		},
+		error:function(error){
+			console.log(error);
+		}
+	})	
+	//动态添加大转盘的奖品与奖品区域背景颜色
+	turnplate.randomRate = ["0.05%",'20%','0.01%','63.49%','5%','0.5%'];  //小心设置按100%分配
+	turnplate.restaraunts = ["1元红包","50金币","5元红包","谢谢参与","200金币","1000金币 "];
+	turnplate.colors = ["#f7f7f7", "#FFFFFF", "#f7f7f7", "#FFFFFF","#f7f7f7", "#FFFFFF"];	
+	var rotateTimeOut = function (){
+		$('#wheelcanvas').rotate({
+			angle:0,
+			animateTo:2160,
+			duration:8000,
+			callback:function (){
+				alert('网络超时，请检查您的网络设置！');
+			}
+		});
+	};
+	//旋转转盘 item:奖品位置; txt:提示语;
+	var rotateFn = function (item, txt){
+		var angles = item * (360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts.length*2));
+		if(angles<270){
+			angles = 270 - angles; 
+		}else{
+			angles = 360 - angles + 270;
+		}
+		$('#wheelcanvas').stopRotate();
+		$('#wheelcanvas').rotate({
+			angle:0,
+			animateTo:angles+1800,
+			duration:3000,
+			callback:function (){
+				//转盘结束，事件处理
+				mask(txt);
+				turnplate.bRotate = false;
+				$('.pointer').on("click",run);
+			}
+		});
+	};
+	//抽奖
+	function run(){
+		//判断是否有充足金币
+		console.log(gold);
+		if(gold<30){
+			$("#maskBox").show();
+			$(".img").hide();
+			$(".txt").html("金币余额不足 去看新闻赚金币");
+			$(".btn").on("click",function(){
+				newsRead();
+			})
+			return;
+		}
+		//获取随机数(奖品个数范围内)
+		var item = rnd(turnplate.randomRate);
+		//奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
+		rotateFn(item, turnplate.restaraunts[item-1]);
+		//如果正在旋转，点击无效,
+		$('.pointer').off("click",run);
+	}
+	$('.pointer').on("click",run);
+});
+function rnd(rate){
+	var random = Math.floor(Math.random() * 100);
+	var myRandom = [];
+	var randomList = [];
+	var randomParent = [];
+	for(var i = 0; i < 100; i++){
+		myRandom.push(parseInt([i]) + 1);
+	};
+	for(var i = 0; i < rate.length; i++){
+		var temp = [];
+		var start = 0;
+		var end = 0;
+		randomList.push(parseInt(rate[i].split('%')[0]));
+		for(var j = 0; j < randomList.length; j++){
+			start += randomList[j-1] || 0
+			end += randomList[j]
+		}
+		temp = myRandom.slice(start, end);
+		randomParent.push(temp)
+	}
+	for(var i = 0; i < randomParent.length; i++){
+		if($.inArray(random, randomParent[i]) > 0){
+			return(i+1)
+		}
+	}
+	
+}
+//页面所有元素加载完毕后执行drawRouletteWheel()方法对转盘进行渲染
+window.onload=function(){
+	drawRouletteWheel();
+};
+function drawRouletteWheel(){    
+  var canvas = document.getElementById("wheelcanvas");    
+  if (canvas.getContext) {
+	  //根据奖品个数计算圆周角度
+	  var arc = Math.PI / (turnplate.restaraunts.length/2);
+	  var ctx = canvas.getContext("2d");
+	  //在给定矩形内清空一个矩形
+	  ctx.clearRect(0,0,422,422);
+	  //strokeStyle 属性设置或返回用于笔触的颜色、渐变或模式  
+	  ctx.strokeStyle = "#FFBE04";
+	  //font 属性设置或返回画布上文本内容的当前字体属性
+	  ctx.font = '16px Microsoft YaHei';      
+	  for(var i = 0; i < turnplate.restaraunts.length; i++) {       
+		  var angle = turnplate.startAngle + i * arc;
+		  ctx.fillStyle = turnplate.colors[i];
+		  ctx.beginPath();
+		  //arc(x,y,r,起始角,结束角,绘制方向) 方法创建弧/曲线（用于创建圆或部分圆）    
+		  ctx.arc(211, 211, turnplate.outsideRadius, angle, angle + arc, false);    
+		  ctx.arc(211, 211, turnplate.insideRadius, angle + arc, angle, true);
+		  ctx.stroke();  
+		  ctx.fill();
+		  //锁画布(为了保存之前的画布状态)
+		  ctx.save();   		  
+		  //----绘制奖品开始----
+		  ctx.fillStyle = "#E5302F";
+		  var text = turnplate.restaraunts[i];
+		  var line_height = 17;
+		  //translate方法重新映射画布上的 (0,0) 位置
+		  ctx.translate(211 + Math.cos(angle + arc / 2) * turnplate.textRadius, 211 + Math.sin(angle + arc / 2) * turnplate.textRadius);
+		  
+		  //rotate方法旋转当前的绘图
+		  ctx.rotate(angle + arc / 2 + Math.PI / 2);
+		  
+		  /** 下面代码根据奖品类型、奖品名称长度渲染不同效果，如字体、颜色、图片效果。(具体根据实际情况改变) **/
+		  if(text.indexOf("M")>0){//流量包
+			  var texts = text.split("M");
+			  for(var j = 0; j<texts.length; j++){
+				  ctx.font = j == 0?'bold 20px Microsoft YaHei':'16px Microsoft YaHei';
+				  if(j == 0){
+					  ctx.fillText(texts[j]+"M", -ctx.measureText(texts[j]+"M").width / 2, j * line_height);
+				  }else{
+					  ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
+				  }
+			  }
+		  }else if(text.indexOf("M") == -1 && text.length>6){//奖品名称长度超过一定范围 
+			  text = text.substring(0,6)+"||"+text.substring(6);
+			  var texts = text.split("||");
+			  for(var j = 0; j<texts.length; j++){
+				  ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
+			  }
+		  }else{
+			  //在画布上绘制填色的文本。文本的默认颜色是黑色
+			  //measureText()方法返回包含一个对象，该对象包含以像素计的指定字体宽度
+			  ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+		  }
+		  
+		  //添加对应图标
+		  if(text.indexOf("金币")>0){
+			  var img= document.getElementById("gold-img");
+			  img.onload=function(){  
+				  ctx.drawImage(img,-25,10);      
+			  }; 
+			  ctx.drawImage(img,-25,10);  
+		  }else if(text.indexOf("5元")>=0){
+			  var img= document.getElementById("5-img");
+			  img.onload=function(){  
+				  ctx.drawImage(img,-25,10);      
+			  };  
+			  ctx.drawImage(img,-25,10);  
+		  }else if(text.indexOf("1元")>=0){
+			  var img= document.getElementById("1-img");
+			  img.onload=function(){  
+				  ctx.drawImage(img,-25,10);      
+			  };  
+			  ctx.drawImage(img,-25,10);  
+		  }
+		  //把当前画布返回（调整）到上一个save()状态之前 
+		  ctx.restore();
+		  //----绘制奖品结束----
+	  }     
+  } 
+}
+//弹出框
+function mask(text){	
+	if(text=="50金币"){
+		getGold("gold","50","50");
+		$("#maskBox").show();
+		$(".txt").html(`恭喜你抽中<span class="red">${text}</span>`);
+		$(".img").show();
+		$(".img").attr("src","./images/gold.png");
+	}else if(text=="200金币"){
+		getGold("gold","200","200");
+		$("#maskBox").show();
+		$(".txt").html(`恭喜你抽中<span class="red">${text}</span>`);
+		$(".img").show();
+		$(".img").attr("src","./images/gold.png");
+	
+	}else if(text=="1000金币"){
+		getGold("gold","1000","1000");
+		$("#maskBox").show();
+		$(".txt").html(`恭喜你抽中<span class="red">${text}</span>`);
+		$(".img").show();
+		$(".img").attr("src","./images/gold.png");
+		
+	}else if(text=="1元红包"){
+		getGold("money",1,"0");
+		$("#maskBox").show();
+		$(".txt").html(`恭喜你抽中<span class="red">${text}</span>`);
+		$(".img").show();
+		$(".img").attr("src","./images/1.png");
+
+	}else if(text=="5元红包"){
+		getGold("money","5","0");
+		$("#maskBox").show();
+		$(".txt").html(`恭喜你抽中<span class="red">${text}</span>`);
+		$(".img").show();
+		$(".img").attr("src","./images/5.png");
+	}else if(text=="谢谢参与"){
+		getGold("gold","0","0");
+		$("#maskBox").show();
+		$(".img").hide();
+		$(".txt").html("很遗憾没有抽中");		
+	}					
+}
+//关闭弹出框
+/*function close(ele){
+	$(ele).hide();
+};*/
+$(".closeMask").on("click",function(){
+	$("#maskBox").hide();
+});
+//接口
+function getGold(type,currency,num){
+	axios({	
+	  url: '/turn/table',
+	  method: 'get', 
+	  baseURL:ajaxUrl,	
+	  params:{
+	  	userId:userID,
+	  	type:type,
+	  	currency:currency
+	  }
+	})
+	.then(function(res){
+		gold =res.data.gold + parseInt(num);
+	})
+	.catch(function(error){
+		console.log(error);
+	});
+}
+//阅读新闻
+function newsRead(){ 
+   var u = navigator.userAgent;
+   var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+   var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+   if(isAndroid){
+        /*alert('是否是Android：'+isAndroid);*/
+       window.jsi.newsRead("ok");
+   }else if(isiOS){
+        /*alert('是否是iOS：'+isiOS);*/
+       window.webkit.messageHandlers.newsRead.postMessage("ok");
+   }
+}	
+</script>
+</body>
+</html>

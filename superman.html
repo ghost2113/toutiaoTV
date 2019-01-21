@@ -1,0 +1,105 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"><title>超人</title><link rel="stylesheet" href="./css/reset.css"><link rel="stylesheet" href="./css/superman.css"><script>var _PageHeight=document.documentElement.clientHeight,_PageWidth=document.documentElement.clientWidth,_LoadingTop=61<_PageHeight?(_PageHeight-61)/2:0,_LoadingLeft=215<_PageWidth?(_PageWidth-215)/2:0,_LoadingHtml='<div id="loadingDiv" style="position:absolute;left:0;width:100%;height:'+_PageHeight+'px;top:0;background:url(https://zhishun520.com/zttH5/img/details_loading.png) no-repeat center center;background-size:100% 100%;opacity:100;filter:alpha(opacity=100);z-index:10000;"></div>';function completeLoading(){if("complete"==document.readyState){var e=document.getElementById("loadingDiv");e.parentNode.removeChild(e),$("#loadingDiv").remove(),$("#main").css({opacity:100,filter:"alpha(opacity=100)"}),$(".rank").css({opacity:100,filter:"alpha(opacity=100)"})}}document.write(_LoadingHtml),document.onreadystatechange=completeLoading</script></head><body><section id="main" style="opacity:0"><div class="banner"><img src="img/pic@3x.png" alt=""></div><div class="desc"><p>分享淘宝商家隐藏优惠券</p><p>和返利的秘密给你的小伙伴吧</p></div><div class="discBtn" onclick="disciple()">立即邀请</div><div class="container"><div class="lists-title"><span></span>我的好友<span></span></div><div class="tab-box discCon"><ul class="discList"></ul></div></div></section></body><script src="./js/rem.js"></script><script src="https://unpkg.com/zepto@1.2.0/dist/zepto.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script><script src="./js/fastclick.js"></script><script src="static/drop/dropload.min.js"></script><script>if('addEventListener' in document) {
+			document.addEventListener('DOMContentLoaded', function() {
+				FastClick.attach(document.body);
+			}, false);
+		}
+		//获取Url地址中userId参数
+		function getUrlParams(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //定义正则表达式 
+			var r = window.location.search.substr(1).match(reg);
+			if(r != null) return unescape(r[2]);
+			return null;
+		};
+		/**
+		 * @param   userId 用户Id
+		 */
+		var userID = getUrlParams("userId");				
+		/**
+		 * 徒弟列表
+		 */
+		lists();
+		function lists() {	
+			$(".discList").html("");
+			$(".noDisc").remove();
+			$(".dropload-down").remove();
+			// 页数
+			var page = 0;
+			// dropload
+			$('.discCon').dropload({
+				scrollArea: window,
+				loadDownFn: function(me) {
+					page++;
+					// 拼接HTML
+					var result = '';
+					$.ajax({
+						type: 'GET',
+						url: ajaxUrl + "/apprentice/list?userId=" + userID + "&pageNo=" + page + "&pageSize=10",
+						dataType: 'json',
+						success: function(res) {
+							console.log("徒弟列表",res);
+							var arrLen = res.data.length;
+							var data = res.data;
+							if(arrLen > 0) {
+								data.map(function(item,index){
+									let html = ""; 
+									(item.apprenticeDate!==""&&item.apprenticeDate!==null)?
+									html = `累计进贡<span class="red">${item.sumGold}元</span>`:
+									html = `你尚未成为有效徒弟`;
+									result += `<li>
+												<div>
+													<span class="userPhoto"><img src="${item.headPath}" alt="" /></span><span class="userName">${item.nickName}</span>
+												</div>
+												<div class="disc-status">
+												${
+													html	
+												}
+												</div>
+											</li>`;
+								});
+								// 如果没有数据
+							} else {
+								if(page == 1) {
+									$(".discList").append(`<img class="noDisc" src="https://zhishun520.com/zttH5/img/noDisc.png" alt="">`);
+								}
+								// 锁定
+								me.lock();
+								// 无数据
+								me.noData();
+							}							
+							// 为了测试，延迟1秒加载
+							// 插入数据到页面，放到最后面
+							$('.discList').append(result);
+							$(".dropload-down").remove();
+							// 每次数据插入，必须重置
+							me.resetload();
+						},
+						error: function(xhr, type) {
+							alert('Ajax error!');
+							// 即使加载出错，也得重置
+							me.resetload();
+						}
+					});
+				}
+			});
+		}		
+		/**
+		 * 去收徒
+		 */
+
+		function disciple() {
+			var u = navigator.userAgent;
+			var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+			var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+			if(isAndroid) {
+				window.jsi.shareMore("ok")
+			} else if(isiOS) {
+				window.webkit.messageHandlers.disciple.postMessage("ok");
+			}
+		}
+		/**
+		 * 数字显示格式化
+		 * @param {Object} n
+		 */
+		function numType(n) {
+			return n < 1000 ? n : Math.floor(n / 1000) + 'k';
+		}</script></html>

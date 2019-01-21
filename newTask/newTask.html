@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"><title>新手任务</title><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="./css/newTask.css"><script>var _PageHeight=document.documentElement.clientHeight,_PageWidth=document.documentElement.clientWidth,_LoadingTop=61<_PageHeight?(_PageHeight-61)/2:0,_LoadingLeft=215<_PageWidth?(_PageWidth-215)/2:0,_LoadingHtml='<div id="loadingDiv" style="position:absolute;left:0;width:100%;height:'+_PageHeight+'px;top:0;background:url(./img/details_loading.png) no-repeat center center;background-size:100% 100%;opacity:100;filter:alpha(opacity=100);z-index:10000;"></div>';function completeLoading(){if("complete"==document.readyState){var e=document.getElementById("loadingDiv");e.parentNode.removeChild(e),$("#loadingDiv").remove(),$("#main").css({opacity:100,filter:"alpha(opacity=100)"}),$(".rank").css({opacity:100,filter:"alpha(opacity=100)"})}}document.write(_LoadingHtml),document.onreadystatechange=completeLoading</script></head><body><section id="main" style="opacity:0"><div id="content"><div class="taskCon"><ul class="taskList"><li class="taskItem" onclick="pageJump(1)"><div class="icon"><img src="./img/taobao.png" alt=""></div><div class="item"><p class="p1">观看淘宝购物返利视频&nbsp;<span class="gold">+0.1元</span></p><p class="p2">完成<span class="tbNum num"></span>/1</p></div><div class="btn tbState"><button class="taskState taskState1">去完成</button> <button class="taskState taskState3">已发放</button></div></li><div class="border1"></div><li class="taskItem" onclick="pageJump(2)"><div class="icon"><img src="./img/disc-video.png" alt=""></div><div class="item"><p class="p1">观看收徒视频&nbsp;<span class="gold">+0.1元</span></p><p class="p2">完成<span class="discNum num"></span>/1</p></div><div class="btn discState"><button class="taskState taskState1">去完成</button> <button class="taskState taskState3">已发放</button></div></li><div class="border1"></div><li class="taskItem" onclick="pageJump(3)"><div class="icon"><img src="./img/news-video.png" alt=""></div><div class="item"><p class="p1">观看阅读赚钱视频&nbsp;<span class="gold">+0.1元</span></p><p class="p2">完成<span class="newsvideoNum num"></span>/1</p></div><div class="btn newsvideoState"><button class="taskState taskState1">去完成</button> <button class="taskState taskState3">已发放</button></div></li><div class="border1"></div><li class="taskItem" onclick="newsPage()"><div class="icon"><img src="./img/news2.png" alt=""></div><div class="item"><p class="p1">阅读20篇新闻&nbsp;<span class="gold">+0.2元</span></p><p class="p2">完成<span class="newsNum num"></span>/20</p></div><div class="btn newsState"><button class="taskState taskState1">去完成</button> <button class="taskState taskState3">已发放</button></div></li><div class="border1"></div><li class="taskItem" onclick="pageJump(4)"><div class="icon"><img src="./img/share2.png" alt=""></div><div class="item"><p class="p1">收徒一名额外奖励1元&nbsp;<span class="gold">+1元</span></p><p class="p2">完成<span class="shareNum num"></span>/1</p></div><div class="btn shareState"><button class="taskState taskState1">去完成</button> <button class="taskState taskState3">已发放</button></div></li><div class="border1"></div><li class="taskItem" onclick="home()"><div class="icon"><img src="./img/rebate.png" alt=""></div><div class="item"><p class="p1">获得一次淘宝返利&nbsp;<span class="gold">+3元</span></p><p class="p2">完成<span class="rebateNum num"></span>/1</p></div><div class="btn rebateState"><button class="taskState taskState1">去完成</button> <button class="taskState taskState3">已发放</button></div></li><div class="border1"></div><li class="taskItem" onclick="pageJump(5)"><div class="icon"><img src="./img/sign2.png" alt=""></div><div class="item"><p class="p1">连续签到7天&nbsp;<span class="gold">+1元</span></p><p class="p2">完成<span class="signNum num"></span>/7</p></div><div class="btn signState"><button class="taskState taskState1">去完成</button> <button class="taskState taskState3">已发放</button></div></li><div class="border1"></div></ul></div><div id="mask" style="display:none"><div class="maskCon"><div class="maskwrap"><p class="msg"></p><div class="btn btn-info close" id="close">确认</div></div></div></div></div></section></body><script src="../js/zepto.js"></script><script src="../js/rem.js"></script><script src="../js/fastclick.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script><script>var userID = getUrlParams("userId");
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"><title>新手任务</title><link rel="stylesheet" href="../css/reset.css"><link rel="stylesheet" href="./css/newTask.css"><script>var _PageHeight=document.documentElement.clientHeight,_PageWidth=document.documentElement.clientWidth,_LoadingTop=61<_PageHeight?(_PageHeight-61)/2:0,_LoadingLeft=215<_PageWidth?(_PageWidth-215)/2:0,_LoadingHtml='<div id="loadingDiv" style="position:absolute;left:0;width:100%;height:'+_PageHeight+'px;top:0;background:url(./img/details_loading.png) no-repeat center center;background-size:100% 100%;opacity:100;filter:alpha(opacity=100);z-index:10000;"></div>';function completeLoading(){if("complete"==document.readyState){var e=document.getElementById("loadingDiv");e.parentNode.removeChild(e),$("#loadingDiv").remove(),$("#main").css({opacity:100,filter:"alpha(opacity=100)"}),$(".rank").css({opacity:100,filter:"alpha(opacity=100)"})}}document.write(_LoadingHtml),document.onreadystatechange=completeLoading</script></head><body><section id="main" style="opacity:0"><div id="content"><div class="taskCon"><ul class="taskList"><li class="taskItem" onclick="pageJump(1)"><div class="icon"><img src="./img/taobao.png" alt=""></div><div class="item"><p class="p1">观看淘宝购物返利视频&nbsp;<span class="gold">+0.1元</span></p><p class="p2">完成<span class="tbNum num"></span>/1</p></div><div class="btn tbState"><button class="taskState taskState1">去完成</button> <button class="taskState taskState3">已发放</button></div></li><div class="border1"></div><li class="taskItem" onclick="pageJump(2)"><div class="icon"><img src="./img/disc-video.png" alt=""></div><div class="item"><p class="p1">观看收徒视频&nbsp;<span class="gold">+0.1元</span></p><p class="p2">完成<span class="discNum num"></span>/1</p></div><div class="btn discState"><button class="taskState taskState1">去完成</button> <button class="taskState taskState3">已发放</button></div></li><div class="border1"></div><li class="taskItem" onclick="pageJump(4)"><div class="icon"><img src="./img/share2.png" alt=""></div><div class="item"><p class="p1">收徒一名额外奖励1元&nbsp;<span class="gold">+1元</span></p><p class="p2">完成<span class="shareNum num"></span>/1</p></div><div class="btn shareState"><button class="taskState taskState1">去完成</button> <button class="taskState taskState3">已发放</button></div></li><div class="border1"></div><li class="taskItem" onclick="home()"><div class="icon"><img src="./img/rebate.png" alt=""></div><div class="item"><p class="p1">获得一次淘宝返利&nbsp;<span class="gold">+3元</span></p><p class="p2">完成<span class="rebateNum num"></span>/1</p></div><div class="btn rebateState"><button class="taskState taskState1">去完成</button> <button class="taskState taskState3">已发放</button></div></li><div class="border1"></div><li class="taskItem" onclick="pageJump(5)"><div class="icon"><img src="./img/sign2.png" alt=""></div><div class="item"><p class="p1">连续签到7天&nbsp;<span class="gold">+1元</span></p><p class="p2">完成<span class="signNum num"></span>/7</p></div><div class="btn signState"><button class="taskState taskState1">去完成</button> <button class="taskState taskState3">已发放</button></div></li><div class="border1"></div></ul></div><div id="mask" style="display:none"><div class="maskCon"><div class="maskwrap"><p class="msg"></p><div class="btn btn-info close" id="close">确认</div></div></div></div></div></section></body><script src="../js/zepto.js"></script><script src="../js/rem.js"></script><script src="../js/fastclick.js"></script><script src="https://unpkg.com/axios/dist/axios.min.js"></script><script>var userID = getUrlParams("userId");
 		var isReload = false;
 		newTask();
 		window.onpageshow = function(event) {			
@@ -25,6 +25,7 @@
 				})
 				.then(function(res) {
 					var data = res.data;
+					console.log("data",data);
 					/**
 					 *  新手任务参数
 					 *  isTaoMoneyNumber, //获得一次淘宝返利；
@@ -38,20 +39,19 @@
 						signNumber, // 签到天数
 						readNumber; //阅读天数
 					 */
-					var isTaoMoneyNumber = data.isTaoMoneyNumber; //获得一次淘宝返利；
-					var isReadNumber = data.isReadNumber;
-					var isSignMoneyNumber = data.isSignMoneyNumber;
-					var isTaoShopNumber = data.isTaoShopNumber;
-					var isOneAppMoneyNumber = data.isOneAppMoneyNumber;
-					var isApprenticeNumber = data.isApprenticeNumber;
-					var isReadMoneyNumber = data.isReadMoneyNumber;
-					var signNumber = data.signNumber;
-					var readNumber = data.readNumber;
-					var isSignNumber = data.isSignNumber;
+					var	isTaoMoneyNumber = data.isTaoMoneyNumber, //获得一次淘宝返利；
+						//isReadNumber = data.isReadNumber,
+						isSignMoneyNumber = data.isSignMoneyNumber,
+						isTaoShopNumber = data.isTaoShopNumber,
+						isOneAppMoneyNumber = data.isOneAppMoneyNumber,
+						isApprenticeNumber = data.isApprenticeNumber,
+						//isReadMoneyNumber = data.isReadMoneyNumber,
+						signNumber = data.signNumber,
+						readNumber = data.readNumber,
+						isSignNumber = data.isSignNumber;
 					/**
 					 * "UNCLAIMED" 表示去完成   "ALREADYRECEIVED" 已领取
 					 */
-
 					//观看淘宝购物返利视频
 					$(".tbNum").html(`${isTaoShopNumber=="UNCLAIMED"?"0":"1"}`);
 					if(isTaoShopNumber == "UNCLAIMED") {
@@ -71,23 +71,23 @@
 						$('.discState>.taskState3').show();
 					}
 					//观看阅读赚钱视频
-					$(".newsvideoNum").html(`${isReadMoneyNumber=="UNCLAIMED"?"0":"1"}`);
-					if(isReadMoneyNumber == "UNCLAIMED") {
-						$('.newsvideoState>.taskState1').show();
-						$('.newsvideoState>.taskState3').hide();
-					} else if(isReadMoneyNumber == "ALREADYRECEIVED") {
-						$('.newsvideoState>.taskState1').hide();
-						$('.newsvideoState>.taskState3').show();
-					}
+//					$(".newsvideoNum").html(`${isReadMoneyNumber=="UNCLAIMED"?"0":"1"}`);
+//					if(isReadMoneyNumber == "UNCLAIMED") {
+//						$('.newsvideoState>.taskState1').show();
+//						$('.newsvideoState>.taskState3').hide();
+//					} else if(isReadMoneyNumber == "ALREADYRECEIVED") {
+//						$('.newsvideoState>.taskState1').hide();
+//						$('.newsvideoState>.taskState3').show();
+//					}
 					//阅读新闻
-					$(".newsNum").html(`${isReadNumber=="UNCLAIMED"?readNumber:"20"}`);
-					if(isReadNumber == "UNCLAIMED") {
-						$('.newsState>.taskState1').show();
-						$('.newsState>.taskState3').hide();
-					} else if(isReadNumber == "ALREADYRECEIVED") {
-						$('.newsState>.taskState1').hide();
-						$('.newsState>.taskState3').show();
-					}
+//					$(".newsNum").html(`${isReadNumber=="UNCLAIMED"?readNumber:"20"}`);
+//					if(isReadNumber == "UNCLAIMED") {
+//						$('.newsState>.taskState1').show();
+//						$('.newsState>.taskState3').hide();
+//					} else if(isReadNumber == "ALREADYRECEIVED") {
+//						$('.newsState>.taskState1').hide();
+//						$('.newsState>.taskState3').show();
+//					}
 					//收徒一名
 					$(".shareNum").html(`${isOneAppMoneyNumber=="UNCLAIMED"?"0":"1"}`);
 					if(isOneAppMoneyNumber == "UNCLAIMED") {
@@ -132,9 +132,9 @@
 				case 2:
 					window.location.href = '../discVideo.html?userId=' + userID;
 					break;
-				case 3:
-					window.location.href = '../newsVideo.html?userId=' + userID;
-					break;
+//				case 3:
+//					window.location.href = '../newsVideo.html?userId=' + userID;
+//					break;
 				case 4:
 					window.location.href = '../timeTask.html?userId=' + userID;
 					break;
